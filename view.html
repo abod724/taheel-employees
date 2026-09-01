@@ -29,15 +29,8 @@
             text-align: center;
             margin-bottom: 15px;
         }
-        .header-logo h1 {
-            font-size: 26px;
-            color: #1a3b4a;
-            border-right: none;
-            padding-right: 0;
-            margin-bottom: 5px;
-        }
         .header-logo .org-name {
-            font-size: 20px;
+            font-size: 22px;
             color: #1a5a7a;
             font-weight: 700;
             letter-spacing: 1px;
@@ -120,9 +113,6 @@
             height: 18px;
             cursor: pointer;
         }
-        .badge-satisfied { color: #2a7de1; }
-        .badge-dissatisfied { color: #d32f2f; }
-        .badge-neutral { color: #f9a825; }
 
         textarea {
             width: 100%;
@@ -159,6 +149,11 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(26,90,122,0.3);
         }
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
         .footer-note {
             text-align: center;
             font-size: 13px;
@@ -182,6 +177,13 @@
             color: #cbd5e0;
             margin: 0 6px;
         }
+        #loadingMessage {
+            display: none;
+            text-align: center;
+            color: #1a5a7a;
+            font-weight: 600;
+            margin-top: 10px;
+        }
         @media (max-width: 500px) {
             .container { padding: 20px; }
             .options { gap: 12px 20px; }
@@ -191,19 +193,17 @@
 <body>
 <div class="container">
 
-    <!-- رأس الصفحة خاص بمركز التأهيل الشامل -->
     <div class="header-logo">
         <div class="org-name">🏥 مركز التأهيل الشامل</div>
         <div class="org-sub">استبيان قياس رضا الموظفين عن بيئة العمل</div>
     </div>
     
     <div class="subtitle">
-        <strong>📋 الهدف:</strong> نحرص على توفير بيئة عمل محفزة وداعمة لجميع منسوبي المركز. آراؤكم الصريحة هي أساس تطويرنا.
+        <strong>📋 الهدف:</strong> نحرص على توفير بيئة عمل محفزة وداعمة. آراؤكم الصريحة هي أساس تطويرنا.
     </div>
 
     <form id="surveyForm">
-
-        <!-- القسم 1: بيئة العمل العامة -->
+        <!-- القسم 1 -->
         <div class="section">
             <h3><span>١</span> بيئة العمل العامة</h3>
             <div class="question">
@@ -224,7 +224,7 @@
             </div>
         </div>
 
-        <!-- القسم 2: العلاقات والدعم الإداري -->
+        <!-- القسم 2 -->
         <div class="section">
             <h3><span>٢</span> العلاقات والدعم الإداري</h3>
             <div class="question">
@@ -245,9 +245,9 @@
             </div>
         </div>
 
-        <!-- القسم 3: التطوير والاستقرار الوظيفي -->
+        <!-- القسم 3 -->
         <div class="section">
-            <h3><span>٣</span> التطوير والاستقرار الوظيفي</h3>
+            <h3><span>٣</span> التطوير والاستقرار</h3>
             <div class="question">
                 <p>مدى رضاك عن فرص التطوير المهني والتدريب المقدمة؟</p>
                 <div class="options">
@@ -266,9 +266,9 @@
             </div>
         </div>
 
-        <!-- القسم 4: التقييم العام -->
+        <!-- القسم 4 -->
         <div class="section">
-            <h3><span>٤</span> التقييم العام والمقترحات</h3>
+            <h3><span>٤</span> التقييم العام</h3>
             <div class="question">
                 <p>بشكل عام، ما مدى رضاك عن العمل في مركز التأهيل الشامل؟</p>
                 <div class="options">
@@ -296,10 +296,10 @@
             </div>
         </div>
 
-        <button type="submit" class="btn-submit">📤 إرسال الاستبيان</button>
-        <div class="footer-note">شكرًا لمشاركتك — صوتك يهمنا في بناء بيئة عمل أفضل للجميع.</div>
+        <button type="submit" class="btn-submit" id="submitBtn">📤 إرسال الاستبيان</button>
+        <div id="loadingMessage">⏳ جاري الإرسال، يرجى الانتظار...</div>
+        <div class="footer-note">شكرًا لمشاركتك — صوتك يهمنا في بناء بيئة عمل أفضل.</div>
         
-        <!-- توقيع المطورين -->
         <div class="developer-credit">
             ✦ برمجة وتصميم: 
             <span>عبدالله حسين المطيري</span> 
@@ -311,30 +311,61 @@
 </div>
 
 <script>
-    // برمجة وتصميم: عبدالله حسين المطيري وسلامه بشير العنزي
     document.getElementById('surveyForm').addEventListener('submit', function(e) {
         e.preventDefault();
+
         const formData = new FormData(this);
-        const results = {};
-        let allAnswered = true;
+        const data = {};
         for (let [key, value] of formData.entries()) {
-            results[key] = value;
+            data[key] = value;
         }
-        // التأكد من الإجابة على الأسئلة الإجبارية (q1 إلى q7)
+
+        // التحقق من الإجابات الإجبارية
         const required = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7'];
         for (let r of required) {
-            if (!results[r]) {
-                allAnswered = false;
+            if (!data[r]) {
                 alert('⚠️ الرجاء الإجابة على جميع الأسئلة الإجبارية (من ١ إلى ٧) قبل الإرسال.');
                 return;
             }
         }
 
-        alert('✅ تم إرسال الاستبيان بنجاح! شكرًا لمشاركتك القيّمة.');
-        console.log('نتائج استبيان مركز التأهيل الشامل:', results);
-        // هذا الموقع حالياً يعرض النتيجة في وحدة التحكم فقط.
-        // لربطه بقاعدة بيانات، استبدل console.log بكود API.
-        // this.reset(); // أزل التعليق لتفريغ الحقول بعد الإرسال
+        const submitBtn = document.getElementById('submitBtn');
+        const loadingMsg = document.getElementById('loadingMessage');
+        
+        // تعطيل الزر وإظهار رسالة الانتظار
+        submitBtn.disabled = true;
+        submitBtn.textContent = '⏳ جاري الإرسال...';
+        loadingMsg.style.display = 'block';
+
+        // رابط Formspree الخاص بك
+        const FORMSPREE_URL = 'https://formspree.io/f/myeyewol';
+
+        fetch(FORMSPREE_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('✅ تم إرسال الاستبيان بنجاح! شكرًا لمشاركتك القيّمة.');
+                this.reset(); // تفريغ الحقول
+            } else {
+                alert('❌ حدث خطأ في الإرسال، يرجى المحاولة مرة أخرى.');
+            }
+        })
+        .catch(error => {
+            alert('❌ حدث خطأ تقني، يرجى المحاولة لاحقًا أو التواصل مع الدعم الفني.');
+            console.error('Error:', error);
+        })
+        .finally(() => {
+            // إعادة تفعيل الزر
+            submitBtn.disabled = false;
+            submitBtn.textContent = '📤 إرسال الاستبيان';
+            loadingMsg.style.display = 'none';
+        });
     });
 </script>
 
