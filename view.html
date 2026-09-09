@@ -5,11 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>استبيان ورشة الصرع - مركز التأهيل الشامل</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #e0f0ff, #f5faff);
@@ -20,144 +16,174 @@
       padding: 20px;
     }
     .card {
-      max-width: 750px;
+      max-width: 780px;
       width: 100%;
       background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(6px);
       border-radius: 40px;
-      padding: 40px 30px;
-      box-shadow: 0 20px 40px rgba(0, 20, 40, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 35px 30px;
+      box-shadow: 0 20px 40px rgba(0,20,40,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
     }
-    h1 {
-      font-size: 2rem;
-      color: #0a2647;
-      margin-bottom: 6px;
-    }
-    .sub {
-      color: #2d4d6e;
-      font-size: 1rem;
-      border-right: 4px solid #2b7a8a;
-      padding-right: 16px;
-      margin-bottom: 30px;
-    }
-    .form-group {
-      margin-bottom: 24px;
-    }
-    label {
-      display: block;
-      font-weight: 600;
-      color: #0a2647;
-      margin-bottom: 6px;
-      font-size: 0.95rem;
-    }
-    label .required {
-      color: #c00;
-      margin-right: 4px;
-    }
+    h1 { font-size: 2rem; color: #0a2647; margin-bottom: 4px; }
+    .sub { color: #2d4d6e; font-size: 1rem; border-right: 4px solid #2b7a8a; padding-right: 16px; margin-bottom: 25px; }
+    .form-group { margin-bottom: 22px; }
+    label { display: block; font-weight: 600; color: #0a2647; margin-bottom: 6px; font-size: 0.95rem; }
+    label .required { color: #c00; margin-right: 4px; }
     input, select, textarea {
-      width: 100%;
-      padding: 12px 16px;
-      border: 2px solid #d6e6f5;
-      border-radius: 16px;
-      font-size: 1rem;
-      background: #fff;
-      transition: 0.2s;
-      font-family: inherit;
+      width: 100%; padding: 12px 16px;
+      border: 2px solid #d6e6f5; border-radius: 16px;
+      font-size: 1rem; background: #fff;
+      transition: 0.2s; font-family: inherit;
     }
     input:focus, select:focus, textarea:focus {
       border-color: #1a5a8a;
       outline: none;
-      box-shadow: 0 0 0 4px rgba(26, 90, 138, 0.1);
+      box-shadow: 0 0 0 4px rgba(26,90,138,0.1);
     }
-    textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
+    textarea { resize: vertical; min-height: 70px; }
     .radio-group, .checkbox-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      background: #f0f8ff;
-      padding: 16px 20px;
-      border-radius: 20px;
-      border: 1px solid #d6e6f5;
+      display: flex; flex-wrap: wrap; gap: 18px;
+      background: #f0f8ff; padding: 14px 18px;
+      border-radius: 20px; border: 1px solid #d6e6f5;
     }
     .radio-group label, .checkbox-group label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 400;
-      font-size: 0.95rem;
-      color: #1d3b57;
-      cursor: pointer;
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 400; font-size: 0.95rem;
+      color: #1d3b57; cursor: pointer;
     }
     .radio-group input, .checkbox-group input {
-      width: auto;
-      accent-color: #0a2647;
-      transform: scale(1.1);
+      width: auto; accent-color: #0a2647; transform: scale(1.1);
     }
     .stars {
-      display: flex;
-      flex-direction: row-reverse;
-      justify-content: flex-end;
-      gap: 8px;
+      display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 8px;
     }
-    .stars input {
-      display: none;
-    }
+    .stars input { display: none; }
     .stars label {
-      font-size: 2rem;
-      color: #ccc;
-      cursor: pointer;
-      transition: 0.2s;
+      font-size: 2.2rem; color: #ccc; cursor: pointer; transition: 0.2s;
     }
     .stars label:hover,
     .stars label:hover ~ label,
     .stars input:checked ~ label {
       color: #f5b342;
     }
-    .btn-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-top: 25px;
-    }
+    .btn-group { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 25px; }
     .btn {
-      background: #0a2647;
-      color: #fff;
-      border: none;
-      padding: 14px 34px;
-      border-radius: 60px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      transition: 0.2s;
-      box-shadow: 0 4px 12px rgba(10, 38, 71, 0.2);
-      flex: 1 1 auto;
-      justify-content: center;
+      background: #0a2647; color: #fff; border: none;
+      padding: 14px 34px; border-radius: 60px;
+      font-size: 1rem; font-weight: 600; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 10px;
+      transition: 0.2s; box-shadow: 0 4px 12px rgba(10,38,71,0.2);
+      flex: 1 1 auto; justify-content: center;
       border: 2px solid transparent;
     }
-    .btn:hover {
-      background: #1d4a75;
-      transform: scale(1.02);
+    .btn:hover { background: #1d4a75; transform: scale(1.02); }
+    .btn-outline { background: transparent; color: #0a2647; border: 2px solid #0a2647; box-shadow: none; }
+    .btn-outline:hover { background: #0a2647; color: #fff; }
+
+    .stats-section {
+      margin-top: 30px;
+      padding-top: 25px;
+      border-top: 2px dashed #cbdae9;
     }
-    .btn-outline {
-      background: transparent;
+    .stats-title {
+      font-size: 1.3rem;
+      font-weight: 700;
       color: #0a2647;
-      border: 2px solid #0a2647;
-      box-shadow: none;
+      text-align: center;
+      margin-bottom: 20px;
     }
-    .btn-outline:hover {
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .stat-card {
+      background: #f7faff;
+      padding: 15px 12px;
+      border-radius: 20px;
+      text-align: center;
+      border: 1px solid #e2edf7;
+    }
+    .stat-card .num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #0a2647;
+      display: block;
+      line-height: 1.2;
+    }
+    .stat-card .label {
+      font-size: 0.85rem;
+      color: #3c5d7a;
+    }
+
+    .bar-container { margin: 10px 0; }
+    .bar-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .bar-item .bar-label {
+      min-width: 80px;
+      font-weight: 600;
+      color: #0a2647;
+      font-size: 0.95rem;
+    }
+    .bar-item .bar-bg {
+      flex: 1;
+      height: 22px;
+      background: #e6edf5;
+      border-radius: 30px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .bar-item .bar-fill {
+      height: 100%;
+      border-radius: 30px;
+      transition: width 0.4s ease;
+      width: 0%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 8px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.7rem;
+      white-space: nowrap;
+    }
+    .bar-item .bar-percent {
+      min-width: 45px;
+      font-weight: 700;
+      color: #0a2647;
+      font-size: 0.9rem;
+      text-align: left;
+    }
+    .fill-green { background: #2a9d8f; }
+    .fill-gray { background: #8d99ae; }
+    .fill-red { background: #e63946; }
+
+    .avg-stars {
+      text-align: center;
       background: #0a2647;
       color: #fff;
+      padding: 12px 16px;
+      border-radius: 60px;
+      margin-top: 15px;
+      font-size: 1rem;
     }
+    .avg-stars span { font-size: 1.4rem; font-weight: 800; margin: 0 8px; }
+
+    .btn-stats {
+      background: #2a9d8f !important;
+      box-shadow: 0 4px 12px rgba(42,157,143,0.3) !important;
+    }
+    .btn-stats:hover { background: #21867a !important; }
+
     .footer-note {
-      margin-top: 30px;
+      margin-top: 25px;
       font-size: 0.85rem;
       color: #3c5d7a;
       text-align: center;
@@ -165,117 +191,68 @@
       padding-top: 20px;
     }
     .credit {
-      margin-top: 10px;
+      margin-top: 8px;
       font-weight: 600;
       color: #0a2647;
       background: #e6f0fa;
-      padding: 10px 16px;
+      padding: 8px 16px;
       border-radius: 50px;
       display: inline-block;
       font-size: 0.9rem;
     }
-    .credit span {
-      color: #1d5a7a;
-    }
+    .credit span { color: #1d5a7a; }
 
-    /* نافذة "شكراً لمشاركتك" */
     .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(4px);
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
+      display: none; position: fixed; top:0;left:0;width:100%;height:100%;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      justify-content: center; align-items: center; z-index: 999;
     }
     .modal-box {
-      background: #fff;
-      padding: 40px 50px;
-      border-radius: 40px;
-      text-align: center;
-      max-width: 420px;
-      width: 90%;
+      background: #fff; padding: 40px 50px; border-radius: 40px;
+      text-align: center; max-width: 420px; width: 90%;
       box-shadow: 0 30px 60px rgba(0,0,0,0.3);
       animation: popIn 0.3s ease-out;
     }
-    .modal-box .icon {
-      font-size: 4rem;
-      margin-bottom: 10px;
-    }
-    .modal-box h2 {
-      color: #0a2647;
-      margin-bottom: 10px;
-      font-size: 1.8rem;
-    }
-    .modal-box p {
-      color: #3c5d7a;
-      margin-bottom: 25px;
-      font-size: 1rem;
-    }
+    .modal-box .icon { font-size: 4rem; margin-bottom: 10px; }
+    .modal-box h2 { color: #0a2647; margin-bottom: 10px; font-size: 1.8rem; }
+    .modal-box p { color: #3c5d7a; margin-bottom: 25px; font-size: 1rem; }
     .modal-box .btn-close-modal {
-      background: #0a2647;
-      color: #fff;
-      border: none;
-      padding: 12px 40px;
-      border-radius: 60px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.2s;
+      background: #0a2647; color: #fff; border: none;
+      padding: 12px 40px; border-radius: 60px;
+      font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.2s;
     }
-    .modal-box .btn-close-modal:hover {
-      background: #1d4a75;
-      transform: scale(1.03);
-    }
+    .modal-box .btn-close-modal:hover { background: #1d4a75; transform: scale(1.03); }
     @keyframes popIn {
       from { transform: scale(0.8); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
-
     @media (max-width: 600px) {
-      .radio-group, .checkbox-group {
-        flex-direction: column;
-        gap: 8px;
-      }
-      .stars label {
-        font-size: 1.6rem;
-      }
-      h1 {
-        font-size: 1.6rem;
-      }
-      .modal-box {
-        padding: 30px 20px;
-      }
+      .radio-group, .checkbox-group { flex-direction: column; gap: 6px; }
+      .stars label { font-size: 1.8rem; }
+      h1 { font-size: 1.6rem; }
+      .modal-box { padding: 30px 20px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .bar-item .bar-label { min-width: 60px; font-size: 0.85rem; }
     }
   </style>
 </head>
 <body>
-
   <div class="card">
     <h1>📝 استبيان تقييم الورشة</h1>
     <div class="sub">
       الصرع وطرق التعامل معه – <strong>مركز التأهيل الشامل بحفر الباطن</strong>
     </div>
 
-    <!-- النموذج مع ربط Formspree ولكن عبر JavaScript (إرسال خلفي) -->
+    <!-- نموذج الاستبيان -->
     <form id="surveyForm">
-      <!-- 1. الاسم -->
       <div class="form-group">
         <label>الاسم (اختياري)</label>
         <input type="text" name="الاسم" placeholder="أدخل اسمك" />
       </div>
-
-      <!-- 2. التخصص / القسم -->
       <div class="form-group">
         <label>التخصص / القسم <span class="required">*</span></label>
         <input type="text" name="القسم" required placeholder="مثال: تمريض، علاج طبيعي..." />
       </div>
-
-      <!-- 3. تقييم المحتوى العلمي (نجوم) -->
       <div class="form-group">
         <label>مدى فائدة المحتوى العلمي للورشة <span class="required">*</span></label>
         <div class="stars">
@@ -285,14 +262,12 @@
           <label for="star4">★</label>
           <input type="radio" name="تقييم_المحتوى" value="3 نجوم" id="star3" />
           <label for="star3">★</label>
-          <input type="radio" name="تقييم_المحتوى" value="نجمتان" id="star2" />
+          <input type="radio" name="تقييم_المحتوى" value="2 نجوم" id="star2" />
           <label for="star2">★</label>
-          <input type="radio" name="تقييم_المحتوى" value="نجمة واحدة" id="star1" />
+          <input type="radio" name="تقييم_المحتوى" value="1 نجوم" id="star1" />
           <label for="star1">★</label>
         </div>
       </div>
-
-      <!-- 4. تقييم المدرب -->
       <div class="form-group">
         <label>تقييمك لأداء الأخصائي / عبيد رحيم الشمري <span class="required">*</span></label>
         <select name="تقييم_المدرب" required>
@@ -304,8 +279,6 @@
           <option value="ضعيف">👎 ضعيف</option>
         </select>
       </div>
-
-      <!-- 5. تغير النظرة عن الصرع -->
       <div class="form-group">
         <label>هل تغيرت نظرتك عن الصرع بعد حضور الورشة؟ <span class="required">*</span></label>
         <div class="radio-group">
@@ -314,8 +287,6 @@
           <label><input type="radio" name="تغير_النظرة" value="لا، لم تتغير" /> لا، لم تتغير</label>
         </div>
       </div>
-
-      <!-- 6. ممارسات التعامل مع النوبات -->
       <div class="form-group">
         <label>هل تشعر الآن بقدرة أفضل على التعامل مع نوبات الصرع؟ <span class="required">*</span></label>
         <div class="radio-group">
@@ -324,8 +295,6 @@
           <label><input type="radio" name="الثقة_بالتعامل" value="لا زلت بحاجة لتطبيق عملي" /> لا زلت بحاجة لتطبيق عملي</label>
         </div>
       </div>
-
-      <!-- 7. الرضا العام -->
       <div class="form-group">
         <label>ما هو تقييمك العام للورشة؟ <span class="required">*</span></label>
         <div class="radio-group">
@@ -334,20 +303,59 @@
           <label><input type="radio" name="الرضا_العام" value="غير راضي" /> 😞 غير راضي</label>
         </div>
       </div>
-
-      <!-- 8. اقتراحات -->
       <div class="form-group">
         <label>اقتراحاتك لتطوير الورشة أو مواضيع مقترحة مستقبلاً</label>
         <textarea name="الاقتراحات" placeholder="اكتب اقتراحاتك هنا..."></textarea>
       </div>
-
-      <!-- أزرار -->
       <div class="btn-group">
         <button type="submit" class="btn">📧 إرسال الاستبيان</button>
         <button type="reset" class="btn btn-outline">🗑️ تفريغ الحقول</button>
       </div>
     </form>
 
+    <!-- ====== قسم الإحصائيات والرسوميات + زر الإرسال ====== -->
+    <div class="stats-section" id="statsSection">
+      <div class="stats-title">📊 إحصائيات الردود (مباشر)</div>
+      
+      <div class="stats-grid" id="statsCards">
+        <div class="stat-card"><span class="num" id="totalCount">0</span><span class="label">إجمالي المشاركات</span></div>
+        <div class="stat-card"><span class="num" id="satCount">0</span><span class="label">😊 راضي</span></div>
+        <div class="stat-card"><span class="num" id="neutralCount">0</span><span class="label">😐 محايد</span></div>
+        <div class="stat-card"><span class="num" id="unsatCount">0</span><span class="label">😞 غير راضي</span></div>
+      </div>
+
+      <div class="bar-container">
+        <div class="bar-item">
+          <span class="bar-label">😊 راضي</span>
+          <div class="bar-bg"><div class="bar-fill fill-green" id="barSat" style="width:0%;">0%</div></div>
+          <span class="bar-percent" id="percentSat">0%</span>
+        </div>
+        <div class="bar-item">
+          <span class="bar-label">😐 محايد</span>
+          <div class="bar-bg"><div class="bar-fill fill-gray" id="barNeutral" style="width:0%;">0%</div></div>
+          <span class="bar-percent" id="percentNeutral">0%</span>
+        </div>
+        <div class="bar-item">
+          <span class="bar-label">😞 غير راضي</span>
+          <div class="bar-bg"><div class="bar-fill fill-red" id="barUnsat" style="width:0%;">0%</div></div>
+          <span class="bar-percent" id="percentUnsat">0%</span>
+        </div>
+      </div>
+
+      <div class="avg-stars">
+        ⭐ متوسط تقييم المحتوى: <span id="avgStars">0</span> / 5 نجوم
+        <span style="font-weight:400;font-size:0.8rem;display:block;margin-top:4px;" id="starCountText">(بناءً على 0 مشاركة)</span>
+      </div>
+
+      <!-- 🔴🔴🔴 زر إرسال الإحصائيات إلى البريد (المطلوب) 🔴🔴🔴 -->
+      <div style="text-align: center; margin-top: 20px;">
+        <button onclick="sendStatsToEmail()" class="btn btn-stats" style="background:#2a9d8f; box-shadow: 0 4px 12px rgba(42,157,143,0.3); border: none;">
+          📊 أرسل الإحصائيات إلى بريدي
+        </button>
+      </div>
+    </div>
+
+    <!-- التذييل -->
     <div class="footer-note">
       <div class="credit">
         🖥️ برمجة وتصميم: <span>عبدالله حسين المطيري</span> | <span>بدر فريح الحربي</span>
@@ -357,7 +365,7 @@
     </div>
   </div>
 
-  <!-- نافذة "شكراً لمشاركتك" المنبثقة -->
+  <!-- نافذة "شكراً لمشاركتك" -->
   <div class="modal-overlay" id="thankYouModal">
     <div class="modal-box">
       <div class="icon">🙏</div>
@@ -368,14 +376,77 @@
   </div>
 
   <script>
-    function closeModal() {
-      document.getElementById('thankYouModal').style.display = 'none';
+    // ============================================================
+    // 🔴 هام: ضع رابط Google Apps Script الخاص بك هنا
+    // ============================================================
+    const SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL'; // ⬅️ استبدل هذا بالرابط
+
+    // --- دوال الإحصائيات ---
+    function loadStats() {
+      fetch(SCRIPT_URL, {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.total === undefined) return;
+        
+        const total = data.total || 0;
+        const sat = data.راضي || 0;
+        const neutral = data.محايد || 0;
+        const unsat = data.غيرراضي || 0;
+        
+        document.getElementById('totalCount').textContent = total;
+        document.getElementById('satCount').textContent = sat;
+        document.getElementById('neutralCount').textContent = neutral;
+        document.getElementById('unsatCount').textContent = unsat;
+        
+        const pSat = total > 0 ? (sat / total * 100) : 0;
+        const pNeutral = total > 0 ? (neutral / total * 100) : 0;
+        const pUnsat = total > 0 ? (unsat / total * 100) : 0;
+        
+        document.getElementById('barSat').style.width = pSat + '%';
+        document.getElementById('barSat').textContent = pSat.toFixed(1) + '%';
+        document.getElementById('percentSat').textContent = pSat.toFixed(1) + '%';
+        
+        document.getElementById('barNeutral').style.width = pNeutral + '%';
+        document.getElementById('barNeutral').textContent = pNeutral.toFixed(1) + '%';
+        document.getElementById('percentNeutral').textContent = pNeutral.toFixed(1) + '%';
+        
+        document.getElementById('barUnsat').style.width = pUnsat + '%';
+        document.getElementById('barUnsat').textContent = pUnsat.toFixed(1) + '%';
+        document.getElementById('percentUnsat').textContent = pUnsat.toFixed(1) + '%';
+        
+        document.getElementById('avgStars').textContent = data.avgStars || '0';
+        document.getElementById('starCountText').textContent = `(بناءً على ${data.starCount || 0} مشاركة)`;
+      })
+      .catch(err => console.log('خطأ في تحميل الإحصائيات:', err));
     }
 
+    // --- دالة إرسال الإحصائيات إلى البريد (الخاصة بالزر) ---
+    function sendStatsToEmail() {
+      // نضيف ?action=stats عشان الخادم يفهم إننا نبغى إرسال بريد
+      fetch(SCRIPT_URL + '?action=stats', {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 'sent') {
+          alert('✅ تم إرسال التقرير إلى بريدك الإلكتروني (abdullaha0569361@gmail.com)');
+        } else {
+          alert('⚠️ حدث خطأ في الإرسال، حاول مرة أخرى.');
+        }
+      })
+      .catch(() => {
+        alert('⚠️ حدث خطأ في الاتصال بالخادم.');
+      });
+    }
+
+    // --- إرسال الاستبيان ---
     document.getElementById('surveyForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
-      // التحقق من الحقول الإجبارية (لأننا أزلنا required من بعض العناصر بسبب الـ stars)
       const dept = this.querySelector('input[name="القسم"]').value.trim();
       const rating = this.querySelector('input[name="تقييم_المحتوى"]:checked');
       const trainer = this.querySelector('select[name="تقييم_المدرب"]').value;
@@ -388,28 +459,35 @@
         return;
       }
 
-      // إرسال البيانات إلى Formspree في الخلفية (بدون مغادرة الصفحة)
-      const form = this;
-      const formData = new FormData(form);
+      const formData = new FormData(this);
+      const data = {};
+      formData.forEach((value, key) => { data[key] = value; });
 
-      fetch('https://formspree.io/f/xqpkgjoa', {
+      fetch(SCRIPT_URL, {
         method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
       })
-      .then(response => {
-        if (response.ok) {
-          // إظهار نافذة الشكر
-          document.getElementById('thankYouModal').style.display = 'flex';
-          form.reset(); // تفريغ الحقول
-        } else {
-          alert('⚠️ حدث خطأ في الإرسال، يرجى المحاولة مرة أخرى.');
-        }
+      .then(() => {
+        document.getElementById('thankYouModal').style.display = 'flex';
+        this.reset();
+        setTimeout(loadStats, 1000);
       })
-      .catch(error => {
-        alert('⚠️ حدث خطأ في الاتصال، تأكد من اتصالك بالإنترنت.');
+      .catch(err => {
+        alert('⚠️ حدث خطأ في الإرسال، يرجى المحاولة مرة أخرى.');
+        console.log(err);
       });
     });
+
+    function closeModal() {
+      document.getElementById('thankYouModal').style.display = 'none';
+    }
+
+    window.onload = function() {
+      loadStats();
+      setInterval(loadStats, 30000);
+    };
   </script>
 </body>
 </html>
