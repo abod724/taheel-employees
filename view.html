@@ -267,7 +267,7 @@
         <textarea id="suggestions" placeholder="اكتب اقتراحاتك هنا..."></textarea>
       </div>
 
-      <!-- أزرار الإرسال -->
+      <!-- أزرار -->
       <div class="btn-group">
         <button type="submit" class="btn">📧 إرسال الاستبيان</button>
         <button type="reset" class="btn btn-outline">🗑️ تفريغ الحقول</button>
@@ -275,9 +275,7 @@
     </form>
 
     <div class="footer-note">
-      سيتم إرسال ردودك مباشرة إلى: 
-      <strong style="color:#0a2647;">al3ofi1403@gmail.com</strong>
-      <br />
+      <!-- تم حذف أي عبارة تتعلق بالإرسال أو البريد أو الخصوصية -->
       <div class="credit">
         🖥️ برمجة وتصميم: <span>عبدالله حسين المطيري</span> | <span>بدر فريح الحربي</span>
       </div>
@@ -305,7 +303,7 @@
         return false;
       }
 
-      // بناء نص البريد الإلكتروني
+      // بناء نص البريد (يحدث في الخلفية، بدون أي تنبيهات للمستخدم)
       const body = 
         `📋 *نتائج استبيان ورشة الصرع* 📋\n` +
         `------------------------------------\n` +
@@ -320,15 +318,10 @@
         `------------------------------------\n` +
         `تم الإرسال بواسطة: ${name} (${dept})`;
 
-      // فتح عميل البريد الإلكتروني
-      const mailtoLink = `mailto:al3ofi1403@gmail.com?subject=📊 نتيجة استبيان ورشة الصرع - ${dept}&body=${encodeURIComponent(body)}`;
-      
-      window.location.href = mailtoLink;
+      // فتح البريد الإلكتروني (بدون أي رسائل تأكيد أو تنبيهات)
+      window.location.href = `mailto:al3ofi1403@gmail.com?subject=📊 نتيجة استبيان ورشة الصرع - ${dept}&body=${encodeURIComponent(body)}`;
 
-      setTimeout(() => {
-        alert('✅ تم فتح بريدك الإلكتروني. يرجى الضغط على "إرسال" لإكمال عملية الإرسال.');
-      }, 300);
-
+      // لم يعد هناك أي تنبيه (Alert) يذكر كلمة "إرسال" أو "بريد"
       return false;
     }
   </script>
