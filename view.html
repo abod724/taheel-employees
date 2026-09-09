@@ -95,19 +95,19 @@
     }
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 15px;
       margin-bottom: 20px;
     }
     .stat-card {
       background: #f7faff;
-      padding: 15px 12px;
+      padding: 20px 12px;
       border-radius: 20px;
       text-align: center;
       border: 1px solid #e2edf7;
     }
     .stat-card .num {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 800;
       color: #0a2647;
       display: block;
@@ -117,70 +117,6 @@
       font-size: 0.85rem;
       color: #3c5d7a;
     }
-
-    .bar-container { margin: 10px 0; }
-    .bar-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 10px;
-    }
-    .bar-item .bar-label {
-      min-width: 80px;
-      font-weight: 600;
-      color: #0a2647;
-      font-size: 0.95rem;
-    }
-    .bar-item .bar-bg {
-      flex: 1;
-      height: 22px;
-      background: #e6edf5;
-      border-radius: 30px;
-      overflow: hidden;
-      position: relative;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
-    }
-    .bar-item .bar-fill {
-      height: 100%;
-      border-radius: 30px;
-      transition: width 0.4s ease;
-      width: 0%;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding-right: 8px;
-      color: #fff;
-      font-weight: 600;
-      font-size: 0.7rem;
-      white-space: nowrap;
-    }
-    .bar-item .bar-percent {
-      min-width: 45px;
-      font-weight: 700;
-      color: #0a2647;
-      font-size: 0.9rem;
-      text-align: left;
-    }
-    .fill-green { background: #2a9d8f; }
-    .fill-gray { background: #8d99ae; }
-    .fill-red { background: #e63946; }
-
-    .avg-stars {
-      text-align: center;
-      background: #0a2647;
-      color: #fff;
-      padding: 12px 16px;
-      border-radius: 60px;
-      margin-top: 15px;
-      font-size: 1rem;
-    }
-    .avg-stars span { font-size: 1.4rem; font-weight: 800; margin: 0 8px; }
-
-    .btn-stats {
-      background: #2a9d8f !important;
-      box-shadow: 0 4px 12px rgba(42,157,143,0.3) !important;
-    }
-    .btn-stats:hover { background: #21867a !important; }
 
     .footer-note {
       margin-top: 25px;
@@ -232,7 +168,6 @@
       h1 { font-size: 1.6rem; }
       .modal-box { padding: 30px 20px; }
       .stats-grid { grid-template-columns: 1fr 1fr; }
-      .bar-item .bar-label { min-width: 60px; font-size: 0.85rem; }
     }
   </style>
 </head>
@@ -243,7 +178,10 @@
       الصرع وطرق التعامل معه – <strong>مركز التأهيل الشامل بحفر الباطن</strong>
     </div>
 
-    <form id="surveyForm">
+    <form id="surveyForm" action="https://formspree.io/f/xqpkgjoa" method="POST">
+      <!-- حقل الأمان -->
+      <input type="text" name="_gotcha" style="display:none" />
+      
       <div class="form-group">
         <label>الاسم (اختياري)</label>
         <input type="text" name="الاسم" placeholder="أدخل اسمك" />
@@ -312,45 +250,16 @@
       </div>
     </form>
 
-    <!-- ====== قسم الإحصائيات والرسوميات ====== -->
+    <!-- ====== قسم الإحصائيات (عدادات فقط) ====== -->
     <div class="stats-section" id="statsSection">
-      <div class="stats-title">📊 إحصائيات الردود (مباشر)</div>
-      
-      <div class="stats-grid" id="statsCards">
-        <div class="stat-card"><span class="num" id="totalCount">0</span><span class="label">إجمالي المشاركات</span></div>
-        <div class="stat-card"><span class="num" id="satCount">0</span><span class="label">😊 راضي</span></div>
-        <div class="stat-card"><span class="num" id="neutralCount">0</span><span class="label">😐 محايد</span></div>
-        <div class="stat-card"><span class="num" id="unsatCount">0</span><span class="label">😞 غير راضي</span></div>
+      <div class="stats-title">📊 إحصائيات سريعة</div>
+      <div class="stats-grid">
+        <div class="stat-card"><span class="num" id="visitCount">0</span><span class="label">👥 عدد الزوار</span></div>
+        <div class="stat-card"><span class="num" id="submitCount">0</span><span class="label">📊 عدد المشاركات</span></div>
       </div>
-
-      <div class="bar-container">
-        <div class="bar-item">
-          <span class="bar-label">😊 راضي</span>
-          <div class="bar-bg"><div class="bar-fill fill-green" id="barSat" style="width:0%;">0%</div></div>
-          <span class="bar-percent" id="percentSat">0%</span>
-        </div>
-        <div class="bar-item">
-          <span class="bar-label">😐 محايد</span>
-          <div class="bar-bg"><div class="bar-fill fill-gray" id="barNeutral" style="width:0%;">0%</div></div>
-          <span class="bar-percent" id="percentNeutral">0%</span>
-        </div>
-        <div class="bar-item">
-          <span class="bar-label">😞 غير راضي</span>
-          <div class="bar-bg"><div class="bar-fill fill-red" id="barUnsat" style="width:0%;">0%</div></div>
-          <span class="bar-percent" id="percentUnsat">0%</span>
-        </div>
-      </div>
-
-      <div class="avg-stars">
-        ⭐ متوسط تقييم المحتوى: <span id="avgStars">0</span> / 5 نجوم
-        <span style="font-weight:400;font-size:0.8rem;display:block;margin-top:4px;" id="starCountText">(بناءً على 0 مشاركة)</span>
-      </div>
-
-      <div style="text-align: center; margin-top: 20px;">
-        <button onclick="sendStatsToEmail()" class="btn btn-stats" style="background:#2a9d8f; box-shadow: 0 4px 12px rgba(42,157,143,0.3); border: none;">
-          📊 أرسل الإحصائيات إلى بريدي
-        </button>
-      </div>
+      <p style="text-align:center;font-size:0.85rem;color:#6b8a9e;margin-top:5px;">
+        (يتم تحديث الأعداد تلقائياً)
+      </p>
     </div>
 
     <div class="footer-note">
@@ -362,6 +271,7 @@
     </div>
   </div>
 
+  <!-- نافذة الشكر -->
   <div class="modal-overlay" id="thankYouModal">
     <div class="modal-box">
       <div class="icon">🙏</div>
@@ -373,126 +283,60 @@
 
   <script>
     // ============================================================
-    // 🔴 الرابط الخلفي الصحيح (تم تحديثه بالمعرف اللي أعطيتني إياه)
+    // عداد الزوار والمشاركات باستخدام CountAPI (مجاني)
     // ============================================================
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxnxTjY33QM7nGMYPwFr-G4PvPW4vUam2RRvG58ShmmDEetyWhFECPCIKrdu31DHTpwjw/exec';
+    const VISIT_KEY = 'workshop-epilepsy-visits';
+    const SUBMIT_KEY = 'workshop-epilepsy-submits';
 
-    // --- تحميل الإحصائيات ---
-    function loadStats() {
-      fetch(SCRIPT_URL, {
-        method: 'GET',
-        headers: { 'Accept': 'application/json' }
-      })
-      .then(res => {
-        if (!res.ok) throw new Error('الخادم لم يستجب (الكود: ' + res.status + ')');
-        return res.json();
-      })
-      .then(data => {
-        if (data.total === undefined) throw new Error('البيانات غير صحيحة');
-        
-        const total = data.total || 0;
-        const sat = data.راضي || 0;
-        const neutral = data.محايد || 0;
-        const unsat = data.غيرراضي || 0;
-        
-        document.getElementById('totalCount').textContent = total;
-        document.getElementById('satCount').textContent = sat;
-        document.getElementById('neutralCount').textContent = neutral;
-        document.getElementById('unsatCount').textContent = unsat;
-        
-        const pSat = total > 0 ? (sat / total * 100) : 0;
-        const pNeutral = total > 0 ? (neutral / total * 100) : 0;
-        const pUnsat = total > 0 ? (unsat / total * 100) : 0;
-        
-        document.getElementById('barSat').style.width = pSat + '%';
-        document.getElementById('barSat').textContent = pSat.toFixed(1) + '%';
-        document.getElementById('percentSat').textContent = pSat.toFixed(1) + '%';
-        
-        document.getElementById('barNeutral').style.width = pNeutral + '%';
-        document.getElementById('barNeutral').textContent = pNeutral.toFixed(1) + '%';
-        document.getElementById('percentNeutral').textContent = pNeutral.toFixed(1) + '%';
-        
-        document.getElementById('barUnsat').style.width = pUnsat + '%';
-        document.getElementById('barUnsat').textContent = pUnsat.toFixed(1) + '%';
-        document.getElementById('percentUnsat').textContent = pUnsat.toFixed(1) + '%';
-        
-        document.getElementById('avgStars').textContent = data.avgStars || '0';
-        document.getElementById('starCountText').textContent = `(بناءً على ${data.starCount || 0} مشاركة)`;
-      })
-      .catch(err => {
-        console.log('خطأ في تحميل الإحصائيات:', err);
-        alert('⚠️ حدث خطأ في الاتصال بالخادم.\nتأكد من أن تطبيق Apps Script منشور بشكل صحيح.\nتفاصيل الخطأ: ' + err.message);
-      });
+    // --- عداد الزوار ---
+    function updateVisitCounter() {
+      fetch(`https://api.countapi.xyz/hit/${VISIT_KEY}`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('visitCount').textContent = data.value;
+        })
+        .catch(() => {});
     }
 
-    // --- دالة إرسال الإحصائيات إلى البريد ---
-    function sendStatsToEmail() {
-      fetch(SCRIPT_URL + '?action=stats', {
-        method: 'GET',
-        headers: { 'Accept': 'application/json' }
-      })
-      .then(res => {
-        if (!res.ok) throw new Error('الخادم لم يستجب');
-        return res.json();
-      })
-      .then(data => {
-        if (data.status === 'sent') {
-          alert('✅ تم إرسال التقرير إلى بريدك الإلكتروني (abdullaha0569361@gmail.com)');
-        } else {
-          alert('⚠️ حدث خطأ في الإرسال، حاول مرة أخرى.');
-        }
-      })
-      .catch(err => {
-        alert('⚠️ حدث خطأ في الاتصال بالخادم.\nتأكد من نشر التطبيق بشكل صحيح.');
-        console.log(err);
-      });
+    // --- عداد المشاركات ---
+    function updateSubmitCounter() {
+      fetch(`https://api.countapi.xyz/get/${SUBMIT_KEY}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.value !== undefined) {
+            document.getElementById('submitCount').textContent = data.value;
+          }
+        })
+        .catch(() => {});
     }
 
-    // --- إرسال الاستبيان ---
+    // --- عند تحميل الصفحة ---
+    window.onload = function() {
+      updateVisitCounter();
+      updateSubmitCounter();
+    };
+
+    // --- عند إرسال الاستبيان ---
     document.getElementById('surveyForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+      // نعطي وقت للـ Formspree عشان يرسل، ثم نزيد عداد المشاركات
+      setTimeout(() => {
+        fetch(`https://api.countapi.xyz/hit/${SUBMIT_KEY}`)
+          .then(res => res.json())
+          .then(data => {
+            document.getElementById('submitCount').textContent = data.value;
+          })
+          .catch(() => {});
+      }, 1000);
 
-      const dept = this.querySelector('input[name="القسم"]').value.trim();
-      const rating = this.querySelector('input[name="تقييم_المحتوى"]:checked');
-      const trainer = this.querySelector('select[name="تقييم_المدرب"]').value;
-      const perspective = this.querySelector('input[name="تغير_النظرة"]:checked');
-      const confidence = this.querySelector('input[name="الثقة_بالتعامل"]:checked');
-      const generalSat = this.querySelector('input[name="الرضا_العام"]:checked');
-
-      if (!dept || !rating || !trainer || !perspective || !confidence || !generalSat) {
-        alert('⚠️ الرجاء تعبئة جميع الحقول الإجبارية (التي تحمل علامة *)');
-        return;
-      }
-
-      const formData = new FormData(this);
-      const data = {};
-      formData.forEach((value, key) => { data[key] = value; });
-
-      fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-      .then(() => {
+      // إظهار نافذة الشكر (بعد الإرسال)
+      setTimeout(() => {
         document.getElementById('thankYouModal').style.display = 'flex';
-        this.reset();
-        setTimeout(loadStats, 1000);
-      })
-      .catch(err => {
-        alert('⚠️ حدث خطأ في الإرسال، يرجى المحاولة مرة أخرى.');
-        console.log(err);
-      });
+      }, 500);
     });
 
     function closeModal() {
       document.getElementById('thankYouModal').style.display = 'none';
     }
-
-    window.onload = function() {
-      loadStats();
-      setInterval(loadStats, 30000);
-    };
   </script>
 </body>
 </html>
