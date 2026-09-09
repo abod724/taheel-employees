@@ -125,8 +125,9 @@
       الصرع وطرق التعامل معه – <strong>مركز التأهيل الشامل بحفر الباطن</strong>
     </div>
 
-    <!-- النموذج يرسل مباشرة إلى Formspree (بريدك) -->
+    <!-- نموذج يرسل مباشرة إلى Formspree (بريدك) -->
     <form id="surveyForm" action="https://formspree.io/f/xqpkgjoa" method="POST">
+      <!-- حقل أمان Formspree -->
       <input type="text" name="_gotcha" style="display:none" />
 
       <div class="form-group">
@@ -207,7 +208,7 @@
     </div>
   </div>
 
-  <!-- نافذة شكر -->
+  <!-- نافذة شكر تظهر بعد الإرسال -->
   <div class="modal-overlay" id="thankYouModal">
     <div class="modal-box">
       <div class="icon">🙏</div>
@@ -218,11 +219,11 @@
   </div>
 
   <script>
+    // عند إرسال النموذج، نظهر نافذة الشكر بعد 1 ثانية
     document.getElementById('surveyForm').addEventListener('submit', function(e) {
-      // نعرض نافذة الشكر بعد 1 ثانية
       setTimeout(() => {
         document.getElementById('thankYouModal').style.display = 'flex';
-      }, 600);
+      }, 500);
     });
 
     function closeModal() {
