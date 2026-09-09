@@ -129,24 +129,8 @@
         }
         .btn-outline:hover { background: #0a2647; color: #fff; }
 
-        .counter-box {
-            background: #e8f0fe;
-            border-radius: 60px;
-            padding: 14px 20px;
-            text-align: center;
-            margin-top: 30px;
-            border: 1px solid #c5d9f0;
-            font-size: 1rem;
-            color: #0a2647;
-        }
-        .counter-box span {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin: 0 8px;
-        }
-
         .footer {
-            margin-top: 25px;
+            margin-top: 30px;
             font-size: 0.8rem;
             color: #4d6a85;
             text-align: center;
@@ -216,7 +200,8 @@
                 <select id="courseSelect" required style="width:100%;">
                     <option value="">-- اختر الدورة --</option>
                     <option value="الصرع وطرق التعامل معه">🧠 الصرع وطرق التعامل معه</option>
-                    <option value="النطق والتخطيط وتنمية المعارف">🗣️ النطق والتخطيط</option>
+                    <!-- ✅ تم تصحيح الخطأ هنا: "النطق والتخاطب" بدلاً من "النطق والتخطيط" -->
+                    <option value="النطق والتخاطب">🗣️ النطق والتخاطب</option>
                     <option value="الإسعافات الأولية">🚑 الإسعافات الأولية</option>
                 </select>
             </div>
@@ -287,11 +272,6 @@
             </div>
         </form>
 
-        <!-- عداد المشاركات (يعتمد على localStorage) -->
-        <div class="counter-box">
-            📊 عدد مرات إرسالك للاستبيان من هذا الجهاز: <span id="submitCounter">0</span>
-        </div>
-
         <div class="footer">
             <div class="credit">
                 🖥️ برمجة وتصميم: <span>عبدالله حسين المطيري</span> | <span>بدر فريح الحربي</span>
@@ -313,48 +293,12 @@
 
     <script>
         // =============================================
-        // 1. معرف النموذج في Formspree
+        // معرف النموذج في Formspree
         // =============================================
         const FORM_ID = 'maeyalyd';
 
         // =============================================
-        // 2. عداد المشاركات (باستخدام localStorage)
-        // =============================================
-        const COUNTER_KEY = 'survey_submit_count';
-
-        // دالة لقراءة العداد من localStorage
-        function getCounter() {
-            const val = localStorage.getItem(COUNTER_KEY);
-            return val ? parseInt(val, 10) : 0;
-        }
-
-        // دالة لحفظ العداد في localStorage
-        function setCounter(value) {
-            localStorage.setItem(COUNTER_KEY, String(value));
-        }
-
-        // دالة لعرض العداد على الصفحة
-        function displayCounter() {
-            const count = getCounter();
-            document.getElementById('submitCounter').innerText = count;
-        }
-
-        // دالة لزيادة العداد بمقدار 1
-        function incrementCounter() {
-            const current = getCounter();
-            const newCount = current + 1;
-            setCounter(newCount);
-            displayCounter();
-            return newCount;
-        }
-
-        // عرض العداد عند تحميل الصفحة
-        window.onload = function() {
-            displayCounter();
-        };
-
-        // =============================================
-        // 3. زر Formspree العائم (تواصل معنا)
+        // زر Formspree العائم (تواصل معنا)
         // =============================================
         window.formbutton = window.formbutton || function() { (formbutton.q = formbutton.q || []).push(arguments); };
         formbutton("create", {
@@ -381,12 +325,11 @@
         });
 
         // =============================================
-        // 4. إرسال الاستبيان الرئيسي (مع زيادة العداد)
+        // إرسال الاستبيان الرئيسي
         // =============================================
         document.getElementById('surveyForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // جمع البيانات
             const name = document.getElementById('name').value.trim() || 'لم يذكر';
             const dept = document.getElementById('dept').value.trim();
             const course = document.getElementById('courseSelect').value;
@@ -397,13 +340,11 @@
             const q5 = document.querySelector('input[name="q5"]:checked');
             const suggestions = document.getElementById('suggestions').value.trim() || 'لا يوجد';
 
-            // التحقق من الإجباريات
             if (!dept || !course || !q1 || !q2 || !q3 || !q4 || !q5) {
                 alert('⚠️ الرجاء تعبئة جميع الحقول الإجبارية (التي تحمل علامة *)');
                 return;
             }
 
-            // تجهيز البيانات
             const formData = new FormData();
             formData.append('الاسم', name);
             formData.append('القسم', dept);
@@ -415,31 +356,21 @@
             formData.append('التطبيق_في_العمل', q5.value);
             formData.append('الاقتراحات', suggestions);
 
-            // إرسال إلى Formspree
             fetch("https://formspree.io/f/" + FORM_ID, {
                 method: 'POST',
                 body: formData,
                 mode: 'no-cors'
             }).then(() => {
-                // زيادة العداد المحلي
-                incrementCounter();
-                // إظهار نافذة الشكر
                 document.getElementById('thankYouModal').style.display = 'flex';
-                // تفريغ الحقول
                 document.getElementById('surveyForm').reset();
                 document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
             }).catch(() => {
-                // حتى لو فشل الإرسال، نظهر الشكر عشان ما يخرب تجربة المستخدم
-                // لكننا لا نزيد العداد في حالة الفشل
                 document.getElementById('thankYouModal').style.display = 'flex';
                 document.getElementById('surveyForm').reset();
                 document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
             });
         });
 
-        // =============================================
-        // 5. إغلاق نافذة الشكر
-        // =============================================
         function closeModal() {
             document.getElementById('thankYouModal').style.display = 'none';
         }
