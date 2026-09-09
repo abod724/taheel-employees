@@ -177,65 +177,6 @@
     .credit span {
       color: #1d5a7a;
     }
-
-    /* --- نافذة "شكراً لمشاركتك" المنبثقة --- */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(4px);
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
-    .modal-box {
-      background: #fff;
-      padding: 40px 50px;
-      border-radius: 40px;
-      text-align: center;
-      max-width: 420px;
-      width: 90%;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-      animation: popIn 0.3s ease-out;
-    }
-    .modal-box .icon {
-      font-size: 4rem;
-      margin-bottom: 10px;
-    }
-    .modal-box h2 {
-      color: #0a2647;
-      margin-bottom: 10px;
-      font-size: 1.8rem;
-    }
-    .modal-box p {
-      color: #3c5d7a;
-      margin-bottom: 25px;
-      font-size: 1rem;
-    }
-    .modal-box .btn-close-modal {
-      background: #0a2647;
-      color: #fff;
-      border: none;
-      padding: 12px 40px;
-      border-radius: 60px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .modal-box .btn-close-modal:hover {
-      background: #1d4a75;
-      transform: scale(1.03);
-    }
-    @keyframes popIn {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
     @media (max-width: 600px) {
       .radio-group, .checkbox-group {
         flex-direction: column;
@@ -247,46 +188,48 @@
       h1 {
         font-size: 1.6rem;
       }
-      .modal-box {
-        padding: 30px 20px;
-      }
     }
   </style>
 </head>
 <body>
-  <!-- نموذج الاستبيان -->
   <div class="card">
     <h1>📝 استبيان تقييم الورشة</h1>
     <div class="sub">
       الصرع وطرق التعامل معه – <strong>مركز التأهيل الشامل بحفر الباطن</strong>
     </div>
 
-    <form id="surveyForm" onsubmit="return submitSurvey(event)">
+    <!-- ✅ تم ربط النموذج بـ Formspree باستخدام المعرف الخاص بك -->
+    <form action="https://formspree.io/f/xqpkgjoa" method="POST">
+      <!-- حقول مخفية -->
+      <input type="hidden" name="_subject" value="📊 نتيجة استبيان ورشة الصرع - مركز التأهيل" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="text" name="_gotcha" style="display:none" />
+
       <!-- 1. الاسم -->
       <div class="form-group">
         <label>الاسم (اختياري)</label>
-        <input type="text" id="name" placeholder="أدخل اسمك" />
+        <input type="text" name="الاسم" placeholder="أدخل اسمك" />
       </div>
 
       <!-- 2. التخصص / القسم -->
       <div class="form-group">
         <label>التخصص / القسم <span class="required">*</span></label>
-        <input type="text" id="department" required placeholder="مثال: تمريض، علاج طبيعي..." />
+        <input type="text" name="القسم" required placeholder="مثال: تمريض، علاج طبيعي..." />
       </div>
 
       <!-- 3. تقييم المحتوى العلمي (نجوم) -->
       <div class="form-group">
         <label>مدى فائدة المحتوى العلمي للورشة <span class="required">*</span></label>
-        <div class="stars" id="ratingStars">
-          <input type="radio" name="rating" value="5" id="star5" />
+        <div class="stars">
+          <input type="radio" name="تقييم_المحتوى" value="5 نجوم" id="star5" required />
           <label for="star5">★</label>
-          <input type="radio" name="rating" value="4" id="star4" />
+          <input type="radio" name="تقييم_المحتوى" value="4 نجوم" id="star4" />
           <label for="star4">★</label>
-          <input type="radio" name="rating" value="3" id="star3" />
+          <input type="radio" name="تقييم_المحتوى" value="3 نجوم" id="star3" />
           <label for="star3">★</label>
-          <input type="radio" name="rating" value="2" id="star2" />
+          <input type="radio" name="تقييم_المحتوى" value="نجمتان" id="star2" />
           <label for="star2">★</label>
-          <input type="radio" name="rating" value="1" id="star1" />
+          <input type="radio" name="تقييم_المحتوى" value="نجمة واحدة" id="star1" />
           <label for="star1">★</label>
         </div>
       </div>
@@ -294,7 +237,7 @@
       <!-- 4. تقييم المدرب -->
       <div class="form-group">
         <label>تقييمك لأداء الأخصائي / عبيد رحيم الشمري <span class="required">*</span></label>
-        <select id="trainerEval" required>
+        <select name="تقييم_المدرب" required>
           <option value="">-- اختر التقييم --</option>
           <option value="ممتاز">⭐ ممتاز</option>
           <option value="جيد جداً">👍 جيد جداً</option>
@@ -308,9 +251,9 @@
       <div class="form-group">
         <label>هل تغيرت نظرتك عن الصرع بعد حضور الورشة؟ <span class="required">*</span></label>
         <div class="radio-group">
-          <label><input type="radio" name="perspective" value="نعم، بشكل كبير" required /> نعم، بشكل كبير</label>
-          <label><input type="radio" name="perspective" value="نعم، قليلاً" /> نعم، قليلاً</label>
-          <label><input type="radio" name="perspective" value="لا، لم تتغير" /> لا، لم تتغير</label>
+          <label><input type="radio" name="تغير_النظرة" value="نعم، بشكل كبير" required /> نعم، بشكل كبير</label>
+          <label><input type="radio" name="تغير_النظرة" value="نعم، قليلاً" /> نعم، قليلاً</label>
+          <label><input type="radio" name="تغير_النظرة" value="لا، لم تتغير" /> لا، لم تتغير</label>
         </div>
       </div>
 
@@ -318,26 +261,26 @@
       <div class="form-group">
         <label>هل تشعر الآن بقدرة أفضل على التعامل مع نوبات الصرع؟ <span class="required">*</span></label>
         <div class="radio-group">
-          <label><input type="radio" name="confidence" value="نعم، بثقة عالية" required /> نعم، بثقة عالية</label>
-          <label><input type="radio" name="confidence" value="إلى حد ما" /> إلى حد ما</label>
-          <label><input type="radio" name="confidence" value="لا زلت بحاجة لتطبيق عملي" /> لا زلت بحاجة لتطبيق عملي</label>
+          <label><input type="radio" name="الثقة_بالتعامل" value="نعم، بثقة عالية" required /> نعم، بثقة عالية</label>
+          <label><input type="radio" name="الثقة_بالتعامل" value="إلى حد ما" /> إلى حد ما</label>
+          <label><input type="radio" name="الثقة_بالتعامل" value="لا زلت بحاجة لتطبيق عملي" /> لا زلت بحاجة لتطبيق عملي</label>
         </div>
       </div>
 
-      <!-- 7. الرضا العام (جديد) -->
+      <!-- 7. الرضا العام -->
       <div class="form-group">
         <label>ما هو تقييمك العام للورشة؟ <span class="required">*</span></label>
         <div class="radio-group">
-          <label><input type="radio" name="generalSatisfaction" value="راضي" required /> 😊 راضي</label>
-          <label><input type="radio" name="generalSatisfaction" value="محايد" /> 😐 محايد</label>
-          <label><input type="radio" name="generalSatisfaction" value="غير راضي" /> 😞 غير راضي</label>
+          <label><input type="radio" name="الرضا_العام" value="راضي" required /> 😊 راضي</label>
+          <label><input type="radio" name="الرضا_العام" value="محايد" /> 😐 محايد</label>
+          <label><input type="radio" name="الرضا_العام" value="غير راضي" /> 😞 غير راضي</label>
         </div>
       </div>
 
       <!-- 8. اقتراحات -->
       <div class="form-group">
         <label>اقتراحاتك لتطوير الورشة أو مواضيع مقترحة مستقبلاً</label>
-        <textarea id="suggestions" placeholder="اكتب اقتراحاتك هنا..."></textarea>
+        <textarea name="الاقتراحات" placeholder="اكتب اقتراحاتك هنا..."></textarea>
       </div>
 
       <!-- أزرار -->
@@ -348,7 +291,6 @@
     </form>
 
     <div class="footer-note">
-      <!-- لا توجد أي عبارة عن الإرسال أو البريد -->
       <div class="credit">
         🖥️ برمجة وتصميم: <span>عبدالله حسين المطيري</span> | <span>بدر فريح الحربي</span>
       </div>
@@ -356,68 +298,5 @@
       <span style="font-size:0.8rem;">© 2026 – مركز التأهيل الشامل بحفر الباطن – قسم التمريض</span>
     </div>
   </div>
-
-  <!-- نافذة "شكراً لمشاركتك" المنبثقة (مخفية ابتداءً) -->
-  <div class="modal-overlay" id="thankYouModal">
-    <div class="modal-box">
-      <div class="icon">🙏</div>
-      <h2>شكراً لمشاركتك</h2>
-      <p>تم استلام آرائك بنجاح، وهي تهمنا في تطوير أعمالنا.</p>
-      <button class="btn-close-modal" onclick="closeModal()">حسناً</button>
-    </div>
-  </div>
-
-  <script>
-    function closeModal() {
-      document.getElementById('thankYouModal').style.display = 'none';
-    }
-
-    function submitSurvey(e) {
-      e.preventDefault();
-
-      // جمع البيانات
-      const name = document.getElementById('name').value || 'لم يذكر';
-      const dept = document.getElementById('department').value.trim();
-      const rating = document.querySelector('input[name="rating"]:checked');
-      const trainer = document.getElementById('trainerEval').value;
-      const perspective = document.querySelector('input[name="perspective"]:checked');
-      const confidence = document.querySelector('input[name="confidence"]:checked');
-      const generalSat = document.querySelector('input[name="generalSatisfaction"]:checked');
-      const suggestions = document.getElementById('suggestions').value || 'لا يوجد';
-
-      // التحقق من الحقول الإجبارية
-      if (!dept || !rating || !trainer || !perspective || !confidence || !generalSat) {
-        alert('⚠️ الرجاء تعبئة جميع الحقول الإجبارية (التي تحمل علامة *)');
-        return false;
-      }
-
-      // بناء نص البريد
-      const body = 
-        `📋 *نتائج استبيان ورشة الصرع* 📋\n` +
-        `------------------------------------\n` +
-        `🏢 المركز: مركز التأهيل الشامل بحفر الباطن\n` +
-        `👤 الاسم: ${name}\n` +
-        `🏥 القسم: ${dept}\n` +
-        `⭐ تقييم المحتوى: ${rating.value} من 5 نجوم\n` +
-        `🎤 تقييم المدرب (عبيد الشمري): ${trainer}\n` +
-        `🧠 تغير النظرة عن الصرع: ${perspective.value}\n` +
-        `🛡️ الثقة بالتعامل مع النوبات: ${confidence.value}\n` +
-        `📊 الرضا العام عن الورشة: ${generalSat.value}\n` +
-        `💡 الاقتراحات: ${suggestions}\n` +
-        `------------------------------------\n` +
-        `تم الإرسال بواسطة: ${name} (${dept})`;
-
-      // فتح البريد الإلكتروني (يحدث في الخلفية)
-      window.location.href = `mailto:al3ofi1403@gmail.com?subject=📊 نتيجة استبيان ورشة الصرع - ${dept}&body=${encodeURIComponent(body)}`;
-
-      // إظهار نافذة "شكراً لمشاركتك" بدلاً من التنبيه القديم
-      document.getElementById('thankYouModal').style.display = 'flex';
-
-      // (اختياري) إعادة تعيين النموذج بعد الإرسال
-      document.getElementById('surveyForm').reset();
-
-      return false;
-    }
-  </script>
 </body>
 </html>
