@@ -373,9 +373,9 @@
 
   <script>
     // ============================================================
-    // 🔴 الرابط الخلفي الجديد (تم تحديثه بالمعرف اللي أعطيتني إياه)
+    // 🔴 الرابط الخلفي الجديد (تم تحديثه بالرابط اللي أعطيتني إياه)
     // ============================================================
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyTxvFIWRBoIG24_1lcP_6LUce4lVXiFM7FNWXLq5LA/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwRHDyxFhCPBZ3sc5hjWZxWS3DBc0-xdpBkn4pWbDAQsuQGn50-YZ3_sq_xh-TczktEpw/exec';
 
     // --- تحميل الإحصائيات ---
     function loadStats() {
@@ -421,7 +421,6 @@
       })
       .catch(err => {
         console.log('خطأ في تحميل الإحصائيات:', err);
-        // عرض رسالة خطأ واضحة للمستخدم
         alert('⚠️ حدث خطأ في الاتصال بالخادم.\nتأكد من أن تطبيق Apps Script منشور بشكل صحيح.\nتفاصيل الخطأ: ' + err.message);
       });
     }
