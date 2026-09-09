@@ -129,8 +129,25 @@
         }
         .btn-outline:hover { background: #0a2647; color: #fff; }
 
-        .footer {
+        /* ===== عداد المشاركات ===== */
+        .counter-box {
+            background: #e8f0fe;
+            border-radius: 60px;
+            padding: 14px 20px;
+            text-align: center;
             margin-top: 30px;
+            border: 1px solid #c5d9f0;
+            font-size: 1rem;
+            color: #0a2647;
+        }
+        .counter-box span {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0 8px;
+        }
+
+        .footer {
+            margin-top: 25px;
             font-size: 0.8rem;
             color: #4d6a85;
             text-align: center;
@@ -271,6 +288,11 @@
             </div>
         </form>
 
+        <!-- ===== عداد المشاركات (رجعناه لك) ===== -->
+        <div class="counter-box">
+            📊 إجمالي المشاركات حتى الآن: <span id="submitCounter">0</span>
+        </div>
+
         <div class="footer">
             <div class="credit">
                 🖥️ برمجة وتصميم: <span>عبدالله حسين المطيري</span> | <span>بدر فريح الحربي</span>
@@ -291,10 +313,37 @@
     </div>
 
     <script>
-        // 🔴 معرف النموذج الجديد من حساب نبراس
+        // =============================================
+        // 1. معرف النموذج في Formspree
+        // =============================================
         const FORM_ID = 'maeyalyd';
 
-        // زر منبثق للتواصل السريع (Formspree Button)
+        // =============================================
+        // 2. عداد المشاركات (CountAPI)
+        // =============================================
+        const COUNTER_KEY = 'workshop-survey-2026';
+
+        function updateCounter() {
+            fetch(`https://api.countapi.xyz/get/${COUNTER_KEY}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.value !== undefined) {
+                        document.getElementById('submitCounter').innerText = data.value;
+                    }
+                })
+                .catch(() => {
+                    // إذا فشل العداد، يبقى الرقم 0
+                });
+        }
+
+        // عند تحميل الصفحة، نعرض العداد الحالي
+        window.onload = function() {
+            updateCounter();
+        };
+
+        // =============================================
+        // 3. زر Formspree العائم (تواصل معنا)
+        // =============================================
         window.formbutton = window.formbutton || function() { (formbutton.q = formbutton.q || []).push(arguments); };
         formbutton("create", {
             action: "https://formspree.io/f/" + FORM_ID,
@@ -319,10 +368,13 @@
             initiallyVisible: false
         });
 
-        // إرسال الاستبيان الرئيسي
+        // =============================================
+        // 4. إرسال الاستبيان الرئيسي (مع زيادة العداد)
+        // =============================================
         document.getElementById('surveyForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
+            // جمع البيانات
             const name = document.getElementById('name').value.trim() || 'لم يذكر';
             const dept = document.getElementById('dept').value.trim();
             const course = document.getElementById('courseSelect').value;
@@ -333,11 +385,13 @@
             const q5 = document.querySelector('input[name="q5"]:checked');
             const suggestions = document.getElementById('suggestions').value.trim() || 'لا يوجد';
 
+            // التحقق من الإجباريات
             if (!dept || !course || !q1 || !q2 || !q3 || !q4 || !q5) {
                 alert('⚠️ الرجاء تعبئة جميع الحقول الإجبارية (التي تحمل علامة *)');
                 return;
             }
 
+            // تجهيز البيانات
             const formData = new FormData();
             formData.append('الاسم', name);
             formData.append('القسم', dept);
@@ -349,21 +403,35 @@
             formData.append('التطبيق_في_العمل', q5.value);
             formData.append('الاقتراحات', suggestions);
 
+            // إرسال إلى Formspree
             fetch("https://formspree.io/f/" + FORM_ID, {
                 method: 'POST',
                 body: formData,
                 mode: 'no-cors'
             }).then(() => {
+                // زيادة عداد المشاركات
+                return fetch(`https://api.countapi.xyz/hit/${COUNTER_KEY}`);
+            }).then(res => res.json())
+            .then(data => {
+                if (data && data.value !== undefined) {
+                    document.getElementById('submitCounter').innerText = data.value;
+                }
+                // إظهار نافذة الشكر
                 document.getElementById('thankYouModal').style.display = 'flex';
+                // تفريغ الحقول
                 document.getElementById('surveyForm').reset();
                 document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
             }).catch(() => {
+                // حتى لو فشل العداد، نظهر الشكر عشان ما يخرب تجربة المستخدم
                 document.getElementById('thankYouModal').style.display = 'flex';
                 document.getElementById('surveyForm').reset();
                 document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
             });
         });
 
+        // =============================================
+        // 5. إغلاق نافذة الشكر
+        // =============================================
         function closeModal() {
             document.getElementById('thankYouModal').style.display = 'none';
         }
