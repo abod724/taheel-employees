@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>استبيان تقييم الدورات - مركز التأهيل الشامل</title>
+    <!-- مكتبة Formspree للنافذة المنبثقة -->
+    <script src="https://formspree.io/js/formbutton-v1.min.js" defer></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
         body {
@@ -199,6 +201,9 @@
             <p>مركز التأهيل الشامل بحفر الباطن</p>
         </div>
 
+        <!-- ========================================= -->
+        <!-- نموذج الاستبيان الرئيسي (٥ أسئلة)          -->
+        <!-- ========================================= -->
         <form id="surveyForm">
             <!-- 1. الاسم والقسم -->
             <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 5px;">
@@ -223,7 +228,7 @@
                 </select>
             </div>
 
-            <!-- السؤال 1 (مثل الصورة) -->
+            <!-- السؤال 1 -->
             <div class="form-group">
                 <span class="question-title">١. وضوح أهداف الدورة وتوثيقها مع المحتوى <span class="required">*</span></span>
                 <div class="options-grid">
@@ -235,7 +240,7 @@
                 </div>
             </div>
 
-            <!-- السؤال 2 (مثل الصورة) -->
+            <!-- السؤال 2 -->
             <div class="form-group">
                 <span class="question-title">٢. تسلسل وسلاسة عرض المعلومات <span class="required">*</span></span>
                 <div class="options-grid">
@@ -247,7 +252,7 @@
                 </div>
             </div>
 
-            <!-- السؤال 3 (مثل الصورة) -->
+            <!-- السؤال 3 -->
             <div class="form-group">
                 <span class="question-title">٣. ملائمة الوقت المخصص للدورة ومدتها <span class="required">*</span></span>
                 <div class="options-grid">
@@ -259,7 +264,7 @@
                 </div>
             </div>
 
-            <!-- السؤال 4 (جديد احترافي) -->
+            <!-- السؤال 4 (جديد) -->
             <div class="form-group">
                 <span class="question-title">٤. تفاعل المدرب مع المشاركين وقدرته على الإجابة عن الاستفسارات <span class="required">*</span></span>
                 <div class="options-grid">
@@ -271,7 +276,7 @@
                 </div>
             </div>
 
-            <!-- السؤال 5 (جديد احترافي) -->
+            <!-- السؤال 5 (جديد) -->
             <div class="form-group">
                 <span class="question-title">٥. مدى إمكانية تطبيق المعلومات المكتسبة في بيئة العمل <span class="required">*</span></span>
                 <div class="options-grid">
@@ -295,6 +300,7 @@
             </div>
         </form>
 
+        <!-- عداد المشاركات -->
         <div class="counter-box">
             📊 إجمالي المشاركات: <span id="submitCounter">0</span>
         </div>
@@ -308,7 +314,9 @@
         </div>
     </div>
 
-    <!-- نافذة الشكر -->
+    <!-- ========================================= -->
+    <!-- نافذة شكر الاستبيان الرئيسي               -->
+    <!-- ========================================= -->
     <div class="modal-overlay" id="thankYouModal">
         <div class="modal-box">
             <div class="icon">🙏</div>
@@ -318,10 +326,64 @@
         </div>
     </div>
 
+    <!-- ========================================= -->
+    <!-- كود Formspree Button (النافذة المنبثقة)   -->
+    <!-- ========================================= -->
     <script>
-        // ----------------------------------------------
-        // 1. عداد المشاركات (CountAPI)
-        // ----------------------------------------------
+        // تأكد من تحميل المكتبة أولاً
+        window.formbutton = window.formbutton || function() { (formbutton.q = formbutton.q || []).push(arguments); };
+
+        // نضبط الزر المنبثق
+        formbutton("create", {
+            action: "https://formspree.io/f/xqpkgjoa", // نفس معرف النموذج
+            title: "📩 تواصل معنا", // عنوان النافذة
+            description: "لديك استفسار إضافي عن الدورات؟ اكتب لنا.", // وصف
+            fields: [
+                {
+                    type: "email",
+                    label: "📧 بريدك الإلكتروني:",
+                    name: "email",
+                    required: true,
+                    placeholder: "your@email.com"
+                },
+                {
+                    type: "textarea",
+                    label: "💬 رسالتك:",
+                    name: "message",
+                    placeholder: "اكتب استفسارك هنا..."
+                },
+                { type: "submit", value: "إرسال" } // زر الإرسال بالعربي
+            ],
+            styles: {
+                title: {
+                    backgroundColor: "#0a2647", // نفس لون الاستبيان
+                    color: "#ffffff"
+                },
+                button: {
+                    backgroundColor: "#0a2647",
+                    color: "#ffffff",
+                    position: "fixed",
+                    bottom: "20px",
+                    left: "20px", // يظهر في الزاوية اليسرى (عشان ما يزاحم المحتوى)
+                    fontSize: "16px",
+                    padding: "12px 24px",
+                    borderRadius: "60px",
+                    boxShadow: "0 4px 15px rgba(10,38,71,0.25)",
+                    border: "none",
+                    cursor: "pointer",
+                    zIndex: "999"
+                },
+                dialog: {
+                    borderRadius: "25px",
+                    boxShadow: "0 20px 60px rgba(0,0,0,0.15)"
+                }
+            },
+            initiallyVisible: false // لا تظهر تلقائياً، تظهر عند الضغط على الزر
+        });
+
+        // =========================================
+        // جافا سكريبت الاستبيان الرئيسي (عداد + إرسال)
+        // =========================================
         const COUNTER_KEY = 'workshop-epilepsy-unified';
 
         function updateCounter() {
@@ -336,13 +398,9 @@
         }
         window.onload = updateCounter;
 
-        // ----------------------------------------------
-        // 2. إرسال الاستبيان في الخلفية (Formspree)
-        // ----------------------------------------------
         document.getElementById('surveyForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // جمع البيانات
             const name = document.getElementById('name').value.trim() || 'لم يذكر';
             const dept = document.getElementById('dept').value.trim();
             const course = document.getElementById('courseSelect').value;
@@ -353,13 +411,11 @@
             const q5 = document.querySelector('input[name="q5"]:checked');
             const suggestions = document.getElementById('suggestions').value.trim() || 'لا يوجد';
 
-            // التحقق من الحقول الإجبارية
             if (!dept || !course || !q1 || !q2 || !q3 || !q4 || !q5) {
                 alert('⚠️ الرجاء تعبئة جميع الحقول الإجبارية (التي تحمل علامة *)');
                 return;
             }
 
-            // تجهيز البيانات للإرسال (FormData)
             const formData = new FormData();
             formData.append('الاسم', name);
             formData.append('القسم', dept);
@@ -371,24 +427,16 @@
             formData.append('السؤال5_التطبيق_في_العمل', q5.value);
             formData.append('الاقتراحات', suggestions);
 
-            // إرسال إلى Formspree في الخلفية
             fetch('https://formspree.io/f/xqpkgjoa', {
                 method: 'POST',
                 body: formData,
-                headers: {
-                    'Accept': 'application/json' // نطلب استجابة JSON
-                }
-                // لا نضع 'Content-Type' لأن المتصفح سيضبطها تلقائياً مع FormData
+                headers: { 'Accept': 'application/json' }
             })
             .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('فشل الإرسال (الكود: ' + response.status + ')');
-                }
+                if (response.ok) return response.json();
+                else throw new Error('فشل الإرسال');
             })
-            .then(data => {
-                // زيادة العداد
+            .then(() => {
                 return fetch(`https://api.countapi.xyz/hit/${COUNTER_KEY}`);
             })
             .then(res => res.json())
@@ -396,22 +444,16 @@
                 if (data && data.value !== undefined) {
                     document.getElementById('submitCounter').innerText = data.value;
                 }
-                // إظهار نافذة الشكر
                 document.getElementById('thankYouModal').style.display = 'flex';
-                // تفريغ الحقول
                 document.getElementById('surveyForm').reset();
-                // إلغاء تحديد الراديو (احتياطي)
                 document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
             })
             .catch(error => {
-                console.error('خطأ:', error);
-                alert('⚠️ حدث خطأ في الإرسال، يرجى المحاولة مرة أخرى. تأكد من اتصالك بالإنترنت.');
+                alert('⚠️ حدث خطأ في الإرسال، يرجى المحاولة مرة أخرى.');
+                console.log(error);
             });
         });
 
-        // ----------------------------------------------
-        // 3. إغلاق نافذة الشكر
-        // ----------------------------------------------
         function closeModal() {
             document.getElementById('thankYouModal').style.display = 'none';
         }
