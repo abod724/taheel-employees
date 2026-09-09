@@ -312,7 +312,7 @@
       </div>
     </form>
 
-    <!-- ====== قسم الإحصائيات والرسوميات ====== -->
+    <!-- ====== قسم الإحصائيات ====== -->
     <div class="stats-section" id="statsSection">
       <div class="stats-title">📊 إحصائيات الردود (مباشر)</div>
       
@@ -346,7 +346,6 @@
         <span style="font-weight:400;font-size:0.8rem;display:block;margin-top:4px;" id="starCountText">(بناءً على 0 مشاركة)</span>
       </div>
 
-      <!-- زر إرسال الإحصائيات إلى البريد -->
       <div style="text-align: center; margin-top: 20px;">
         <button onclick="sendStatsToEmail()" class="btn btn-stats" style="background:#2a9d8f; box-shadow: 0 4px 12px rgba(42,157,143,0.3); border: none;">
           📊 أرسل الإحصائيات إلى بريدي
@@ -374,7 +373,7 @@
 
   <script>
     // ============================================================
-    // 🔴 الرابط السحري الخاص بمشروع Apps Script (تم وضعه مباشرة)
+    // 🔴 هذا هو الرابط السحري لـ Apps Script (تأكد من صحته)
     // ============================================================
     const SCRIPT_URL = 'https://script.google.com/macros/s/1Vkls04pBkXF9OfjquUSyhlfzfmh9pYpdxtU5rmev6Pgr56F7Or4kPEVK/exec';
 
@@ -384,9 +383,12 @@
         method: 'GET',
         headers: { 'Accept': 'application/json' }
       })
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error('الخادم لم يستجب (الكود: ' + res.status + ')');
+        return res.json();
+      })
       .then(data => {
-        if (data.total === undefined) return;
+        if (data.total === undefined) throw new Error('البيانات غير صحيحة');
         
         const total = data.total || 0;
         const sat = data.راضي || 0;
@@ -417,7 +419,11 @@
         document.getElementById('avgStars').textContent = data.avgStars || '0';
         document.getElementById('starCountText').textContent = `(بناءً على ${data.starCount || 0} مشاركة)`;
       })
-      .catch(err => console.log('خطأ في تحميل الإحصائيات:', err));
+      .catch(err => {
+        console.log('خطأ في تحميل الإحصائيات:', err);
+        // عرض رسالة خطأ واضحة للمستخدم
+        alert('⚠️ حدث خطأ في الاتصال بالخادم.\nتأكد من أن تطبيق Apps Script منشور بشكل صحيح.\nتفاصيل الخطأ: ' + err.message);
+      });
     }
 
     // --- دالة إرسال الإحصائيات إلى البريد ---
@@ -426,7 +432,10 @@
         method: 'GET',
         headers: { 'Accept': 'application/json' }
       })
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error('الخادم لم يستجب');
+        return res.json();
+      })
       .then(data => {
         if (data.status === 'sent') {
           alert('✅ تم إرسال التقرير إلى بريدك الإلكتروني (abdullaha0569361@gmail.com)');
@@ -434,8 +443,9 @@
           alert('⚠️ حدث خطأ في الإرسال، حاول مرة أخرى.');
         }
       })
-      .catch(() => {
-        alert('⚠️ حدث خطأ في الاتصال بالخادم.');
+      .catch(err => {
+        alert('⚠️ حدث خطأ في الاتصال بالخادم.\nتأكد من نشر التطبيق بشكل صحيح.');
+        console.log(err);
       });
     }
 
