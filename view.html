@@ -95,7 +95,7 @@
     }
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 15px;
       margin-bottom: 20px;
     }
@@ -243,7 +243,6 @@
       الصرع وطرق التعامل معه – <strong>مركز التأهيل الشامل بحفر الباطن</strong>
     </div>
 
-    <!-- نموذج الاستبيان -->
     <form id="surveyForm">
       <div class="form-group">
         <label>الاسم (اختياري)</label>
@@ -313,7 +312,7 @@
       </div>
     </form>
 
-    <!-- ====== قسم الإحصائيات والرسوميات + زر الإرسال ====== -->
+    <!-- ====== قسم الإحصائيات والرسوميات ====== -->
     <div class="stats-section" id="statsSection">
       <div class="stats-title">📊 إحصائيات الردود (مباشر)</div>
       
@@ -347,7 +346,7 @@
         <span style="font-weight:400;font-size:0.8rem;display:block;margin-top:4px;" id="starCountText">(بناءً على 0 مشاركة)</span>
       </div>
 
-      <!-- 🔴🔴🔴 زر إرسال الإحصائيات إلى البريد (المطلوب) 🔴🔴🔴 -->
+      <!-- زر إرسال الإحصائيات إلى البريد -->
       <div style="text-align: center; margin-top: 20px;">
         <button onclick="sendStatsToEmail()" class="btn btn-stats" style="background:#2a9d8f; box-shadow: 0 4px 12px rgba(42,157,143,0.3); border: none;">
           📊 أرسل الإحصائيات إلى بريدي
@@ -355,7 +354,6 @@
       </div>
     </div>
 
-    <!-- التذييل -->
     <div class="footer-note">
       <div class="credit">
         🖥️ برمجة وتصميم: <span>عبدالله حسين المطيري</span> | <span>بدر فريح الحربي</span>
@@ -365,7 +363,6 @@
     </div>
   </div>
 
-  <!-- نافذة "شكراً لمشاركتك" -->
   <div class="modal-overlay" id="thankYouModal">
     <div class="modal-box">
       <div class="icon">🙏</div>
@@ -377,11 +374,11 @@
 
   <script>
     // ============================================================
-    // 🔴 هام: ضع رابط Google Apps Script الخاص بك هنا
+    // 🔴 الرابط السحري الخاص بمشروع Apps Script (تم وضعه مباشرة)
     // ============================================================
-    const SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL'; // ⬅️ استبدل هذا بالرابط
+    const SCRIPT_URL = 'https://script.google.com/macros/s/1Vkls04pBkXF9OfjquUSyhlfzfmh9pYpdxtU5rmev6Pgr56F7Or4kPEVK/exec';
 
-    // --- دوال الإحصائيات ---
+    // --- تحميل الإحصائيات ---
     function loadStats() {
       fetch(SCRIPT_URL, {
         method: 'GET',
@@ -423,9 +420,8 @@
       .catch(err => console.log('خطأ في تحميل الإحصائيات:', err));
     }
 
-    // --- دالة إرسال الإحصائيات إلى البريد (الخاصة بالزر) ---
+    // --- دالة إرسال الإحصائيات إلى البريد ---
     function sendStatsToEmail() {
-      // نضيف ?action=stats عشان الخادم يفهم إننا نبغى إرسال بريد
       fetch(SCRIPT_URL + '?action=stats', {
         method: 'GET',
         headers: { 'Accept': 'application/json' }
