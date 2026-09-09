@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>استبيان الدورات - مركز التأهيل الشامل</title>
+    <title>استبيان تقييم الدورات - مركز التأهيل الشامل</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
         body {
-            background: linear-gradient(135deg, #e6f0fa, #f4f9ff);
+            background: #f2f8ff;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -15,123 +15,136 @@
             padding: 20px;
         }
         .card {
-            max-width: 750px;
+            max-width: 780px;
             width: 100%;
             background: #ffffff;
-            border-radius: 35px;
-            padding: 35px 30px;
-            box-shadow: 0 15px 40px rgba(0, 20, 40, 0.10);
-            border: 1px solid rgba(255,255,255,0.5);
+            border-radius: 32px;
+            padding: 40px 35px;
+            box-shadow: 0 20px 45px rgba(0, 20, 40, 0.08);
+            border: 1px solid #e9f0f7;
         }
-        h1 {
-            font-size: 2rem;
-            color: #0a2647;
-            margin-bottom: 5px;
+        .header {
             text-align: center;
+            border-bottom: 2px solid #eef4fa;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
         }
-        .sub {
-            color: #2d4d6e;
-            font-size: 1rem;
-            text-align: center;
-            border-bottom: 2px solid #d0e2f2;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-        }
-        .form-group { margin-bottom: 22px; }
-        label {
-            display: block;
-            font-weight: 600;
-            color: #0a2647;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
-        label .required { color: #c00; margin-right: 4px; }
-        input, select, textarea {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #d6e6f5;
-            border-radius: 16px;
-            font-size: 1rem;
-            background: #fbfdff;
+        .header h1 { font-size: 2rem; color: #0a2647; font-weight: 700; }
+        .header p { color: #3e5f7b; font-size: 1rem; margin-top: 4px; }
+
+        .form-group {
+            margin-bottom: 30px;
+            background: #f9fcff;
+            padding: 20px 22px;
+            border-radius: 20px;
+            border: 1px solid #e4edf6;
             transition: 0.2s;
         }
-        input:focus, select:focus, textarea:focus {
-            border-color: #1a5a8a;
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(26, 90, 138, 0.08);
+        .form-group:hover { border-color: #b8d0e5; }
+
+        .question-title {
+            display: block;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #0a2647;
+            margin-bottom: 15px;
         }
-        textarea { min-height: 80px; resize: vertical; }
-        .radio-group {
+        .question-title .required { color: #d32f2f; margin-right: 4px; }
+
+        .options-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
-            background: #f5faff;
-            padding: 15px 18px;
-            border-radius: 18px;
-            border: 1px solid #d6e6f5;
+            gap: 12px 18px;
+            justify-content: flex-start;
         }
-        .radio-group label {
+        .options-grid label {
             display: flex;
             align-items: center;
             gap: 8px;
-            font-weight: 400;
             font-size: 0.95rem;
             color: #1d3b57;
             cursor: pointer;
+            background: #ffffff;
+            padding: 6px 14px 6px 10px;
+            border-radius: 40px;
+            border: 1px solid #dce6f0;
+            transition: 0.15s;
         }
-        .radio-group input { width: auto; accent-color: #0a2647; transform: scale(1.1); }
-        .stars {
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: flex-end;
-            gap: 8px;
+        .options-grid label:hover {
+            background: #e6f0fa;
+            border-color: #a0bcd9;
         }
-        .stars input { display: none; }
-        .stars label {
-            font-size: 2.5rem;
-            color: #ccc;
-            cursor: pointer;
+        .options-grid input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #0a2647;
+            margin: 0;
+            flex-shrink: 0;
+        }
+
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #dce6f0;
+            border-radius: 16px;
+            font-size: 1rem;
+            background: #ffffff;
             transition: 0.2s;
         }
-        .stars label:hover,
-        .stars label:hover ~ label,
-        .stars input:checked ~ label { color: #f5b342; }
+        input[type="text"]:focus, select:focus, textarea:focus {
+            border-color: #1a5a8a;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(26, 90, 138, 0.06);
+        }
+        textarea { min-height: 80px; resize: vertical; }
 
-        .btn-group { display: flex; gap: 15px; margin-top: 30px; flex-wrap: wrap; }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
         .btn {
-            background: #0a2647;
-            color: #fff;
-            border: none;
-            padding: 16px 30px;
+            padding: 16px 35px;
             border-radius: 60px;
             font-size: 1.1rem;
             font-weight: 600;
+            border: none;
             cursor: pointer;
             flex: 1;
-            text-align: center;
             transition: 0.2s;
+            text-align: center;
+        }
+        .btn-primary {
+            background: #0a2647;
+            color: #fff;
             box-shadow: 0 4px 12px rgba(10, 38, 71, 0.15);
         }
-        .btn:hover { background: #1d4a75; transform: scale(1.02); }
-        .btn-outline { background: transparent; color: #0a2647; border: 2px solid #0a2647; box-shadow: none; }
+        .btn-primary:hover { background: #1d4a75; transform: scale(1.02); }
+        .btn-outline {
+            background: transparent;
+            color: #0a2647;
+            border: 2px solid #0a2647;
+        }
         .btn-outline:hover { background: #0a2647; color: #fff; }
 
         .counter-box {
             background: #e8f0fe;
             border-radius: 60px;
-            padding: 12px 20px;
+            padding: 14px 20px;
             text-align: center;
-            margin-top: 25px;
+            margin-top: 30px;
             border: 1px solid #c5d9f0;
+            font-size: 1rem;
+            color: #0a2647;
         }
         .counter-box span {
             font-size: 1.8rem;
             font-weight: 800;
-            color: #0a2647;
-            margin: 0 10px;
+            margin: 0 8px;
         }
 
-        .footer-note {
+        .footer {
             margin-top: 25px;
             font-size: 0.8rem;
             color: #4d6a85;
@@ -143,7 +156,7 @@
             font-weight: 600;
             color: #0a2647;
             background: #e6f0fa;
-            padding: 6px 14px;
+            padding: 6px 18px;
             border-radius: 40px;
             display: inline-block;
             font-size: 0.85rem;
@@ -151,119 +164,142 @@
 
         .modal-overlay {
             display: none; position: fixed; top:0;left:0;width:100%;height:100%;
-            background: rgba(0,0,0,0.4); backdrop-filter: blur(3px);
+            background: rgba(0,0,0,0.35); backdrop-filter: blur(3px);
             justify-content: center; align-items: center; z-index: 999;
         }
         .modal-box {
             background: #fff; padding: 35px 30px; border-radius: 30px;
             text-align: center; max-width: 370px; width: 90%;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
         }
-        .modal-box .icon { font-size: 4rem; }
+        .modal-box .icon { font-size: 4.2rem; }
         .modal-box h2 { color: #0a2647; margin: 8px 0; font-size: 1.8rem; }
-        .modal-box p { color: #3c5d7a; margin-bottom: 20px; font-size: 0.95rem; }
+        .modal-box p { color: #3c5d7a; margin-bottom: 22px; font-size: 0.95rem; }
         .modal-box .btn-close-modal {
             background: #0a2647; color: #fff; border: none;
-            padding: 12px 40px; border-radius: 60px;
+            padding: 12px 45px; border-radius: 60px;
             font-size: 1rem; font-weight: 600; cursor: pointer;
         }
         .modal-box .btn-close-modal:hover { background: #1d4a75; }
-        @media (max-width:500px) {
-            h1 { font-size: 1.6rem; }
-            .stars label { font-size: 2rem; }
-            .radio-group { flex-direction: column; gap: 6px; }
+
+        @media (max-width: 600px) {
+            .card { padding: 25px 18px; }
+            .form-group { padding: 15px; }
+            .options-grid label { font-size: 0.85rem; padding: 4px 12px 4px 8px; }
+            .options-grid { gap: 8px; }
+            .btn { padding: 14px 20px; font-size: 1rem; }
         }
     </style>
 </head>
 <body>
     <div class="card">
-        <h1>📝 استبيان تقييم الدورات</h1>
-        <div class="sub">
-            مركز التأهيل الشامل بحفر الباطن
+
+        <div class="header">
+            <h1>📋 استبيان تقييم الدورة</h1>
+            <p>مركز التأهيل الشامل بحفر الباطن</p>
         </div>
 
         <form id="surveyForm">
-            <!-- 1. الاسم -->
-            <div class="form-group">
-                <label>الاسم (اختياري)</label>
-                <input type="text" id="name" placeholder="أدخل اسمك" />
+            <!-- 1. الاسم والقسم -->
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 5px;">
+                <div style="flex: 1; min-width: 150px;">
+                    <label style="font-weight:600; color:#0a2647; font-size:0.9rem;">الاسم (اختياري)</label>
+                    <input type="text" id="name" placeholder="أدخل اسمك" style="margin-top:5px;" />
+                </div>
+                <div style="flex: 1; min-width: 150px;">
+                    <label style="font-weight:600; color:#0a2647; font-size:0.9rem;">القسم <span class="required">*</span></label>
+                    <input type="text" id="dept" required placeholder="مثال: تمريض، علاج طبيعي" style="margin-top:5px;" />
+                </div>
             </div>
 
             <!-- 2. اختيار الدورة -->
             <div class="form-group">
-                <label>ما هي الدورة / الورشة التي حضرتها؟ <span class="required">*</span></label>
-                <select id="courseSelect" required>
+                <label class="question-title">الدورة / الورشة المستهدفة <span class="required">*</span></label>
+                <select id="courseSelect" required style="width:100%;">
                     <option value="">-- اختر الدورة --</option>
                     <option value="الصرع وطرق التعامل معه">🧠 الصرع وطرق التعامل معه</option>
-                    <option value="النطق والتخطيط وتنمية المعارف">🗣️ النطق والتخطيط وتنمية المعارف</option>
+                    <option value="النطق والتخطيط وتنمية المعارف">🗣️ النطق والتخطيط</option>
                     <option value="الإسعافات الأولية">🚑 الإسعافات الأولية</option>
                 </select>
             </div>
 
-            <!-- 3. تقييم المحتوى (نجوم) -->
+            <!-- السؤال 1 (مثل الصورة) -->
             <div class="form-group">
-                <label>تقييمك لمحتوى الدورة <span class="required">*</span></label>
-                <div class="stars">
-                    <input type="radio" name="تقييم_المحتوى" value="5 نجوم" id="star5" required />
-                    <label for="star5">★</label>
-                    <input type="radio" name="تقييم_المحتوى" value="4 نجوم" id="star4" />
-                    <label for="star4">★</label>
-                    <input type="radio" name="تقييم_المحتوى" value="3 نجوم" id="star3" />
-                    <label for="star3">★</label>
-                    <input type="radio" name="تقييم_المحتوى" value="2 نجوم" id="star2" />
-                    <label for="star2">★</label>
-                    <input type="radio" name="تقييم_المحتوى" value="1 نجوم" id="star1" />
-                    <label for="star1">★</label>
+                <span class="question-title">١. وضوح أهداف الدورة وتوثيقها مع المحتوى <span class="required">*</span></span>
+                <div class="options-grid">
+                    <label><input type="radio" name="q1" value="ممتاز" required /> ممتاز</label>
+                    <label><input type="radio" name="q1" value="جيد جدا" /> جيد جداً</label>
+                    <label><input type="radio" name="q1" value="جيد" /> جيد</label>
+                    <label><input type="radio" name="q1" value="متوسط" /> متوسط</label>
+                    <label><input type="radio" name="q1" value="ضعيف" /> ضعيف</label>
                 </div>
             </div>
 
-            <!-- 4. تقييم المدرب (نجوم) -->
+            <!-- السؤال 2 (مثل الصورة) -->
             <div class="form-group">
-                <label>تقييمك للمدرب / المحاضر <span class="required">*</span></label>
-                <div class="stars">
-                    <input type="radio" name="تقييم_المدرب" value="5 نجوم" id="trainer5" required />
-                    <label for="trainer5">★</label>
-                    <input type="radio" name="تقييم_المدرب" value="4 نجوم" id="trainer4" />
-                    <label for="trainer4">★</label>
-                    <input type="radio" name="تقييم_المدرب" value="3 نجوم" id="trainer3" />
-                    <label for="trainer3">★</label>
-                    <input type="radio" name="تقييم_المدرب" value="2 نجوم" id="trainer2" />
-                    <label for="trainer2">★</label>
-                    <input type="radio" name="تقييم_المدرب" value="1 نجوم" id="trainer1" />
-                    <label for="trainer1">★</label>
+                <span class="question-title">٢. تسلسل وسلاسة عرض المعلومات <span class="required">*</span></span>
+                <div class="options-grid">
+                    <label><input type="radio" name="q2" value="ممتاز" required /> ممتاز</label>
+                    <label><input type="radio" name="q2" value="جيد جدا" /> جيد جداً</label>
+                    <label><input type="radio" name="q2" value="جيد" /> جيد</label>
+                    <label><input type="radio" name="q2" value="متوسط" /> متوسط</label>
+                    <label><input type="radio" name="q2" value="ضعيف" /> ضعيف</label>
                 </div>
             </div>
 
-            <!-- 5. الرضا العام (خيارات موسعة) -->
+            <!-- السؤال 3 (مثل الصورة) -->
             <div class="form-group">
-                <label>تقييمك العام للدورة <span class="required">*</span></label>
-                <div class="radio-group">
-                    <label><input type="radio" name="الرضا_العام" value="ممتاز" required /> ⭐ ممتاز</label>
-                    <label><input type="radio" name="الرضا_العام" value="جيد جداً" /> 👍 جيد جداً</label>
-                    <label><input type="radio" name="الرضا_العام" value="جيد" /> 👌 جيد</label>
-                    <label><input type="radio" name="الرضا_العام" value="مقبول" /> 😐 مقبول</label>
-                    <label><input type="radio" name="الرضا_العام" value="ضعيف" /> 👎 ضعيف</label>
+                <span class="question-title">٣. ملائمة الوقت المخصص للدورة ومدتها <span class="required">*</span></span>
+                <div class="options-grid">
+                    <label><input type="radio" name="q3" value="ممتاز" required /> ممتاز</label>
+                    <label><input type="radio" name="q3" value="جيد جدا" /> جيد جداً</label>
+                    <label><input type="radio" name="q3" value="جيد" /> جيد</label>
+                    <label><input type="radio" name="q3" value="متوسط" /> متوسط</label>
+                    <label><input type="radio" name="q3" value="ضعيف" /> ضعيف</label>
                 </div>
             </div>
 
-            <!-- 6. اقتراحات -->
+            <!-- السؤال 4 (جديد احترافي) -->
             <div class="form-group">
-                <label>اقتراحاتك لتطوير الدورات القادمة</label>
-                <textarea id="suggestions" placeholder="اكتب اقتراحاتك..."></textarea>
+                <span class="question-title">٤. تفاعل المدرب مع المشاركين وقدرته على الإجابة عن الاستفسارات <span class="required">*</span></span>
+                <div class="options-grid">
+                    <label><input type="radio" name="q4" value="ممتاز" required /> ممتاز</label>
+                    <label><input type="radio" name="q4" value="جيد جدا" /> جيد جداً</label>
+                    <label><input type="radio" name="q4" value="جيد" /> جيد</label>
+                    <label><input type="radio" name="q4" value="متوسط" /> متوسط</label>
+                    <label><input type="radio" name="q4" value="ضعيف" /> ضعيف</label>
+                </div>
+            </div>
+
+            <!-- السؤال 5 (جديد احترافي) -->
+            <div class="form-group">
+                <span class="question-title">٥. مدى إمكانية تطبيق المعلومات المكتسبة في بيئة العمل <span class="required">*</span></span>
+                <div class="options-grid">
+                    <label><input type="radio" name="q5" value="ممتاز" required /> ممتاز</label>
+                    <label><input type="radio" name="q5" value="جيد جدا" /> جيد جداً</label>
+                    <label><input type="radio" name="q5" value="جيد" /> جيد</label>
+                    <label><input type="radio" name="q5" value="متوسط" /> متوسط</label>
+                    <label><input type="radio" name="q5" value="ضعيف" /> ضعيف</label>
+                </div>
+            </div>
+
+            <!-- اقتراحات عامة -->
+            <div class="form-group" style="background: #f9fcff;">
+                <label style="font-weight:700; color:#0a2647; display:block; margin-bottom:8px;">💡 ملاحظات أو اقتراحات لتطوير الدورة</label>
+                <textarea id="suggestions" placeholder="اكتب اقتراحاتك هنا..."></textarea>
             </div>
 
             <div class="btn-group">
-                <button type="submit" class="btn">📧 إرسال الاستبيان</button>
+                <button type="submit" class="btn btn-primary">📧 إرسال الاستبيان</button>
                 <button type="reset" class="btn btn-outline">🗑️ تفريغ</button>
             </div>
         </form>
 
-        <!-- عداد المشاركات -->
         <div class="counter-box">
-            📊 إجمالي المشاركات حتى الآن: <span id="submitCounter">0</span>
+            📊 إجمالي المشاركات: <span id="submitCounter">0</span>
         </div>
 
-        <div class="footer-note">
+        <div class="footer">
             <div class="credit">
                 🖥️ برمجة وتصميم: <span>عبدالله حسين المطيري</span> | <span>بدر فريح الحربي</span>
             </div>
@@ -277,7 +313,7 @@
         <div class="modal-box">
             <div class="icon">🙏</div>
             <h2>شكراً لمشاركتك</h2>
-            <p>تم فتح بريدك الإلكتروني، يرجى الضغط على "إرسال" لإكمال عملية الإرسال.</p>
+            <p>تم استلام آرائك بنجاح، وهي تهمنا لتطوير أعمالنا.</p>
             <button class="btn-close-modal" onclick="closeModal()">حسناً</button>
         </div>
     </div>
@@ -298,68 +334,83 @@
                 })
                 .catch(() => {});
         }
-
         window.onload = updateCounter;
 
         // ----------------------------------------------
-        // 2. إرسال الاستبيان عبر البريد الإلكتروني (mailto)
+        // 2. إرسال الاستبيان في الخلفية (Formspree)
         // ----------------------------------------------
         document.getElementById('surveyForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
             // جمع البيانات
             const name = document.getElementById('name').value.trim() || 'لم يذكر';
+            const dept = document.getElementById('dept').value.trim();
             const course = document.getElementById('courseSelect').value;
-            const contentRating = document.querySelector('input[name="تقييم_المحتوى"]:checked');
-            const trainerRating = document.querySelector('input[name="تقييم_المدرب"]:checked');
-            const satisfaction = document.querySelector('input[name="الرضا_العام"]:checked');
+            const q1 = document.querySelector('input[name="q1"]:checked');
+            const q2 = document.querySelector('input[name="q2"]:checked');
+            const q3 = document.querySelector('input[name="q3"]:checked');
+            const q4 = document.querySelector('input[name="q4"]:checked');
+            const q5 = document.querySelector('input[name="q5"]:checked');
             const suggestions = document.getElementById('suggestions').value.trim() || 'لا يوجد';
 
             // التحقق من الحقول الإجبارية
-            if (!course || !contentRating || !trainerRating || !satisfaction) {
+            if (!dept || !course || !q1 || !q2 || !q3 || !q4 || !q5) {
                 alert('⚠️ الرجاء تعبئة جميع الحقول الإجبارية (التي تحمل علامة *)');
                 return;
             }
 
-            // بناء نص البريد
-            const body = 
-                `📋 *نتائج استبيان الدورات* 📋\n` +
-                `------------------------------------\n` +
-                `🏢 المركز: مركز التأهيل الشامل بحفر الباطن\n` +
-                `👤 الاسم: ${name}\n` +
-                `📚 الدورة: ${course}\n` +
-                `⭐ تقييم المحتوى: ${contentRating.value}\n` +
-                `🎤 تقييم المدرب: ${trainerRating.value}\n` +
-                `😊 الرضا العام: ${satisfaction.value}\n` +
-                `💡 الاقتراحات: ${suggestions}\n` +
-                `------------------------------------\n` +
-                `تم الإرسال بواسطة: ${name}`;
+            // تجهيز البيانات للإرسال (FormData)
+            const formData = new FormData();
+            formData.append('الاسم', name);
+            formData.append('القسم', dept);
+            formData.append('الدورة', course);
+            formData.append('السؤال1_وضوح_الأهداف', q1.value);
+            formData.append('السؤال2_سلاسة_العرض', q2.value);
+            formData.append('السؤال3_ملائمة_الوقت', q3.value);
+            formData.append('السؤال4_تفاعل_المدرب', q4.value);
+            formData.append('السؤال5_التطبيق_في_العمل', q5.value);
+            formData.append('الاقتراحات', suggestions);
 
-            // فتح البريد الإلكتروني مع تعبئة البيانات
-            const mailtoLink = `mailto:abdullaha0569361@gmail.com?subject=📊 نتيجة استبيان الدورات - ${course}&body=${encodeURIComponent(body)}`;
-            window.location.href = mailtoLink;
-
-            // زيادة عداد المشاركات
-            fetch(`https://api.countapi.xyz/hit/${COUNTER_KEY}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data && data.value !== undefined) {
-                        document.getElementById('submitCounter').innerText = data.value;
-                    }
-                })
-                .catch(() => {});
-
-            // إظهار نافذة الشكر
-            setTimeout(() => {
+            // إرسال إلى Formspree في الخلفية
+            fetch('https://formspree.io/f/xqpkgjoa', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json' // نطلب استجابة JSON
+                }
+                // لا نضع 'Content-Type' لأن المتصفح سيضبطها تلقائياً مع FormData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('فشل الإرسال (الكود: ' + response.status + ')');
+                }
+            })
+            .then(data => {
+                // زيادة العداد
+                return fetch(`https://api.countapi.xyz/hit/${COUNTER_KEY}`);
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.value !== undefined) {
+                    document.getElementById('submitCounter').innerText = data.value;
+                }
+                // إظهار نافذة الشكر
                 document.getElementById('thankYouModal').style.display = 'flex';
+                // تفريغ الحقول
                 document.getElementById('surveyForm').reset();
-                // إلغاء تحديد النجوم
-                document.querySelectorAll('.stars input').forEach(input => input.checked = false);
-            }, 300);
+                // إلغاء تحديد الراديو (احتياطي)
+                document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+            })
+            .catch(error => {
+                console.error('خطأ:', error);
+                alert('⚠️ حدث خطأ في الإرسال، يرجى المحاولة مرة أخرى. تأكد من اتصالك بالإنترنت.');
+            });
         });
 
         // ----------------------------------------------
-        // 3. إغلاق النافذة المنبثقة
+        // 3. إغلاق نافذة الشكر
         // ----------------------------------------------
         function closeModal() {
             document.getElementById('thankYouModal').style.display = 'none';
