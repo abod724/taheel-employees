@@ -125,10 +125,12 @@
       الصرع وطرق التعامل معه – <strong>مركز التأهيل الشامل بحفر الباطن</strong>
     </div>
 
-    <!-- نموذج يرسل مباشرة إلى Formspree (بريدك) -->
-    <form id="surveyForm" action="https://formspree.io/f/xqpkgjoa" method="POST">
+    <!-- النموذج بدون action (سيتم الإرسال عن طريق JavaScript) -->
+    <form id="surveyForm">
       <!-- حقل أمان Formspree -->
       <input type="text" name="_gotcha" style="display:none" />
+      <!-- حقل مخفي لتحديد موضوع البريد (اختياري) -->
+      <input type="hidden" name="_subject" value="📊 رد جديد على استبيان الصرع" />
 
       <div class="form-group">
         <label>الاسم (اختياري)</label>
@@ -208,7 +210,7 @@
     </div>
   </div>
 
-  <!-- نافذة شكر تظهر بعد الإرسال -->
+  <!-- نافذة شكر مخصصة (بدلاً من صفحة Formspree) -->
   <div class="modal-overlay" id="thankYouModal">
     <div class="modal-box">
       <div class="icon">🙏</div>
@@ -219,11 +221,44 @@
   </div>
 
   <script>
-    // عند إرسال النموذج، نظهر نافذة الشكر بعد 1 ثانية
     document.getElementById('surveyForm').addEventListener('submit', function(e) {
-      setTimeout(() => {
-        document.getElementById('thankYouModal').style.display = 'flex';
-      }, 500);
+      e.preventDefault(); // نمنع تحويل الصفحة
+
+      // 1. التحقق من الحقول الإجبارية (لأننا أزلنا required من بعض الحقول بسبب الـ stars)
+      const dept = this.querySelector('input[name="القسم"]').value.trim();
+      const rating = this.querySelector('input[name="تقييم_المحتوى"]:checked');
+      const trainer = this.querySelector('select[name="تقييم_المدرب"]').value;
+      const perspective = this.querySelector('input[name="تغير_النظرة"]:checked');
+      const confidence = this.querySelector('input[name="الثقة_بالتعامل"]:checked');
+      const generalSat = this.querySelector('input[name="الرضا_العام"]:checked');
+
+      if (!dept || !rating || !trainer || !perspective || !confidence || !generalSat) {
+        alert('⚠️ الرجاء تعبئة جميع الحقول الإجبارية');
+        return;
+      }
+
+      // 2. جمع البيانات وإرسالها إلى Formspree في الخلفية (بدون تحويل الصفحة)
+      const formData = new FormData(this);
+
+      fetch('https://formspree.io/f/xqpkgjoa', {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(response => {
+        if (response.ok) {
+          // إظهار نافذة الشكر المخصصة
+          document.getElementById('thankYouModal').style.display = 'flex';
+          // تفريغ الحقول
+          this.reset();
+        } else {
+          alert('⚠️ حدث خطأ في الإرسال، يرجى المحاولة مرة أخرى.');
+        }
+      })
+      .catch(error => {
+        alert('⚠️ حدث خطأ في الاتصال، تأكد من اتصالك بالإنترنت.');
+        console.log(error);
+      });
     });
 
     function closeModal() {
