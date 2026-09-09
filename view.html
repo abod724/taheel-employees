@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>استبيان تقييم الدورات - مركز التأهيل الشامل</title>
-    <!-- مكتبة Formspree للنافذة المنبثقة -->
     <script src="https://formspree.io/js/formbutton-v1.min.js" defer></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
@@ -93,7 +92,7 @@
             background: #ffffff;
             transition: 0.2s;
         }
-        input[type="text"]:focus, select:focus, textarea:focus {
+        input:focus, select:focus, textarea:focus {
             border-color: #1a5a8a;
             outline: none;
             box-shadow: 0 0 0 4px rgba(26, 90, 138, 0.06);
@@ -179,17 +178,12 @@
 </head>
 <body>
     <div class="card">
-
         <div class="header">
             <h1>📋 استبيان تقييم الدورة</h1>
             <p>مركز التأهيل الشامل بحفر الباطن</p>
         </div>
 
-        <!-- ========================================= -->
-        <!-- نموذج الاستبيان الرئيسي (٥ أسئلة)          -->
-        <!-- ========================================= -->
         <form id="surveyForm">
-            <!-- 1. الاسم والقسم -->
             <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 5px;">
                 <div style="flex: 1; min-width: 150px;">
                     <label style="font-weight:600; color:#0a2647; font-size:0.9rem;">الاسم (اختياري)</label>
@@ -201,7 +195,6 @@
                 </div>
             </div>
 
-            <!-- 2. اختيار الدورة -->
             <div class="form-group">
                 <label class="question-title">الدورة / الورشة المستهدفة <span class="required">*</span></label>
                 <select id="courseSelect" required style="width:100%;">
@@ -212,7 +205,6 @@
                 </select>
             </div>
 
-            <!-- السؤال 1 -->
             <div class="form-group">
                 <span class="question-title">١. وضوح أهداف الدورة وتوثيقها مع المحتوى <span class="required">*</span></span>
                 <div class="options-grid">
@@ -224,7 +216,6 @@
                 </div>
             </div>
 
-            <!-- السؤال 2 -->
             <div class="form-group">
                 <span class="question-title">٢. تسلسل وسلاسة عرض المعلومات <span class="required">*</span></span>
                 <div class="options-grid">
@@ -236,7 +227,6 @@
                 </div>
             </div>
 
-            <!-- السؤال 3 -->
             <div class="form-group">
                 <span class="question-title">٣. ملائمة الوقت المخصص للدورة ومدتها <span class="required">*</span></span>
                 <div class="options-grid">
@@ -248,7 +238,6 @@
                 </div>
             </div>
 
-            <!-- السؤال 4 (جديد) -->
             <div class="form-group">
                 <span class="question-title">٤. تفاعل المدرب مع المشاركين وقدرته على الإجابة عن الاستفسارات <span class="required">*</span></span>
                 <div class="options-grid">
@@ -260,7 +249,6 @@
                 </div>
             </div>
 
-            <!-- السؤال 5 (جديد) -->
             <div class="form-group">
                 <span class="question-title">٥. مدى إمكانية تطبيق المعلومات المكتسبة في بيئة العمل <span class="required">*</span></span>
                 <div class="options-grid">
@@ -272,7 +260,6 @@
                 </div>
             </div>
 
-            <!-- اقتراحات عامة -->
             <div class="form-group" style="background: #f9fcff;">
                 <label style="font-weight:700; color:#0a2647; display:block; margin-bottom:8px;">💡 ملاحظات أو اقتراحات لتطوير الدورة</label>
                 <textarea id="suggestions" placeholder="اكتب اقتراحاتك هنا..."></textarea>
@@ -293,9 +280,7 @@
         </div>
     </div>
 
-    <!-- ========================================= -->
-    <!-- نافذة شكر الاستبيان الرئيسي               -->
-    <!-- ========================================= -->
+    <!-- نافذة الشكر -->
     <div class="modal-overlay" id="thankYouModal">
         <div class="modal-box">
             <div class="icon">🙏</div>
@@ -305,68 +290,36 @@
         </div>
     </div>
 
-    <!-- ========================================= -->
-    <!-- كود Formspree Button (النافذة المنبثقة)   -->
-    <!-- ========================================= -->
     <script>
-        // تأكد من تحميل المكتبة أولاً
+        // زر منبثق للتواصل السريع (Formspree Button)
         window.formbutton = window.formbutton || function() { (formbutton.q = formbutton.q || []).push(arguments); };
-
-        // نضبط الزر المنبثق (نموذج التواصل السريع)
         formbutton("create", {
             action: "https://formspree.io/f/xqpkgjoa",
             title: "📩 تواصل معنا",
             description: "لديك استفسار إضافي عن الدورات؟ اكتب لنا.",
             fields: [
-                {
-                    type: "email",
-                    label: "📧 بريدك الإلكتروني:",
-                    name: "email",
-                    required: true,
-                    placeholder: "your@email.com"
-                },
-                {
-                    type: "textarea",
-                    label: "💬 رسالتك:",
-                    name: "message",
-                    placeholder: "اكتب استفسارك هنا..."
-                },
+                { type: "email", label: "📧 بريدك الإلكتروني:", name: "email", required: true, placeholder: "your@email.com" },
+                { type: "textarea", label: "💬 رسالتك:", name: "message", placeholder: "اكتب استفسارك هنا..." },
                 { type: "submit", value: "إرسال" }
             ],
             styles: {
-                title: {
-                    backgroundColor: "#0a2647",
-                    color: "#ffffff"
-                },
+                title: { backgroundColor: "#0a2647", color: "#ffffff" },
                 button: {
-                    backgroundColor: "#0a2647",
-                    color: "#ffffff",
-                    position: "fixed",
-                    bottom: "20px",
-                    left: "20px",
-                    fontSize: "16px",
-                    padding: "12px 24px",
-                    borderRadius: "60px",
+                    backgroundColor: "#0a2647", color: "#ffffff",
+                    position: "fixed", bottom: "20px", left: "20px",
+                    fontSize: "16px", padding: "12px 24px", borderRadius: "60px",
                     boxShadow: "0 4px 15px rgba(10,38,71,0.25)",
-                    border: "none",
-                    cursor: "pointer",
-                    zIndex: "999"
+                    border: "none", cursor: "pointer", zIndex: "999"
                 },
-                dialog: {
-                    borderRadius: "25px",
-                    boxShadow: "0 20px 60px rgba(0,0,0,0.15)"
-                }
+                dialog: { borderRadius: "25px", boxShadow: "0 20px 60px rgba(0,0,0,0.15)" }
             },
             initiallyVisible: false
         });
 
-        // =========================================
-        // جافا سكريبت الاستبيان الرئيسي (بدون رسوميات)
-        // =========================================
+        // إرسال الاستبيان الرئيسي (بدون رسوميات، وضع no-cors)
         document.getElementById('surveyForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // 1. جمع البيانات
             const name = document.getElementById('name').value.trim() || 'لم يذكر';
             const dept = document.getElementById('dept').value.trim();
             const course = document.getElementById('courseSelect').value;
@@ -377,13 +330,11 @@
             const q5 = document.querySelector('input[name="q5"]:checked');
             const suggestions = document.getElementById('suggestions').value.trim() || 'لا يوجد';
 
-            // 2. التحقق من الإجباريات
             if (!dept || !course || !q1 || !q2 || !q3 || !q4 || !q5) {
                 alert('⚠️ الرجاء تعبئة جميع الحقول الإجبارية (التي تحمل علامة *)');
                 return;
             }
 
-            // 3. تجهيز البيانات للإرسال
             const formData = new FormData();
             formData.append('الاسم', name);
             formData.append('القسم', dept);
@@ -395,29 +346,23 @@
             formData.append('التطبيق_في_العمل', q5.value);
             formData.append('الاقتراحات', suggestions);
 
-            // 4. الإرسال إلى Formspree (بدون رسوميات، بدون انتظار رد)
+            // إرسال مع mode: 'no-cors' لتجنب أي أخطاء CORS
             fetch('https://formspree.io/f/xqpkgjoa', {
                 method: 'POST',
                 body: formData,
-                mode: 'no-cors' // هذه الخاصية تمنع ظهور أي خطأ CORS وتضمن الإرسال
-            })
-            .then(() => {
-                // بما أن mode: 'no-cors' لا يعطي رد، نعتبر الإرسال ناجحاً ونعرض الشكر
+                mode: 'no-cors'
+            }).then(() => {
                 document.getElementById('thankYouModal').style.display = 'flex';
                 document.getElementById('surveyForm').reset();
                 document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
-            })
-            .catch(() => {
-                // حتى لو ظهر خطأ، نعرض الشكر عشان ما يخرب تجربة المستخدم
+            }).catch(() => {
+                // حتى لو ظهر خطأ، نظهر الشكر عشان ما يتضايق المستخدم
                 document.getElementById('thankYouModal').style.display = 'flex';
                 document.getElementById('surveyForm').reset();
                 document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
             });
         });
 
-        // =========================================
-        // إغلاق نافذة الشكر
-        // =========================================
         function closeModal() {
             document.getElementById('thankYouModal').style.display = 'none';
         }
