@@ -177,6 +177,65 @@
     .credit span {
       color: #1d5a7a;
     }
+
+    /* نافذة "شكراً لمشاركتك" */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+    .modal-box {
+      background: #fff;
+      padding: 40px 50px;
+      border-radius: 40px;
+      text-align: center;
+      max-width: 420px;
+      width: 90%;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+      animation: popIn 0.3s ease-out;
+    }
+    .modal-box .icon {
+      font-size: 4rem;
+      margin-bottom: 10px;
+    }
+    .modal-box h2 {
+      color: #0a2647;
+      margin-bottom: 10px;
+      font-size: 1.8rem;
+    }
+    .modal-box p {
+      color: #3c5d7a;
+      margin-bottom: 25px;
+      font-size: 1rem;
+    }
+    .modal-box .btn-close-modal {
+      background: #0a2647;
+      color: #fff;
+      border: none;
+      padding: 12px 40px;
+      border-radius: 60px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .modal-box .btn-close-modal:hover {
+      background: #1d4a75;
+      transform: scale(1.03);
+    }
+    @keyframes popIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
     @media (max-width: 600px) {
       .radio-group, .checkbox-group {
         flex-direction: column;
@@ -188,23 +247,22 @@
       h1 {
         font-size: 1.6rem;
       }
+      .modal-box {
+        padding: 30px 20px;
+      }
     }
   </style>
 </head>
 <body>
+
   <div class="card">
     <h1>📝 استبيان تقييم الورشة</h1>
     <div class="sub">
       الصرع وطرق التعامل معه – <strong>مركز التأهيل الشامل بحفر الباطن</strong>
     </div>
 
-    <!-- ✅ تم ربط النموذج بـ Formspree باستخدام المعرف الخاص بك -->
-    <form action="https://formspree.io/f/xqpkgjoa" method="POST">
-      <!-- حقول مخفية -->
-      <input type="hidden" name="_subject" value="📊 نتيجة استبيان ورشة الصرع - مركز التأهيل" />
-      <input type="hidden" name="_captcha" value="false" />
-      <input type="text" name="_gotcha" style="display:none" />
-
+    <!-- النموذج مع ربط Formspree ولكن عبر JavaScript (إرسال خلفي) -->
+    <form id="surveyForm">
       <!-- 1. الاسم -->
       <div class="form-group">
         <label>الاسم (اختياري)</label>
@@ -298,5 +356,60 @@
       <span style="font-size:0.8rem;">© 2026 – مركز التأهيل الشامل بحفر الباطن – قسم التمريض</span>
     </div>
   </div>
+
+  <!-- نافذة "شكراً لمشاركتك" المنبثقة -->
+  <div class="modal-overlay" id="thankYouModal">
+    <div class="modal-box">
+      <div class="icon">🙏</div>
+      <h2>شكراً لمشاركتك</h2>
+      <p>تم استلام آرائك بنجاح، وهي تهمنا في تطوير أعمالنا.</p>
+      <button class="btn-close-modal" onclick="closeModal()">حسناً</button>
+    </div>
+  </div>
+
+  <script>
+    function closeModal() {
+      document.getElementById('thankYouModal').style.display = 'none';
+    }
+
+    document.getElementById('surveyForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // التحقق من الحقول الإجبارية (لأننا أزلنا required من بعض العناصر بسبب الـ stars)
+      const dept = this.querySelector('input[name="القسم"]').value.trim();
+      const rating = this.querySelector('input[name="تقييم_المحتوى"]:checked');
+      const trainer = this.querySelector('select[name="تقييم_المدرب"]').value;
+      const perspective = this.querySelector('input[name="تغير_النظرة"]:checked');
+      const confidence = this.querySelector('input[name="الثقة_بالتعامل"]:checked');
+      const generalSat = this.querySelector('input[name="الرضا_العام"]:checked');
+
+      if (!dept || !rating || !trainer || !perspective || !confidence || !generalSat) {
+        alert('⚠️ الرجاء تعبئة جميع الحقول الإجبارية (التي تحمل علامة *)');
+        return;
+      }
+
+      // إرسال البيانات إلى Formspree في الخلفية (بدون مغادرة الصفحة)
+      const form = this;
+      const formData = new FormData(form);
+
+      fetch('https://formspree.io/f/xqpkgjoa', {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(response => {
+        if (response.ok) {
+          // إظهار نافذة الشكر
+          document.getElementById('thankYouModal').style.display = 'flex';
+          form.reset(); // تفريغ الحقول
+        } else {
+          alert('⚠️ حدث خطأ في الإرسال، يرجى المحاولة مرة أخرى.');
+        }
+      })
+      .catch(error => {
+        alert('⚠️ حدث خطأ في الاتصال، تأكد من اتصالك بالإنترنت.');
+      });
+    });
+  </script>
 </body>
 </html>
