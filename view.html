@@ -291,10 +291,13 @@
     </div>
 
     <script>
+        // 🔴 معرف النموذج الجديد من حساب نبراس
+        const FORM_ID = 'maeyalyd';
+
         // زر منبثق للتواصل السريع (Formspree Button)
         window.formbutton = window.formbutton || function() { (formbutton.q = formbutton.q || []).push(arguments); };
         formbutton("create", {
-            action: "https://formspree.io/f/xqpkgjoa",
+            action: "https://formspree.io/f/" + FORM_ID,
             title: "📩 تواصل معنا",
             description: "لديك استفسار إضافي عن الدورات؟ اكتب لنا.",
             fields: [
@@ -316,7 +319,7 @@
             initiallyVisible: false
         });
 
-        // إرسال الاستبيان الرئيسي (بدون رسوميات، وضع no-cors)
+        // إرسال الاستبيان الرئيسي
         document.getElementById('surveyForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -346,8 +349,7 @@
             formData.append('التطبيق_في_العمل', q5.value);
             formData.append('الاقتراحات', suggestions);
 
-            // إرسال مع mode: 'no-cors' لتجنب أي أخطاء CORS
-            fetch('https://formspree.io/f/xqpkgjoa', {
+            fetch("https://formspree.io/f/" + FORM_ID, {
                 method: 'POST',
                 body: formData,
                 mode: 'no-cors'
@@ -356,7 +358,6 @@
                 document.getElementById('surveyForm').reset();
                 document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
             }).catch(() => {
-                // حتى لو ظهر خطأ، نظهر الشكر عشان ما يتضايق المستخدم
                 document.getElementById('thankYouModal').style.display = 'flex';
                 document.getElementById('surveyForm').reset();
                 document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
