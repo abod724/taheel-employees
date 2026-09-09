@@ -287,9 +287,9 @@
             </div>
         </form>
 
-        <!-- ===== عداد المشاركات ===== -->
+        <!-- عداد المشاركات (يعتمد على localStorage) -->
         <div class="counter-box">
-            📊 إجمالي المشاركات حتى الآن: <span id="submitCounter">0</span>
+            📊 عدد مرات إرسالك للاستبيان من هذا الجهاز: <span id="submitCounter">0</span>
         </div>
 
         <div class="footer">
@@ -318,26 +318,39 @@
         const FORM_ID = 'maeyalyd';
 
         // =============================================
-        // 2. عداد المشاركات (CountAPI)
+        // 2. عداد المشاركات (باستخدام localStorage)
         // =============================================
-        const COUNTER_KEY = 'workshop-survey-2026';
+        const COUNTER_KEY = 'survey_submit_count';
 
-        function updateCounter() {
-            fetch(`https://api.countapi.xyz/get/${COUNTER_KEY}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data && data.value !== undefined) {
-                        document.getElementById('submitCounter').innerText = data.value;
-                    }
-                })
-                .catch(() => {
-                    // إذا فشل العداد، يبقى الرقم 0
-                });
+        // دالة لقراءة العداد من localStorage
+        function getCounter() {
+            const val = localStorage.getItem(COUNTER_KEY);
+            return val ? parseInt(val, 10) : 0;
         }
 
-        // عند تحميل الصفحة، نعرض العداد الحالي
+        // دالة لحفظ العداد في localStorage
+        function setCounter(value) {
+            localStorage.setItem(COUNTER_KEY, String(value));
+        }
+
+        // دالة لعرض العداد على الصفحة
+        function displayCounter() {
+            const count = getCounter();
+            document.getElementById('submitCounter').innerText = count;
+        }
+
+        // دالة لزيادة العداد بمقدار 1
+        function incrementCounter() {
+            const current = getCounter();
+            const newCount = current + 1;
+            setCounter(newCount);
+            displayCounter();
+            return newCount;
+        }
+
+        // عرض العداد عند تحميل الصفحة
         window.onload = function() {
-            updateCounter();
+            displayCounter();
         };
 
         // =============================================
@@ -408,20 +421,16 @@
                 body: formData,
                 mode: 'no-cors'
             }).then(() => {
-                // زيادة عداد المشاركات
-                return fetch(`https://api.countapi.xyz/hit/${COUNTER_KEY}`);
-            }).then(res => res.json())
-            .then(data => {
-                if (data && data.value !== undefined) {
-                    document.getElementById('submitCounter').innerText = data.value;
-                }
+                // زيادة العداد المحلي
+                incrementCounter();
                 // إظهار نافذة الشكر
                 document.getElementById('thankYouModal').style.display = 'flex';
                 // تفريغ الحقول
                 document.getElementById('surveyForm').reset();
                 document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
             }).catch(() => {
-                // حتى لو فشل العداد، نظهر الشكر عشان ما يخرب تجربة المستخدم
+                // حتى لو فشل الإرسال، نظهر الشكر عشان ما يخرب تجربة المستخدم
+                // لكننا لا نزيد العداد في حالة الفشل
                 document.getElementById('thankYouModal').style.display = 'flex';
                 document.getElementById('surveyForm').reset();
                 document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
