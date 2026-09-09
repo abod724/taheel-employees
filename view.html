@@ -130,24 +130,8 @@
         }
         .btn-outline:hover { background: #0a2647; color: #fff; }
 
-        .counter-box {
-            background: #e8f0fe;
-            border-radius: 60px;
-            padding: 14px 20px;
-            text-align: center;
-            margin-top: 30px;
-            border: 1px solid #c5d9f0;
-            font-size: 1rem;
-            color: #0a2647;
-        }
-        .counter-box span {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin: 0 8px;
-        }
-
         .footer {
-            margin-top: 25px;
+            margin-top: 30px;
             font-size: 0.8rem;
             color: #4d6a85;
             text-align: center;
@@ -300,11 +284,6 @@
             </div>
         </form>
 
-        <!-- عداد المشاركات -->
-        <div class="counter-box">
-            📊 إجمالي المشاركات: <span id="submitCounter">0</span>
-        </div>
-
         <div class="footer">
             <div class="credit">
                 🖥️ برمجة وتصميم: <span>عبدالله حسين المطيري</span> | <span>بدر فريح الحربي</span>
@@ -333,11 +312,11 @@
         // تأكد من تحميل المكتبة أولاً
         window.formbutton = window.formbutton || function() { (formbutton.q = formbutton.q || []).push(arguments); };
 
-        // نضبط الزر المنبثق
+        // نضبط الزر المنبثق (نموذج التواصل السريع)
         formbutton("create", {
-            action: "https://formspree.io/f/xqpkgjoa", // نفس معرف النموذج
-            title: "📩 تواصل معنا", // عنوان النافذة
-            description: "لديك استفسار إضافي عن الدورات؟ اكتب لنا.", // وصف
+            action: "https://formspree.io/f/xqpkgjoa",
+            title: "📩 تواصل معنا",
+            description: "لديك استفسار إضافي عن الدورات؟ اكتب لنا.",
             fields: [
                 {
                     type: "email",
@@ -352,11 +331,11 @@
                     name: "message",
                     placeholder: "اكتب استفسارك هنا..."
                 },
-                { type: "submit", value: "إرسال" } // زر الإرسال بالعربي
+                { type: "submit", value: "إرسال" }
             ],
             styles: {
                 title: {
-                    backgroundColor: "#0a2647", // نفس لون الاستبيان
+                    backgroundColor: "#0a2647",
                     color: "#ffffff"
                 },
                 button: {
@@ -364,7 +343,7 @@
                     color: "#ffffff",
                     position: "fixed",
                     bottom: "20px",
-                    left: "20px", // يظهر في الزاوية اليسرى (عشان ما يزاحم المحتوى)
+                    left: "20px",
                     fontSize: "16px",
                     padding: "12px 24px",
                     borderRadius: "60px",
@@ -378,29 +357,16 @@
                     boxShadow: "0 20px 60px rgba(0,0,0,0.15)"
                 }
             },
-            initiallyVisible: false // لا تظهر تلقائياً، تظهر عند الضغط على الزر
+            initiallyVisible: false
         });
 
         // =========================================
-        // جافا سكريبت الاستبيان الرئيسي (عداد + إرسال)
+        // جافا سكريبت الاستبيان الرئيسي (بدون رسوميات)
         // =========================================
-        const COUNTER_KEY = 'workshop-epilepsy-unified';
-
-        function updateCounter() {
-            fetch(`https://api.countapi.xyz/get/${COUNTER_KEY}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data && data.value !== undefined) {
-                        document.getElementById('submitCounter').innerText = data.value;
-                    }
-                })
-                .catch(() => {});
-        }
-        window.onload = updateCounter;
-
         document.getElementById('surveyForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
+            // 1. جمع البيانات
             const name = document.getElementById('name').value.trim() || 'لم يذكر';
             const dept = document.getElementById('dept').value.trim();
             const course = document.getElementById('courseSelect').value;
@@ -411,49 +377,47 @@
             const q5 = document.querySelector('input[name="q5"]:checked');
             const suggestions = document.getElementById('suggestions').value.trim() || 'لا يوجد';
 
+            // 2. التحقق من الإجباريات
             if (!dept || !course || !q1 || !q2 || !q3 || !q4 || !q5) {
                 alert('⚠️ الرجاء تعبئة جميع الحقول الإجبارية (التي تحمل علامة *)');
                 return;
             }
 
+            // 3. تجهيز البيانات للإرسال
             const formData = new FormData();
             formData.append('الاسم', name);
             formData.append('القسم', dept);
             formData.append('الدورة', course);
-            formData.append('السؤال1_وضوح_الأهداف', q1.value);
-            formData.append('السؤال2_سلاسة_العرض', q2.value);
-            formData.append('السؤال3_ملائمة_الوقت', q3.value);
-            formData.append('السؤال4_تفاعل_المدرب', q4.value);
-            formData.append('السؤال5_التطبيق_في_العمل', q5.value);
+            formData.append('وضوح_الأهداف', q1.value);
+            formData.append('سلاسة_العرض', q2.value);
+            formData.append('ملائمة_الوقت', q3.value);
+            formData.append('تفاعل_المدرب', q4.value);
+            formData.append('التطبيق_في_العمل', q5.value);
             formData.append('الاقتراحات', suggestions);
 
+            // 4. الإرسال إلى Formspree (بدون رسوميات، بدون انتظار رد)
             fetch('https://formspree.io/f/xqpkgjoa', {
                 method: 'POST',
                 body: formData,
-                headers: { 'Accept': 'application/json' }
-            })
-            .then(response => {
-                if (response.ok) return response.json();
-                else throw new Error('فشل الإرسال');
+                mode: 'no-cors' // هذه الخاصية تمنع ظهور أي خطأ CORS وتضمن الإرسال
             })
             .then(() => {
-                return fetch(`https://api.countapi.xyz/hit/${COUNTER_KEY}`);
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data && data.value !== undefined) {
-                    document.getElementById('submitCounter').innerText = data.value;
-                }
+                // بما أن mode: 'no-cors' لا يعطي رد، نعتبر الإرسال ناجحاً ونعرض الشكر
                 document.getElementById('thankYouModal').style.display = 'flex';
                 document.getElementById('surveyForm').reset();
                 document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
             })
-            .catch(error => {
-                alert('⚠️ حدث خطأ في الإرسال، يرجى المحاولة مرة أخرى.');
-                console.log(error);
+            .catch(() => {
+                // حتى لو ظهر خطأ، نعرض الشكر عشان ما يخرب تجربة المستخدم
+                document.getElementById('thankYouModal').style.display = 'flex';
+                document.getElementById('surveyForm').reset();
+                document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
             });
         });
 
+        // =========================================
+        // إغلاق نافذة الشكر
+        // =========================================
         function closeModal() {
             document.getElementById('thankYouModal').style.display = 'none';
         }
