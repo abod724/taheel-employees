@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الدورات القادمة وورش العمل - مركز التأهيل الشامل</title>
     
-    <!-- ربط ملف manifest.json -->
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="logo.jpg">
 
@@ -13,7 +12,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
         body {
-            background: #f2f8ff;
+            background: #f4f8f9;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -23,73 +22,89 @@
         .card {
             max-width: 780px;
             width: 100%;
-            background: #fff;
-            border-radius: 32px;
+            background: #ffffff;
+            border-radius: 24px;
             padding: 35px 30px;
-            box-shadow: 0 20px 45px rgba(0,20,40,0.08);
-            border: 1px solid #e9f0f7;
+            box-shadow: 0 10px 35px rgba(0, 77, 77, 0.08);
+            border: 1px solid #e0ecec;
         }
-        /* ===== تنسيق الشعار ===== */
+        /* ===== الشعار ===== */
         .logo-container {
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
         .logo-container img {
-            max-height: 90px;
+            max-height: 95px;
             width: auto;
-            border-radius: 12px;
+            border-radius: 10px;
             display: inline-block;
         }
 
         .header {
             text-align: center;
-            border-bottom: 2px solid #eef4fa;
+            border-bottom: 1px solid #e0ecec;
             padding-bottom: 20px;
             margin-bottom: 25px;
         }
-        .header h1 { font-size: 2rem; color: #0a2647; font-weight: 700; }
-        .header p { color: #3e5f7b; font-size: 1rem; margin-top: 4px; }
+        .header h1 { 
+            font-size: 1.9rem; 
+            color: #004d4d; 
+            font-weight: 700; 
+        }
+        .header p { 
+            color: #4d6b6b; 
+            font-size: 1rem; 
+            margin-top: 6px; 
+        }
 
         .section-title {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: 700;
-            color: #0a2647;
+            color: #004d4d;
             margin: 25px 0 15px 0;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        .section-title .icon { font-size: 1.8rem; }
+        .section-title .icon { font-size: 1.7rem; }
+
         .form-group {
-            margin-bottom: 25px;
-            background: #f9fcff;
+            margin-bottom: 22px;
+            background: #f7fbfb;
             padding: 18px 20px;
-            border-radius: 20px;
-            border: 1px solid #e4edf6;
+            border-radius: 16px;
+            border: 1px solid #e0ecec;
             transition: 0.2s;
         }
-        .form-group:hover { border-color: #b8d0e5; }
+        .form-group:hover { 
+            border-color: #80b8b8; 
+            background: #f1f8f8;
+        }
         .form-group label {
             display: block;
             font-weight: 600;
-            color: #0a2647;
+            color: #004d4d;
             margin-bottom: 8px;
             font-size: 0.95rem;
         }
-        .form-group label .required { color: #d32f2f; margin-right: 4px; }
+        .form-group label .required { 
+            color: #d32f2f; 
+            margin-right: 4px; 
+        }
         input[type="text"], input[type="email"], select, textarea {
             width: 100%;
             padding: 14px 18px;
-            border: 2px solid #dce6f0;
-            border-radius: 16px;
+            border: 1.5px solid #cfe0e0;
+            border-radius: 12px;
             font-size: 1rem;
             background: #fff;
             transition: 0.2s;
+            color: #1d3b3b;
         }
         input:focus, select:focus, textarea:focus {
-            border-color: #1a5a8a;
+            border-color: #004d4d;
             outline: none;
-            box-shadow: 0 0 0 4px rgba(26,90,138,0.06);
+            box-shadow: 0 0 0 4px rgba(0, 77, 77, 0.08);
         }
         textarea { min-height: 80px; resize: vertical; }
 
@@ -100,84 +115,91 @@
             flex-wrap: wrap;
         }
         .btn {
-            padding: 16px 35px;
-            border-radius: 60px;
-            font-size: 1.1rem;
+            padding: 15px 32px;
+            border-radius: 12px;
+            font-size: 1rem;
             font-weight: 600;
             border: none;
             cursor: pointer;
             flex: 1;
             transition: 0.2s;
             text-align: center;
+            letter-spacing: 0.2px;
         }
         .btn-primary {
-            background: #0a2647;
+            background: #004d4d;
             color: #fff;
-            box-shadow: 0 4px 12px rgba(10,38,71,0.15);
+            box-shadow: 0 4px 12px rgba(0, 77, 77, 0.20);
         }
-        .btn-primary:hover { background: #1d4a75; transform: scale(1.02); }
+        .btn-primary:hover { 
+            background: #003838; 
+            box-shadow: 0 6px 18px rgba(0, 77, 77, 0.30);
+        }
         .btn-outline {
             background: transparent;
-            color: #0a2647;
-            border: 2px solid #0a2647;
+            color: #004d4d;
+            border: 1.5px solid #004d4d;
         }
-        .btn-outline:hover { background: #0a2647; color: #fff; }
+        .btn-outline:hover { 
+            background: #004d4d; 
+            color: #fff; 
+        }
 
         .footer {
-            margin-top: 30px;
+            margin-top: 28px;
             font-size: 0.8rem;
-            color: #4d6a85;
+            color: #4d6b6b;
             text-align: center;
-            border-top: 1px solid #d6e6f5;
+            border-top: 1px solid #e0ecec;
             padding-top: 18px;
         }
         .credit {
             font-weight: 600;
-            color: #0a2647;
-            background: #e6f0fa;
+            color: #004d4d;
+            background: #eaf4f4;
             padding: 6px 18px;
-            border-radius: 40px;
+            border-radius: 30px;
             display: inline-block;
             font-size: 0.85rem;
         }
 
         .modal-overlay {
             display: none; position: fixed; top:0;left:0;width:100%;height:100%;
-            background: rgba(0,0,0,0.35); backdrop-filter: blur(3px);
+            background: rgba(0, 77, 77, 0.45); backdrop-filter: blur(3px);
             justify-content: center; align-items: center; z-index: 999;
         }
         .modal-box {
-            background: #fff; padding: 35px 30px; border-radius: 30px;
+            background: #fff; padding: 35px 30px; border-radius: 24px;
             text-align: center; max-width: 370px; width: 90%;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+            box-shadow: 0 25px 60px rgba(0, 77, 77, 0.25);
         }
         .modal-box .icon { font-size: 4.2rem; }
-        .modal-box h2 { color: #0a2647; margin: 8px 0; font-size: 1.8rem; }
-        .modal-box p { color: #3c5d7a; margin-bottom: 22px; font-size: 0.95rem; }
+        .modal-box h2 { color: #004d4d; margin: 8px 0; font-size: 1.7rem; }
+        .modal-box p { color: #4d6b6b; margin-bottom: 22px; font-size: 0.95rem; }
         .modal-box .btn-close-modal {
-            background: #0a2647; color: #fff; border: none;
+            background: #004d4d; color: #fff; border: none;
             padding: 12px 45px;
-            border-radius: 60px;
+            border-radius: 12px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
+            transition: 0.2s;
         }
-        .modal-box .btn-close-modal:hover { background: #1d4a75; }
+        .modal-box .btn-close-modal:hover { background: #003838; }
 
         @media (max-width: 600px) {
             .card { padding: 20px 15px; }
             .section-title { font-size: 1.1rem; }
             .form-group { padding: 14px; }
             .btn { padding: 14px 20px; font-size: 1rem; }
-            .logo-container img { max-height: 60px; }
+            .logo-container img { max-height: 65px; }
+            .header h1 { font-size: 1.4rem; }
         }
     </style>
 </head>
 <body>
     <div class="card">
-        <!-- ========================================= -->
-        <!-- 🔴 الشعار (تم تعديل المسار)               -->
-        <!-- ========================================= -->
+        <!-- الشعار -->
         <div class="logo-container">
             <img src="./logo.jpg" alt="شعار مركز التأهيل الشامل" />
         </div>
@@ -187,20 +209,17 @@
             <p>مركز التأهيل الشامل بحفر الباطن</p>
         </div>
 
-        <!-- ========================================= -->
-        <!-- استبيان رغبات الدورات القادمة             -->
-        <!-- ========================================= -->
         <div class="section-title">
             <span class="icon">📝</span> استبيان رغبات الدورات وورش العمل
         </div>
         <form id="surveyForm">
             <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 5px;">
                 <div style="flex: 1; min-width: 150px;">
-                    <label style="font-weight:600; color:#0a2647; font-size:0.9rem;">الاسم (اختياري)</label>
+                    <label style="font-weight:600; color:#004d4d; font-size:0.9rem;">الاسم (اختياري)</label>
                     <input type="text" id="name" placeholder="أدخل اسمك" style="margin-top:5px;" />
                 </div>
                 <div style="flex: 1; min-width: 150px;">
-                    <label style="font-weight:600; color:#0a2647; font-size:0.9rem;">القسم <span class="required">*</span></label>
+                    <label style="font-weight:600; color:#004d4d; font-size:0.9rem;">القسم <span class="required">*</span></label>
                     <input type="text" id="dept" required placeholder="مثال: تمريض، علاج طبيعي" style="margin-top:5px;" />
                 </div>
             </div>
@@ -238,9 +257,6 @@
         </div>
     </div>
 
-    <!-- ========================================= -->
-    <!-- نافذة الشكر                               -->
-    <!-- ========================================= -->
     <div class="modal-overlay" id="thankYouModal">
         <div class="modal-box">
             <div class="icon">🙏</div>
@@ -250,13 +266,9 @@
         </div>
     </div>
 
-    <!-- ========================================= -->
-    <!-- الزر العائم (نموذج التواصل السريع)        -->
-    <!-- ========================================= -->
     <script>
         const FORM_ID = 'maeyalyd';
 
-        // ==== الزر العائم ====
         window.formbutton = window.formbutton || function() { (formbutton.q = formbutton.q || []).push(arguments); };
         formbutton("create", {
             action: "https://formspree.io/f/" + FORM_ID,
@@ -268,20 +280,19 @@
                 { type: "submit", value: "إرسال" }
             ],
             styles: {
-                title: { backgroundColor: "#0a2647", color: "#ffffff" },
+                title: { backgroundColor: "#004d4d", color: "#ffffff" },
                 button: {
-                    backgroundColor: "#0a2647", color: "#ffffff",
+                    backgroundColor: "#004d4d", color: "#ffffff",
                     position: "fixed", bottom: "20px", left: "20px",
-                    fontSize: "16px", padding: "12px 24px", borderRadius: "60px",
-                    boxShadow: "0 4px 15px rgba(10,38,71,0.25)",
+                    fontSize: "15px", padding: "12px 22px", borderRadius: "10px",
+                    boxShadow: "0 4px 15px rgba(0,77,77,0.30)",
                     border: "none", cursor: "pointer", zIndex: "999"
                 },
-                dialog: { borderRadius: "25px", boxShadow: "0 20px 60px rgba(0,0,0,0.15)" }
+                dialog: { borderRadius: "20px", boxShadow: "0 20px 60px rgba(0,77,77,0.20)" }
             },
             initiallyVisible: false
         });
 
-        // ==== إرسال استبيان الرغبات ====
         document.getElementById('surveyForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
