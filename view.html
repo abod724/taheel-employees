@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الدورات القادمة وورش العمل - مركز التأهيل الشامل</title>
     
-    <!-- ========================================= -->
-    <!-- 🔴 ربط ملف manifest.json (للتطبيق)        -->
-    <!-- ========================================= -->
+    <!-- ربط ملف manifest.json -->
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="logo.jpg">
 
     <script src="https://formspree.io/js/formbutton-v1.min.js" defer></script>
     <style>
@@ -31,15 +29,16 @@
             box-shadow: 0 20px 45px rgba(0,20,40,0.08);
             border: 1px solid #e9f0f7;
         }
-        /* ===== تنسيق الشعار (الصورة) ===== */
+        /* ===== تنسيق الشعار ===== */
         .logo-container {
             text-align: center;
             margin-bottom: 15px;
         }
         .logo-container img {
-            max-height: 80px;
+            max-height: 90px;
             width: auto;
             border-radius: 12px;
+            display: inline-block;
         }
 
         .header {
@@ -164,7 +163,6 @@
             cursor: pointer;
         }
         .modal-box .btn-close-modal:hover { background: #1d4a75; }
-        .modal-box .btn-close-modal:focus { outline: none; }
 
         @media (max-width: 600px) {
             .card { padding: 20px 15px; }
@@ -178,10 +176,10 @@
 <body>
     <div class="card">
         <!-- ========================================= -->
-        <!-- 🔴 إضافة الشعار (الصورة) في الأعلى        -->
+        <!-- 🔴 الشعار (تم تعديل المسار)               -->
         <!-- ========================================= -->
         <div class="logo-container">
-            <img src="logo.png" alt="شعار مركز التأهيل الشامل" />
+            <img src="./logo.jpg" alt="شعار مركز التأهيل الشامل" />
         </div>
 
         <div class="header">
@@ -190,7 +188,7 @@
         </div>
 
         <!-- ========================================= -->
-        <!-- 1. استبيان رغبات الدورات القادمة          -->
+        <!-- استبيان رغبات الدورات القادمة             -->
         <!-- ========================================= -->
         <div class="section-title">
             <span class="icon">📝</span> استبيان رغبات الدورات وورش العمل
