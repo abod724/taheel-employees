@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الدورات القادمة وورش العمل - مركز التأهيل الشامل</title>
+    
+    <!-- ========================================= -->
+    <!-- 🔴 ربط ملف manifest.json (للتطبيق)        -->
+    <!-- ========================================= -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
     <script src="https://formspree.io/js/formbutton-v1.min.js" defer></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
@@ -24,6 +31,17 @@
             box-shadow: 0 20px 45px rgba(0,20,40,0.08);
             border: 1px solid #e9f0f7;
         }
+        /* ===== تنسيق الشعار (الصورة) ===== */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .logo-container img {
+            max-height: 80px;
+            width: auto;
+            border-radius: 12px;
+        }
+
         .header {
             text-align: center;
             border-bottom: 2px solid #eef4fa;
@@ -153,13 +171,20 @@
             .section-title { font-size: 1.1rem; }
             .form-group { padding: 14px; }
             .btn { padding: 14px 20px; font-size: 1rem; }
+            .logo-container img { max-height: 60px; }
         }
     </style>
 </head>
 <body>
     <div class="card">
+        <!-- ========================================= -->
+        <!-- 🔴 إضافة الشعار (الصورة) في الأعلى        -->
+        <!-- ========================================= -->
+        <div class="logo-container">
+            <img src="logo.png" alt="شعار مركز التأهيل الشامل" />
+        </div>
+
         <div class="header">
-            <!-- 🔴 تم تغيير العنوان إلى: الدورات القادمة وورش العمل -->
             <h1>📋 الدورات القادمة وورش العمل</h1>
             <p>مركز التأهيل الشامل بحفر الباطن</p>
         </div>
