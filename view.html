@@ -2,27 +2,21 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>لغة عين - عربية خالصة مع دوال وقوائم وبينما</title>
+  <title>لغة عين - النسخة النهائية</title>
   <style>
     body { font-family: sans-serif; padding: 20px; background: #f0f0f0; direction: rtl; }
     textarea { width: 100%; height: 200px; font-family: monospace; font-size: 16px; }
-    #الناتج { white-space: pre; background: #fff; padding: 10px; margin-top: 10px; border: 1px solid #ccc; font-family: monospace; min-height: 50px; }
+    #الناتج { white-space: pre-wrap; background: #fff; padding: 10px; margin-top: 10px; border: 1px solid #ccc; font-family: monospace; min-height: 50px; }
     button { padding: 10px 20px; margin-top: 10px; font-size: 16px; margin-left: 5px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 5px; }
     button:hover { background: #0056b3; }
   </style>
 </head>
 <body>
-  <h1>مترجم لغة عين (عربية خالصة)</h1>
+  <h1>مترجم لغة عين (النسخة النهائية)</h1>
   <p>اكتب كود بلغة عين (استخدم الأرقام العربية ٠-٩):</p>
-  <textarea id="كود_عين">// حلقة بينما: تطبع الأرقام من ١ إلى ٣
-متغير العداد = ١
-
-بينما (العداد < ٤) {
-  اطبع "العداد الآن: " + العداد
-  العداد = العداد + ١ // إعادة تعيين المتغير
-}
-
-اطبع "انتهت الحلقة!"</textarea><br>
+  <textarea id="كود_عين">متغير العدد = ٥
+العدد = العدد + ١٠
+اطبع "الناتج هو: " + العدد</textarea><br>
   <button onclick="شغل()">تشغيل</button>
   <button onclick="احفظ()">حفظ الكود</button>
   <button onclick="انسخ()">نسخ الناتج</button>
@@ -32,7 +26,7 @@
 
   <script>
     // ==========================================
-    // 0. دوال مساعدة
+    // 0. دوال مساعدة لتحويل الأرقام
     // ==========================================
     function تحويل_الأرقام_للإنجليزية(نص) {
       const خريطة = { '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4', '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9' };
@@ -48,10 +42,10 @@
     // ==========================================
     function tokenize(code) {
       code = تحويل_الأرقام_للإنجليزية(code);
-      code = code.replace(/\/\/.*$/gm, '');
+      code = code.replace(/\/\/.*$/gm, ''); // تجاهل التعليقات
       
       const tokens = [];
-      // أضفنا "بينما" للكلمات المحجوزة
+      // نطاق الحروف العربية \u0621-\u064A لضمان عدم التقاط الفاصلة ،
       const regex = /\s*(متغير|اطبع|إذا|آخر|كرر|من|إلى|دالة|إرجع|بينما|[a-zA-Z\u0621-\u064A_][a-zA-Z0-9\u0621-\u064A_]*|\d+|"[^"]*"|'[^']*'|[=><+\-*/{}()\[\]،,])/g;
       let match;
       while ((match = regex.exec(code)) !== null) {
@@ -94,7 +88,7 @@
         const token = peek();
         if (!token) return null;
 
-        // 🛑 إضافة: التعرف على إعادة تعيين المتغير (مثل: العداد = العداد + ١)
+        // 1. التعرف على إعادة تعيين المتغير (مثل: العداد = العداد + ١)
         if (token.type === 'معرف' && peekNext() && peekNext().value === '=') {
           const name = consume().value;
           consume(); // =
@@ -106,8 +100,11 @@
           if (token.value === 'متغير') {
             consume();
             const name = consume().value;
-            consume(); // =
-            const value = parseExpression();
+            let value = null;
+            if (peek() && peek().value === '=') {
+              consume(); // =
+              value = parseExpression();
+            }
             return { type: 'إعلان_متغير', name, value };
           }
           if (token.value === 'اطبع') {
@@ -135,7 +132,6 @@
             const body = parseBlock();
             return { type: 'جملة_تكرار', start, end, body };
           }
-          // 🛑 إضافة: جملة بينما
           if (token.value === 'بينما') {
             consume(); consume(); // (
             const condition = parseExpression();
@@ -187,9 +183,12 @@
 
       function parsePrimary() {
         const token = consume();
+        if (!token) throw new Error("نهاية غير متوقعة للكود");
+        
         if (token.type === 'رقم') return { type: 'رقم', value: parseInt(token.value) };
         if (token.type === 'نص') return { type: 'نص', value: token.value };
         
+        // التعامل مع القوائم
         if (token.value === '[') {
           const elements = [];
           while (peek() && peek().value !== ']') {
@@ -201,6 +200,7 @@
         }
 
         if (token.type === 'معرف') {
+          // استدعاء دالة
           if (peek() && peek().value === '(') {
             consume(); // (
             const args = [];
@@ -211,6 +211,7 @@
             consume(); // )
             return { type: 'استدعاء_دالة', name: token.value, args };
           }
+          // الوصول لعنصر في قائمة
           if (peek() && peek().value === '[') {
             consume(); // [
             const index = parseExpression();
@@ -226,7 +227,7 @@
     }
 
     // ==========================================
-    // 3. المفسر (Interpreter) - مع دعم النطاقات
+    // 3. المفسر (Interpreter)
     // ==========================================
     class البيئة {
       constructor(الأب = null) {
@@ -234,7 +235,6 @@
         this.الأب = الأب;
       }
       تعريف(اسم, قيمة) { this.القيم[اسم] = قيمة; }
-      // 🛑 إضافة: دالة تحديث المتغير
       تحديث(اسم, قيمة) {
         if (Object.prototype.hasOwnProperty.call(this.القيم, اسم)) {
           this.القيم[اسم] = قيمة;
@@ -261,9 +261,8 @@
             node.body.forEach(child => evalNode(child, currentEnv));
             break;
           case 'إعلان_متغير':
-            currentEnv.تعريف(node.name, evalNode(node.value, currentEnv));
+            currentEnv.تعريف(node.name, node.value ? evalNode(node.value, currentEnv) : null);
             break;
-          // 🛑 إضافة: تنفيذ إعادة التعيين
           case 'إعادة_تعيين':
             currentEnv.تحديث(node.name, evalNode(node.value, currentEnv));
             break;
@@ -285,7 +284,6 @@
               evalNode(node.body, currentEnv);
             }
             break;
-          // 🛑 إضافة: تنفيذ جملة بينما
           case 'جملة_بينما':
             while (evalNode(node.condition, currentEnv)) {
               evalNode(node.body, currentEnv);
@@ -343,7 +341,7 @@
     }
 
     // ==========================================
-    // واجهة المستخدم
+    // 4. واجهة المستخدم
     // ==========================================
     function شغل() {
       const code = document.getElementById("كود_عين").value;
