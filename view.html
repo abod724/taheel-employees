@@ -14,18 +14,16 @@
 <body>
   <h1>مترجم لغة عين (النسخة الاحترافية)</h1>
   <p>اكتب كود بلغة عين (استخدم الأرقام العربية ٠-٩):</p>
-  <textarea id="كود_عين">متغير اسمي = "عبدالله"
-اطبع "عدد حروف اسمي: " + الطول(اسمي)
+  <textarea id="كود_عين">// تجربة الدوال الرياضية الجديدة
+اطبع "عدد عشوائي بين ١ و ١٠: " + العشوائي(١, ١٠)
 
-متغير عمري = ٢٥
-اطبع "نوع المتغير عمري: " + النوع(عمري)
+اطبع "٢ أس ٣ = " + القوة(٢, ٣)
 
-متغير رقم = ١٠٠
-اطبع "الرقم كـ نص: " + تحويل_لنص(رقم)
+اطبع "الجذر التربيعي لـ ١٦ = " + الجذر(١٦)
 
-متغير نص_رقمي = "٥٠"
-متغير ناتج = تحويل_لرقم(نص_رقمي) + ١٠
-اطبع "الناتج بعد التحويل: " + ناتج</textarea><br>
+// دمج الدوال مع العمليات الحسابية
+متغير ناتج = القوة(٣, ٢) + الجذر(٩)
+اطبع "الناتج النهائي: " + ناتج</textarea><br>
   <button onclick="شغل()">تشغيل</button>
   <button onclick="احفظ()">حفظ الكود</button>
   <button onclick="انسخ()">نسخ الناتج</button>
@@ -245,8 +243,8 @@
           return { type: 'قائمة', elements };
         }
 
-        // 🛑 الإصلاح: التعامل مع الدوال المدمجة داخل التعابير
-        if (['الطول', 'النوع', 'تحويل_لنص', 'تحويل_لرقم'].includes(token.value)) {
+        // التعامل مع الدوال المدمجة داخل التعابير
+        if (['الطول', 'النوع', 'تحويل_لنص', 'تحويل_لرقم', 'العشوائي', 'القوة', 'الجذر'].includes(token.value)) {
           consume(); // (
           const args = [];
           while (peek() && peek().value !== ')') {
@@ -371,14 +369,12 @@
             } else {
               throw new Error(`${node.name} ليست دالة`);
             }
-          // 🛑 الإصلاح: تنفيذ الدوال المدمجة داخل التعابير
           case 'استدعاء_مدمج':
             const argValue = node.args.length > 0 ? evalNode(node.args[0], currentEnv) : null;
+            const arg2 = node.args.length > 1 ? evalNode(node.args[1], currentEnv) : null;
             switch (node.name) {
               case 'الطول':
-                if (typeof argValue !== 'string' && !Array.isArray(argValue)) {
-                  throw new Error(`الطول() تتوقع نصاً أو قائمة`);
-                }
+                if (typeof argValue !== 'string' && !Array.isArray(argValue)) throw new Error(`الطول() تتوقع نصاً أو قائمة`);
                 return argValue.length;
               case 'النوع':
                 if (Array.isArray(argValue)) return 'قائمة';
@@ -391,6 +387,16 @@
                 const num = Number(تحويل_الأرقام_للإنجليزية(String(argValue)));
                 if (isNaN(num)) throw new Error(`لا يمكن تحويل "${argValue}" إلى رقم`);
                 return num;
+              // 🛑 إضافة الدوال الرياضية الجديدة
+              case 'العشوائي':
+                const min = argValue || 0;
+                const max = arg2 || 10;
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+              case 'القوة':
+                return Math.pow(argValue, arg2);
+              case 'الجذر':
+                if (argValue < 0) throw new Error("لا يمكن حساب جذر رقم سالب");
+                return Math.sqrt(argValue);
             }
             break;
           case 'إرجع':
