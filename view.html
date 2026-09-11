@@ -6,7 +6,7 @@
   <style>
     body { font-family: sans-serif; padding: 20px; background: #f0f0f0; direction: rtl; transition: background-color 0.5s; }
     textarea { width: 100%; height: 150px; font-family: monospace; font-size: 16px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
-    #الناتج { white-space: pre-wrap; background: #1e1e1e; color: #0f0; padding: 10px; margin-top: 10px; border-radius: 5px; font-family: monospace; min-height: 50px; }
+    #الناتج { white-space: pre-wrap; background: #ffffff; color: #333; padding: 10px; margin-top: 10px; border-radius: 5px; font-family: monospace; min-height: 50px; border: 1px solid #ccc; }
     #مخرجات_الويب { background: #fff; padding: 15px; margin-top: 10px; border: 2px dashed #007bff; border-radius: 8px; min-height: 100px; }
     button { padding: 10px 15px; margin-top: 10px; font-size: 15px; margin-left: 5px; cursor: pointer; border: none; border-radius: 5px; color: white; }
     .btn-primary { background: #007bff; }
@@ -42,9 +42,6 @@
   <div id="مخرجات_الويب"></div>
 
   <script>
-    // ==========================================
-    // 0. دوال مساعدة لتحويل الأرقام
-    // ==========================================
     function تحويل_الأرقام_للإنجليزية(نص) {
       const خريطة = { '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4', '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9' };
       return نص.replace(/[٠-٩]/g, (حرف) => خريطة[حرف]);
@@ -54,9 +51,6 @@
       return String(نص).replace(/[0-9]/g, (رقم) => خريطة[رقم]);
     }
 
-    // ==========================================
-    // 1. المحلل المعجمي (Lexer)
-    // ==========================================
     function tokenize(code) {
       code = code.replace(/[\u200B-\u200D\uFEFF\u200E\u200F]/g, '');
       code = تحويل_الأرقام_للإنجليزية(code);
@@ -84,9 +78,6 @@
       return tokens;
     }
 
-    // ==========================================
-    // 2. المحلل النحوي (Parser)
-    // ==========================================
     function parse(tokens) {
       let pos = 0;
       function peek() { return tokens[pos]; }
@@ -107,7 +98,7 @@
 
         if (token.type === 'معرف' && peekNext() && peekNext().value === '=') {
           const name = consume().value;
-          consume(); // =
+          consume();
           const value = parseExpression();
           return { type: 'إعادة_تعيين', name, value };
         }
@@ -118,7 +109,7 @@
             const name = consume().value;
             let value = null;
             if (peek() && peek().value === '=') {
-              consume(); // =
+              consume();
               value = parseExpression();
             }
             return { type: 'إعلان_متغير', name, value };
@@ -129,9 +120,9 @@
             return { type: 'جملة_طباعة', value };
           }
           if (token.value === 'إذا') {
-            consume(); consume(); // (
+            consume(); consume();
             const condition = parseExpression();
-            consume(); // )
+            consume();
             const consequent = parseBlock();
             let alternate = null;
             if (peek() && peek().value === 'آخر') {
@@ -141,30 +132,30 @@
             return { type: 'جملة_شرطية', condition, consequent, alternate };
           }
           if (token.value === 'كرر') {
-            consume(); consume(); // من
+            consume(); consume();
             const start = parseExpression();
-            consume(); // إلى
+            consume();
             const end = parseExpression();
             const body = parseBlock();
             return { type: 'جملة_تكرار', start, end, body };
           }
           if (token.value === 'بينما') {
-            consume(); consume(); // (
+            consume(); consume();
             const condition = parseExpression();
-            consume(); // )
+            consume();
             const body = parseBlock();
             return { type: 'جملة_بينما', condition, body };
           }
           if (token.value === 'دالة') {
             consume();
             const name = consume().value;
-            consume(); // (
+            consume();
             const params = [];
             while (peek() && peek().value !== ')') {
               if (peek().value === '،' || peek().value === ',') { consume(); continue; }
               params.push(consume().value);
             }
-            consume(); // )
+            consume();
             const body = parseBlock();
             return { type: 'دالة', name, params, body };
           }
@@ -178,12 +169,12 @@
       }
 
       function parseBlock() {
-        consume(); // {
+        consume();
         const body = [];
         while (peek() && peek().value !== '}') {
           body.push(parseStatement());
         }
-        consume(); // }
+        consume();
         return { type: 'كتلة', body };
       }
 
@@ -249,36 +240,36 @@
             if (peek().value === '،' || peek().value === ',') { consume(); continue; }
             elements.push(parseExpression());
           }
-          consume(); // ]
+          consume();
           return { type: 'قائمة', elements };
         }
 
         if (['الطول', 'النوع', 'تحويل_لنص', 'تحويل_لرقم', 'العشوائي', 'القوة', 'الجذر'].includes(token.value)) {
-          consume(); // (
+          consume();
           const args = [];
           while (peek() && peek().value !== ')') {
             if (peek().value === '،' || peek().value === ',') { consume(); continue; }
             args.push(parseExpression());
           }
-          consume(); // )
+          consume();
           return { type: 'استدعاء_مدمج', name: token.value, args };
         }
 
         if (token.type === 'معرف') {
           if (peek() && peek().value === '(') {
-            consume(); // (
+            consume();
             const args = [];
             while (peek() && peek().value !== ')') {
               if (peek().value === '،' || peek().value === ',') { consume(); continue; }
               args.push(parseExpression());
             }
-            consume(); // )
+            consume();
             return { type: 'استدعاء_دالة', name: token.value, args };
           }
           if (peek() && peek().value === '[') {
-            consume(); // [
+            consume();
             const index = parseExpression();
-            consume(); // ]
+            consume();
             return { type: 'وصول_قائمة', name: token.value, index };
           }
           return { type: 'معرف', name: token.value };
@@ -289,9 +280,6 @@
       return parseProgram();
     }
 
-    // ==========================================
-    // 3. المفسر (Interpreter)
-    // ==========================================
     class البيئة {
       constructor(الأب = null) {
         this.القيم = {};
@@ -448,9 +436,6 @@
         }
       }
 
-      // ==========================================
-      // 🛑 الأوامر التفاعلية (تتعامل مع الويب)
-      // ==========================================
       env.تعريف('أضف_نص', {
         type: 'دالة_مدمجة',
         fn: (args) => {
@@ -507,16 +492,13 @@
       evalNode(ast, env);
     }
 
-    // ==========================================
-    // 4. واجهة المستخدم
-    // ==========================================
     function شغل() {
       const code = document.getElementById("كود_عين").value;
       const outputDiv = document.getElementById("الناتج");
       const webDiv = document.getElementById("مخرجات_الويب");
       
       outputDiv.innerText = ""; 
-      webDiv.innerHTML = ""; // مسح النتيجة القديمة
+      webDiv.innerHTML = "";
       
       try {
         const tokens = tokenize(code);
