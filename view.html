@@ -7,26 +7,35 @@
     body { font-family: sans-serif; padding: 20px; background: #f0f0f0; direction: rtl; }
     textarea { width: 100%; height: 200px; font-family: monospace; font-size: 16px; }
     #الناتج { white-space: pre-wrap; background: #fff; padding: 10px; margin-top: 10px; border: 1px solid #ccc; font-family: monospace; min-height: 50px; }
-    button { padding: 10px 20px; margin-top: 10px; font-size: 16px; margin-left: 5px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 5px; }
-    button:hover { background: #0056b3; }
+    button { padding: 10px 20px; margin-top: 10px; font-size: 16px; margin-left: 5px; cursor: pointer; border: none; border-radius: 5px; color: white; }
+    .btn-primary { background: #007bff; }
+    .btn-primary:hover { background: #0056b3; }
+    .btn-danger { background: #dc3545; }
+    .btn-danger:hover { background: #a71d2a; }
+    .btn-warning { background: #ffc107; color: black; }
+    .btn-warning:hover { background: #d39e00; }
   </style>
 </head>
 <body>
   <h1>مترجم لغة عين (النسخة الاحترافية)</h1>
   <p>اكتب كود بلغة عين (استخدم الأرقام العربية ٠-٩):</p>
-  <textarea id="كود_عين">// تجربة الدوال الرياضية الجديدة
-اطبع "عدد عشوائي بين ١ و ١٠: " + العشوائي(١, ١٠)
+  <textarea id="كود_عين">متغير اسمي = "عبدالله"
+اطبع "عدد حروف اسمي: " + الطول(اسمي)
 
-اطبع "٢ أس ٣ = " + القوة(٢, ٣)
+متغير عمري = ٢٥
+اطبع "نوع المتغير عمري: " + النوع(عمري)
 
-اطبع "الجذر التربيعي لـ ١٦ = " + الجذر(١٦)
+متغير رقم = ١٠٠
+اطبع "الرقم كـ نص: " + تحويل_لنص(رقم)
 
-// دمج الدوال مع العمليات الحسابية
-متغير ناتج = القوة(٣, ٢) + الجذر(٩)
-اطبع "الناتج النهائي: " + ناتج</textarea><br>
-  <button onclick="شغل()">تشغيل</button>
-  <button onclick="احفظ()">حفظ الكود</button>
-  <button onclick="انسخ()">نسخ الناتج</button>
+متغير نص_رقمي = "٥٠"
+متغير ناتج = تحويل_لرقم(نص_رقمي) + ١٠
+اطبع "الناتج بعد التحويل: " + ناتج</textarea><br>
+  <button class="btn-primary" onclick="شغل()">▶ تشغيل</button>
+  <button class="btn-warning" onclick="احفظ()">💾 حفظ الكود</button>
+  <button class="btn-primary" onclick="انسخ()">📋 نسخ الناتج</button>
+  <button class="btn-danger" onclick="امسح_الكود()">🗑️ مسح الكود</button>
+  <button class="btn-danger" onclick="امسح_الناتج()">🧹 مسح الناتج</button>
 
   <h2>الناتج:</h2>
   <div id="الناتج"></div>
@@ -243,7 +252,6 @@
           return { type: 'قائمة', elements };
         }
 
-        // التعامل مع الدوال المدمجة داخل التعابير
         if (['الطول', 'النوع', 'تحويل_لنص', 'تحويل_لرقم', 'العشوائي', 'القوة', 'الجذر'].includes(token.value)) {
           consume(); // (
           const args = [];
@@ -387,7 +395,6 @@
                 const num = Number(تحويل_الأرقام_للإنجليزية(String(argValue)));
                 if (isNaN(num)) throw new Error(`لا يمكن تحويل "${argValue}" إلى رقم`);
                 return num;
-              // 🛑 إضافة الدوال الرياضية الجديدة
               case 'العشوائي':
                 const min = argValue || 0;
                 const max = arg2 || 10;
@@ -473,9 +480,33 @@
 
     function انسخ() {
       const نص = document.getElementById("الناتج").innerText;
+      if (!نص.trim()) {
+        alert("لا يوجد ناتج لنسخه!");
+        return;
+      }
       navigator.clipboard.writeText(نص).then(() => {
         alert("تم نسخ الناتج!");
       });
+    }
+
+    // 🛑 إضافة: دالة مسح الكود
+    function امسح_الكود() {
+      if (document.getElementById("كود_عين").value.trim() === "") {
+        alert("المربع فارغ بالفعل!");
+        return;
+      }
+      if (confirm("هل تريد مسح الكود بالكامل؟")) {
+        document.getElementById("كود_عين").value = "";
+      }
+    }
+
+    // 🛑 إضافة: دالة مسح الناتج
+    function امسح_الناتج() {
+      if (document.getElementById("الناتج").innerText.trim() === "") {
+        alert("الناتج فارغ بالفعل!");
+        return;
+      }
+      document.getElementById("الناتج").innerText = "";
     }
   </script>
 </body>
