@@ -55,14 +55,14 @@
       code = code.replace(/\/\/.*$/gm, ''); 
       
       const tokens = [];
-      const regex = /\s*(متغير|اطبع|إذا|آخر|كرر|من|إلى|دالة|إرجع|بينما|و|أو|الطول|النوع|تحويل_لنص|تحويل_لرقم|[a-zA-Z\u0621-\u064A_][a-zA-Z0-9\u0621-\u064A_]*|\d+|"[^"]*"|'[^']*'|==|!=|>=|<=|[=><+\-*/%{}()\[\]،,])/g;
+      // تمت إزالة الدوال المدمجة من هنا لتُعامل كـ معرف (Identifier)
+      const regex = /\s*(متغير|اطبع|إذا|آخر|كرر|من|إلى|دالة|إرجع|بينما|و|أو|[a-zA-Z\u0621-\u064A_][a-zA-Z0-9\u0621-\u064A_]*|\d+|"[^"]*"|'[^']*'|==|!=|>=|<=|[=><+\-*/%{}()\[\]،,])/g;
       let match;
       while ((match = regex.exec(code)) !== null) {
         let value = match[1];
         let type = 'معرف';
         
-        // 🛑 إضافة: الكلمات المحجوزة للدوال المدمجة
-        if (['متغير', 'اطبع', 'إذا', 'آخر', 'كرر', 'من', 'إلى', 'دالة', 'إرجع', 'بينما', 'و', 'أو', 'الطول', 'النوع', 'تحويل_لنص', 'تحويل_لرقم'].includes(value)) {
+        if (['متغير', 'اطبع', 'إذا', 'آخر', 'كرر', 'من', 'إلى', 'دالة', 'إرجع', 'بينما', 'و', 'أو'].includes(value)) {
           type = 'كلمة_محجوزة';
         } else if (/^\d+$/.test(value)) {
           type = 'رقم';
@@ -165,18 +165,6 @@
             consume();
             const value = parseExpression();
             return { type: 'إرجع', value };
-          }
-          // 🛑 إضافة: التعامل مع الدوال المدمجة
-          if (['الطول', 'النوع', 'تحويل_لنص', 'تحويل_لرقم'].includes(token.value)) {
-            const funcName = consume().value;
-            consume(); // (
-            const args = [];
-            while (peek() && peek().value !== ')') {
-              if (peek().value === '،' || peek().value === ',') { consume(); continue; }
-              args.push(parseExpression());
-            }
-            consume(); // )
-            return { type: 'استدعاء_مدمج', name: funcName, args };
           }
         }
         return parseExpression();
@@ -354,39 +342,25 @@
             break;
           case 'استدعاء_دالة':
             const func = currentEnv.جلب(node.name);
-            if (func.type !== 'دالة') throw new Error(`${node.name} ليست دالة`);
             const args = node.args.map(arg => evalNode(arg, currentEnv));
-            const funcEnv = new البيئة(func.env); 
-            func.params.forEach((param, index) => {
-              funcEnv.تعريف(param, args[index] !== undefined ? args[index] : null);
-            });
-            try {
-              evalNode(func.body, funcEnv);
-            } catch (e) {
-              if (e.type === 'إرجع') return e.value;
-              throw e;
+            
+            if (func.type === 'دالة') {
+              const funcEnv = new البيئة(func.env); 
+              func.params.forEach((param, index) => {
+                funcEnv.تعريف(param, args[index] !== undefined ? args[index] : null);
+              });
+              try {
+                evalNode(func.body, funcEnv);
+              } catch (e) {
+                if (e.type === 'إرجع') return e.value;
+                throw e;
+              }
+              return null; 
+            } else if (func.type === 'دالة_مدمجة') {
+              return func.fn(args);
+            } else {
+              throw new Error(`${node.name} ليست دالة`);
             }
-            return null; 
-          // 🛑 إضافة: تنفيذ الدوال المدمجة
-          case 'استدعاء_مدمج':
-            const argValue = node.args.length > 0 ? evalNode(node.args[0], currentEnv) : null;
-            switch (node.name) {
-              case 'الطول':
-                if (typeof argValue !== 'string' && !Array.isArray(argValue)) {
-                  throw new Error(`الطول() تتوقع نصاً أو قائمة، لكن تم إعطاؤها ${typeof argValue}`);
-                }
-                return argValue.length;
-              case 'النوع':
-                if (Array.isArray(argValue)) return 'قائمة';
-                return typeof argValue;
-              case 'تحويل_لنص':
-                return String(argValue);
-              case 'تحويل_لرقم':
-                const num = Number(تحويل_الأرقام_للإنجليزية(String(argValue)));
-                if (isNaN(num)) throw new Error(`لا يمكن تحويل "${argValue}" إلى رقم`);
-                return num;
-            }
-            break;
           case 'إرجع':
             throw { type: 'إرجع', value: evalNode(node.value, currentEnv) };
           case 'قائمة':
@@ -427,6 +401,41 @@
           case 'معرف': return currentEnv.جلب(node.name);
         }
       }
+      
+      // 🛑 إضافة: تعريف الدوال المدمجة في البيئة الأساسية
+      env.تعريف('الطول', { 
+        type: 'دالة_مدمجة', 
+        fn: (args) => {
+          if (args.length === 0) throw new Error("الطول() تتوقع وسيطاً واحداً");
+          if (typeof args[0] !== 'string' && !Array.isArray(args[0])) throw new Error(`الطول() تتوقع نصاً أو قائمة، لكن تم إعطاؤها ${typeof args[0]}`);
+          return args[0].length;
+        }
+      });
+      env.تعريف('النوع', { 
+        type: 'دالة_مدمجة', 
+        fn: (args) => {
+          if (args.length === 0) throw new Error("النوع() تتوقع وسيطاً واحداً");
+          const val = args[0];
+          if (Array.isArray(val)) return 'قائمة';
+          if (typeof val === 'number') return 'رقم';
+          if (typeof val === 'string') return 'نص';
+          if (typeof val === 'boolean') return 'منطقي';
+          return typeof val;
+        }
+      });
+      env.تعريف('تحويل_لنص', { 
+        type: 'دالة_مدمجة', 
+        fn: (args) => String(args[0])
+      });
+      env.تعريف('تحويل_لرقم', { 
+        type: 'دالة_مدمجة', 
+        fn: (args) => {
+          const num = Number(تحويل_الأرقام_للإنجليزية(String(args[0])));
+          if (isNaN(num)) throw new Error(`لا يمكن تحويل "${args[0]}" إلى رقم`);
+          return num;
+        }
+      });
+
       evalNode(ast, env);
     }
 
