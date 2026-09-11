@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>لغة عين - النسخة النهائية</title>
+  <title>لغة عين - عربية خالصة مع منطق</title>
   <style>
     body { font-family: sans-serif; padding: 20px; background: #f0f0f0; direction: rtl; }
     textarea { width: 100%; height: 200px; font-family: monospace; font-size: 16px; }
@@ -12,11 +12,19 @@
   </style>
 </head>
 <body>
-  <h1>مترجم لغة عين (النسخة النهائية)</h1>
+  <h1>مترجم لغة عين (مع العمليات المنطقية)</h1>
   <p>اكتب كود بلغة عين (استخدم الأرقام العربية ٠-٩):</p>
-  <textarea id="كود_عين">متغير العدد = ٥
-العدد = العدد + ١٠
-اطبع "الناتج هو: " + العدد</textarea><br>
+  <textarea id="كود_عين">متغير العدد = ٧
+
+إذا (العدد > ٥ و العدد < ١٠) {
+  اطبع "العدد بين ٥ و ١٠"
+} آخر {
+  اطبع "العدد خارج النطاق"
+}
+
+إذا (العدد == ٧ أو العدد == ٨) {
+  اطبع "العدد إما ٧ أو ٨"
+}</textarea><br>
   <button onclick="شغل()">تشغيل</button>
   <button onclick="احفظ()">حفظ الكود</button>
   <button onclick="انسخ()">نسخ الناتج</button>
@@ -42,17 +50,17 @@
     // ==========================================
     function tokenize(code) {
       code = تحويل_الأرقام_للإنجليزية(code);
-      code = code.replace(/\/\/.*$/gm, ''); // تجاهل التعليقات
+      code = code.replace(/\/\/.*$/gm, ''); 
       
       const tokens = [];
-      // نطاق الحروف العربية \u0621-\u064A لضمان عدم التقاط الفاصلة ،
-      const regex = /\s*(متغير|اطبع|إذا|آخر|كرر|من|إلى|دالة|إرجع|بينما|[a-zA-Z\u0621-\u064A_][a-zA-Z0-9\u0621-\u064A_]*|\d+|"[^"]*"|'[^']*'|[=><+\-*/{}()\[\]،,])/g;
+      // أضفنا && و || كرموز منطقية (و و أو ستكون كلمات محجوزة)
+      const regex = /\s*(متغير|اطبع|إذا|آخر|كرر|من|إلى|دالة|إرجع|بينما|و|أو|[a-zA-Z\u0621-\u064A_][a-zA-Z0-9\u0621-\u064A_]*|\d+|"[^"]*"|'[^']*'|[=><+\-*/{}()\[\]،,])/g;
       let match;
       while ((match = regex.exec(code)) !== null) {
         let value = match[1];
         let type = 'معرف';
         
-        if (['متغير', 'اطبع', 'إذا', 'آخر', 'كرر', 'من', 'إلى', 'دالة', 'إرجع', 'بينما'].includes(value)) {
+        if (['متغير', 'اطبع', 'إذا', 'آخر', 'كرر', 'من', 'إلى', 'دالة', 'إرجع', 'بينما', 'و', 'أو'].includes(value)) {
           type = 'كلمة_محجوزة';
         } else if (/^\d+$/.test(value)) {
           type = 'رقم';
@@ -88,7 +96,6 @@
         const token = peek();
         if (!token) return null;
 
-        // 1. التعرف على إعادة تعيين المتغير (مثل: العداد = العداد + ١)
         if (token.type === 'معرف' && peekNext() && peekNext().value === '=') {
           const name = consume().value;
           consume(); // =
@@ -171,9 +178,20 @@
         return { type: 'كتلة', body };
       }
 
+      // 🛑 إضافة: التعامل مع العمليات المنطقية (و / أو)
       function parseExpression() {
+        let left = parseComparison();
+        while (peek() && (peek().value === 'و' || peek().value === 'أو')) {
+          const op = consume().value;
+          const right = parseComparison();
+          left = { type: 'تعبير_منطقي', operator: op, left, right };
+        }
+        return left;
+      }
+
+      function parseComparison() {
         let left = parsePrimary();
-        while (peek() && ['>', '<', '+', '-', '*', '/'].includes(peek().value)) {
+        while (peek() && ['>', '<'].includes(peek().value)) { // يمكن إضافة == و != هنا
           const op = consume().value;
           const right = parsePrimary();
           left = { type: 'تعبير_ثنائي', operator: op, left, right };
@@ -188,7 +206,6 @@
         if (token.type === 'رقم') return { type: 'رقم', value: parseInt(token.value) };
         if (token.type === 'نص') return { type: 'نص', value: token.value };
         
-        // التعامل مع القوائم
         if (token.value === '[') {
           const elements = [];
           while (peek() && peek().value !== ']') {
@@ -200,7 +217,6 @@
         }
 
         if (token.type === 'معرف') {
-          // استدعاء دالة
           if (peek() && peek().value === '(') {
             consume(); // (
             const args = [];
@@ -211,7 +227,6 @@
             consume(); // )
             return { type: 'استدعاء_دالة', name: token.value, args };
           }
-          // الوصول لعنصر في قائمة
           if (peek() && peek().value === '[') {
             consume(); // [
             const index = parseExpression();
@@ -320,6 +335,15 @@
             const idx = evalNode(node.index, currentEnv);
             if (idx < 0 || idx >= list.length) throw new Error(`خطأ: الفهرس ${idx} خارج نطاق القائمة`);
             return list[idx];
+          // 🛑 إضافة: تنفيذ العمليات المنطقية
+          case 'تعبير_منطقي':
+            const leftLog = evalNode(node.left, currentEnv);
+            if (node.operator === 'و') {
+              return leftLog && evalNode(node.right, currentEnv);
+            } else if (node.operator === 'أو') {
+              return leftLog || evalNode(node.right, currentEnv);
+            }
+            break;
           case 'تعبير_ثنائي':
             const left = evalNode(node.left, currentEnv);
             const right = evalNode(node.right, currentEnv);
