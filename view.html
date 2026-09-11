@@ -2,29 +2,28 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>لغة عين - مترجم</title>
-  <script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>
+  <title>لغة عين - عربية خالصة</title>
   <style>
     body { font-family: sans-serif; padding: 20px; background: #f0f0f0; direction: rtl; }
-    textarea { width: 100%; height: 150px; font-family: monospace; }
-    #الناتج { white-space: pre; background: #fff; padding: 10px; margin-top: 10px; border: 1px solid #ccc; }
-    button { padding: 10px 20px; margin-top: 10px; font-size: 16px; margin-left: 5px; }
+    textarea { width: 100%; height: 150px; font-family: monospace; font-size: 16px; }
+    #الناتج { white-space: pre; background: #fff; padding: 10px; margin-top: 10px; border: 1px solid #ccc; font-family: monospace; min-height: 50px; }
+    button { padding: 10px 20px; margin-top: 10px; font-size: 16px; margin-left: 5px; cursor: pointer; }
   </style>
 </head>
 <body>
-  <h1>مترجم لغة عين</h1>
-  <p>اكتب كود بلغة عين:</p>
-  <textarea id="كود_عين">متغير العدد = 5
-إذا (العدد > 3) {
-  اطبع "العدد أكبر من 3"
+  <h1>مترجم لغة عين (عربية خالصة)</h1>
+  <p>اكتب كود بلغة عين (استخدم الأرقام العربية ٠-٩):</p>
+  <textarea id="كود_عين">متغير العدد = ٥
+إذا (العدد > ٣) {
+  اطبع "العدد أكبر من ٣"
 } آخر {
   اطبع "العدد صغير"
 }
 
-كرر من 1 إلى 3 {
+كرر من ١ إلى ٣ {
   اطبع "مرحباً"
 }</textarea><br>
-  <button onclick="شغل()">ترجمة وتشغيل</button>
+  <button onclick="شغل()">تشغيل</button>
   <button onclick="احفظ()">حفظ الكود</button>
   <button onclick="انسخ()">نسخ الناتج</button>
 
@@ -32,41 +31,212 @@
   <div id="الناتج"></div>
 
   <script>
-    let جاهز = loadPyodide();
-
-    async function شغل() {
-      const كود = document.getElementById("كود_عين").value;
-      const بايثون = ترجم(كود);
-      const بايثون_جاهز = await جاهز;
-      try {
-        await بايثون_جاهز.runPythonAsync(`\n${بايثون}`);
-        document.getElementById("الناتج").innerText = "تم التنفيذ بنجاح";
-      } catch (خطأ) {
-        document.getElementById("الناتج").innerText = "خطأ: " + خطأ;
-      }
+    // ==========================================
+    // 0. دالة تحويل الأرقام العربية إلى أرقام يفهمها الكمبيوتر
+    // ==========================================
+    function تحويل_الأرقام(نص) {
+      const خريطة_الأرقام = {
+        '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4',
+        '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9'
+      };
+      return نص.replace(/[٠-٩]/g, (حرف) => خريطة_الأرقام[حرف]);
     }
 
-    function ترجم(كود) {
-      كود = كود.replace(/متغير\s+(\w+)\s*=\s*(.+)/g, "$1 = $2");
-      كود = كود.replace(/اطبع\s+\"(.+?)\"/g, 'print("$1")');
-      كود = كود.replace(/إذا\s*\((.+?)\)\s*\{/g, "if ($1):");
-      كود = كود.replace(/\}\s*آخر\s*\{/g, "else:");
-      كود = كود.replace(/\u0643\u0631\u0631 من (\d+) إلى (\d+)\s*\{/g, "for i in range($1, $2+1):");
-      كود = كود.replace(/\}/g, "");
+    // ==========================================
+    // 1. المحلل المعجمي (Lexer) - عربي خالص
+    // ==========================================
+    function tokenize(code) {
+      // تحويل الأرقام العربية أولاً
+      code = تحويل_الأرقام(code);
+      
+      const tokens = [];
+      // التعبير النمطي يدعم الحروف العربية، الأرقام، والرموز
+      const regex = /\s*(متغير|اطبع|إذا|آخر|كرر|من|إلى|[a-zA-Z\u0600-\u06FF_][a-zA-Z0-9\u0600-\u06FF_]*|\d+|"[^"]*"|'[^']*'|[=><+\-*/{}()])/g;
+      let match;
+      while ((match = regex.exec(code)) !== null) {
+        let value = match[1];
+        let type = 'معرف';
+        
+        if (['متغير', 'اطبع', 'إذا', 'آخر', 'كرر', 'من', 'إلى'].includes(value)) {
+          type = 'كلمة_محجوزة';
+        } else if (/^\d+$/.test(value)) {
+          type = 'رقم';
+        } else if (/^["'].*["']$/.test(value)) {
+          type = 'نص';
+          value = value.slice(1, -1);
+        } else if (['=', '>', '<', '+', '-', '*', '/', '{', '}', '(', ')'].includes(value)) {
+          type = 'رمز';
+        }
+        tokens.push({ type, value });
+      }
+      return tokens;
+    }
 
-      let أسطر = كود.split("\n");
-      let مسافة = "";
-      let نتيجة = "";
-      for (let سطر of أسطر) {
-        سطر = سطر.trim();
-        if (سطر.endsWith(":")) {
-          نتيجة += مسافة + سطر + "\n";
-          مسافة += "    ";
-        } else {
-          نتيجة += مسافة + سطر + "\n";
+    // ==========================================
+    // 2. المحلل النحوي (Parser) - عربي خالص
+    // ==========================================
+    function parse(tokens) {
+      let pos = 0;
+      function peek() { return tokens[pos]; }
+      function consume() { return tokens[pos++]; }
+
+      function parseProgram() {
+        const statements = [];
+        while (pos < tokens.length) {
+          statements.push(parseStatement());
+        }
+        return { type: 'برنامج', body: statements };
+      }
+
+      function parseStatement() {
+        const token = peek();
+        if (!token) return null;
+
+        if (token.type === 'كلمة_محجوزة') {
+          if (token.value === 'متغير') {
+            consume();
+            const name = consume().value;
+            consume(); // =
+            const value = parseExpression();
+            return { type: 'إعلان_متغير', name, value };
+          }
+          if (token.value === 'اطبع') {
+            consume();
+            const value = parseExpression();
+            return { type: 'جملة_طباعة', value };
+          }
+          if (token.value === 'إذا') {
+            consume();
+            consume(); // (
+            const condition = parseExpression();
+            consume(); // )
+            const consequent = parseBlock();
+            let alternate = null;
+            if (peek() && peek().value === 'آخر') {
+              consume();
+              alternate = parseBlock();
+            }
+            return { type: 'جملة_شرطية', condition, consequent, alternate };
+          }
+          if (token.value === 'كرر') {
+            consume();
+            consume(); // من
+            const start = parseExpression();
+            consume(); // إلى
+            const end = parseExpression();
+            const body = parseBlock();
+            return { type: 'جملة_تكرار', start, end, body };
+          }
+        }
+        return parseExpression();
+      }
+
+      function parseBlock() {
+        consume(); // {
+        const body = [];
+        while (peek() && peek().value !== '}') {
+          body.push(parseStatement());
+        }
+        consume(); // }
+        return { type: 'كتلة', body };
+      }
+
+      function parseExpression() {
+        let left = parsePrimary();
+        while (peek() && ['>', '<', '+', '-', '*', '/'].includes(peek().value)) {
+          const op = consume().value;
+          const right = parsePrimary();
+          left = { type: 'تعبير_ثنائي', operator: op, left, right };
+        }
+        return left;
+      }
+
+      function parsePrimary() {
+        const token = consume();
+        if (token.type === 'رقم') return { type: 'رقم', value: parseInt(token.value) };
+        if (token.type === 'نص') return { type: 'نص', value: token.value };
+        if (token.type === 'معرف') return { type: 'معرف', name: token.value };
+        throw new Error(`خطأ في التحليل: ${token.value}`);
+      }
+
+      return parseProgram();
+    }
+
+    // ==========================================
+    // 3. المفسر (Interpreter) - عربي خالص
+    // ==========================================
+    function evaluate(ast, env = {}, onOutput = console.log) {
+      function evalNode(node) {
+        if (!node) return;
+        switch (node.type) {
+          case 'برنامج':
+            node.body.forEach(evalNode);
+            break;
+          case 'إعلان_متغير':
+            env[node.name] = evalNode(node.value);
+            break;
+          case 'جملة_طباعة':
+            onOutput(evalNode(node.value));
+            break;
+          case 'جملة_شرطية':
+            if (evalNode(node.condition)) {
+              evalNode(node.consequent);
+            } else if (node.alternate) {
+              evalNode(node.alternate);
+            }
+            break;
+          case 'جملة_تكرار':
+            const start = evalNode(node.start);
+            const end = evalNode(node.end);
+            for (let i = start; i <= end; i++) {
+              env['i'] = i;
+              evalNode(node.body);
+            }
+            break;
+          case 'كتلة':
+            node.body.forEach(evalNode);
+            break;
+          case 'تعبير_ثنائي':
+            const left = evalNode(node.left);
+            const right = evalNode(node.right);
+            switch (node.operator) {
+              case '>': return left > right;
+              case '<': return left < right;
+              case '+': return left + right;
+              case '-': return left - right;
+              case '*': return left * right;
+              case '/': return left / right;
+            }
+            break;
+          case 'رقم':
+            return node.value;
+          case 'نص':
+            return node.value;
+          case 'معرف':
+            if (env.hasOwnProperty(node.name)) return env[node.name];
+            throw new Error(`متغير غير معرف: ${node.name}`);
         }
       }
-      return نتيجة;
+      evalNode(ast);
+    }
+
+    // ==========================================
+    // واجهة المستخدم
+    // ==========================================
+    function شغل() {
+      const code = document.getElementById("كود_عين").value;
+      const outputDiv = document.getElementById("الناتج");
+      outputDiv.innerText = ""; 
+      
+      try {
+        const tokens = tokenize(code);
+        const ast = parse(tokens);
+        evaluate(ast, {}, (msg) => {
+          outputDiv.innerText += msg + "\n";
+        });
+      } catch (error) {
+        outputDiv.innerText = "❌ خطأ: " + error.message;
+      }
     }
 
     function احفظ() {
