@@ -21,14 +21,14 @@
 <body>
   <h1>مترجم لغة عين (النسخة التفاعلية)</h1>
   <p>اكتب كود بلغة عين (استخدم الأرقام العربية ٠-٩):</p>
-  <textarea id="كود_عين">// تجربة الأوامر التفاعلية
-غير_اللون("#e3f2fd")
-أضف_عنوان("أهلاً بك في لغة عين!")
-أضف_نص("هذا النص مكتوب بلغتنا العربية.")
-أضف_نص("جرب تغيير اللون أو إضافة نصوص جديدة.")
-
-متغير اسمي = "عبدالله"
-أضف_نص("مرحباً يا " + اسمي + "!")</textarea><br>
+  <textarea id="كود_عين">غير_اللون("#e3f2fd")
+أضف_عنوان("🌟 مرحباً بك في لغة عين!")
+متغير أ = ١٠
+متغير ب = ٣
+أضف_عنوان("🧮 العمليات:")
+أضف_نص("جمع: " + (أ + ب))
+أضف_نص("قسمة: " + تدوير(أ / ب, ٢))
+أضف_نص("ضرب: " + (أ * ب))</textarea><br>
   <button class="btn-primary" onclick="شغل()">▶ تشغيل</button>
   <button class="btn-warning" onclick="احفظ()">💾 حفظ الكود</button>
   <button class="btn-primary" onclick="انسخ()">📋 نسخ الناتج</button>
@@ -244,7 +244,7 @@
           return { type: 'قائمة', elements };
         }
 
-        if (['الطول', 'النوع', 'تحويل_لنص', 'تحويل_لرقم', 'العشوائي', 'القوة', 'الجذر'].includes(token.value)) {
+        if (['الطول', 'النوع', 'تحويل_لنص', 'تحويل_لرقم', 'العشوائي', 'القوة', 'الجذر', 'تدوير'].includes(token.value)) {
           consume();
           const args = [];
           while (peek() && peek().value !== ')') {
@@ -393,6 +393,9 @@
               case 'الجذر':
                 if (argValue < 0) throw new Error("لا يمكن حساب جذر رقم سالب");
                 return Math.sqrt(argValue);
+              case 'تدوير':
+                const d = arg2 != null ? Number(arg2) : 0;
+                return Number(Number(argValue).toFixed(d));
             }
             break;
           case 'إرجع':
@@ -436,12 +439,13 @@
         }
       }
 
+      // 🎯 التعديل: أضفنا تحويل_الأرقام_للعربية
       env.تعريف('أضف_نص', {
         type: 'دالة_مدمجة',
         fn: (args) => {
           const container = document.getElementById('مخرجات_الويب');
           const p = document.createElement('p');
-          p.textContent = args.map(a => String(a)).join(' ');
+          p.textContent = تحويل_الأرقام_للعربية(args.map(a => String(a)).join(' '));
           p.style.margin = '5px 0';
           p.style.fontSize = '16px';
           container.appendChild(p);
@@ -449,12 +453,13 @@
         }
       });
 
+      // 🎯 التعديل: أضفنا تحويل_الأرقام_للعربية
       env.تعريف('أضف_عنوان', {
         type: 'دالة_مدمجة',
         fn: (args) => {
           const container = document.getElementById('مخرجات_الويب');
           const h = document.createElement('h3');
-          h.textContent = args.map(a => String(a)).join(' ');
+          h.textContent = تحويل_الأرقام_للعربية(args.map(a => String(a)).join(' '));
           h.style.margin = '10px 0 5px 0';
           h.style.color = '#007bff';
           container.appendChild(h);
