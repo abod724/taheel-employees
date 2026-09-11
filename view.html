@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>لغة عين - النسخة الاحترافية</title>
+  <title>لغة عين - النسخة القوية</title>
   <style>
     body { font-family: sans-serif; padding: 20px; background: #f0f0f0; direction: rtl; }
     textarea { width: 100%; height: 200px; font-family: monospace; font-size: 16px; }
@@ -12,17 +12,17 @@
   </style>
 </head>
 <body>
-  <h1>مترجم لغة عين (النسخة الاحترافية)</h1>
+  <h1>مترجم لغة عين (النسخة القوية)</h1>
   <p>اكتب كود بلغة عين (استخدم الأرقام العربية ٠-٩):</p>
-  <textarea id="كود_عين">متغير الناتج = (٢ + ٣) * ٤
-اطبع "الناتج: " + الناتج
-
-متغير العدد = ٤
+  <textarea id="كود_عين">متغير العدد = ٤
 إذا (العدد % ٢ == ٠) {
   اطبع "العدد زوجي"
 } آخر {
   اطبع "العدد فردي"
-}</textarea><br>
+}
+
+متغير الناتج = (٢ + ٣) * ٤
+اطبع "الناتج هو: " + الناتج</textarea><br>
   <button onclick="شغل()">تشغيل</button>
   <button onclick="احفظ()">حفظ الكود</button>
   <button onclick="انسخ()">نسخ الناتج</button>
@@ -47,11 +47,13 @@
     // 1. المحلل المعجمي (Lexer)
     // ==========================================
     function tokenize(code) {
+      // 🛑 إصلاح: تنظيف الأحرف الخفية التي تسبب أخطاء في التحليل
+      code = code.replace(/[\u200B-\u200D\uFEFF\u200E\u200F]/g, '');
+      
       code = تحويل_الأرقام_للإنجليزية(code);
       code = code.replace(/\/\/.*$/gm, ''); 
       
       const tokens = [];
-      // أضفنا % للعمليات الحسابية
       const regex = /\s*(متغير|اطبع|إذا|آخر|كرر|من|إلى|دالة|إرجع|بينما|و|أو|[a-zA-Z\u0621-\u064A_][a-zA-Z0-9\u0621-\u064A_]*|\d+|"[^"]*"|'[^']*'|==|!=|>=|<=|[=><+\-*/%{}()\[\]،,])/g;
       let match;
       while ((match = regex.exec(code)) !== null) {
@@ -74,7 +76,7 @@
     }
 
     // ==========================================
-    // 2. المحلل النحوي (Parser) - مع دعم الأسبقية
+    // 2. المحلل النحوي (Parser)
     // ==========================================
     function parse(tokens) {
       let pos = 0;
@@ -176,7 +178,6 @@
         return { type: 'كتلة', body };
       }
 
-      // 🛑 تحسين: الأسبقية (logical -> comparison -> additive -> multiplicative -> primary)
       function parseExpression() {
         let left = parseComparison();
         while (peek() && (peek().value === 'و' || peek().value === 'أو')) {
@@ -224,7 +225,6 @@
         if (token.type === 'رقم') return { type: 'رقم', value: parseInt(token.value) };
         if (token.type === 'نص') return { type: 'نص', value: token.value };
         
-        // 🛑 إضافة: دعم الأقواس في التعابير الحسابية
         if (token.value === '(') {
           const expr = parseExpression();
           const closing = consume();
