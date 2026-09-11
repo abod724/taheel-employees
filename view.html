@@ -7,39 +7,18 @@
     body { font-family: sans-serif; padding: 20px; background: #f0f0f0; direction: rtl; transition: background-color 0.5s, color 0.5s; }
     textarea { width: 100%; height: 200px; font-family: monospace; font-size: 16px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
     #الناتج { white-space: pre-wrap; background: #1e1e1e; color: #0f0; padding: 10px; margin-top: 10px; border-radius: 5px; font-family: monospace; min-height: 50px; }
-    #مخرجات_الويب { background: transparent; padding: 15px; margin-top: 10px; border: 2px dashed #007bff; border-radius: 8px; min-height: 100px; color: inherit; transition: background-color 0.5s, color 0.5s; }
+    #مخرجات_الويب { background: transparent; padding: 15px; margin-top: 10px; border: 2px dashed #007bff; border-radius: 8px; min-height: 100px; color: inherit; }
     button { padding: 10px 15px; margin-top: 10px; font-size: 15px; margin-left: 5px; cursor: pointer; border: none; border-radius: 5px; color: white; }
     .btn-primary { background: #007bff; }
-    .btn-primary:hover { background: #0056b3; }
     .btn-danger { background: #dc3545; }
-    .btn-danger:hover { background: #a71d2a; }
     .btn-warning { background: #ffc107; color: black; }
-    .btn-warning:hover { background: #d39e00; }
   </style>
 </head>
 <body>
   <h1 id="العنوان_الرئيسي">مترجم لغة عين (النسخة الاحترافية)</h1>
   <p id="الوصف">اكتب كود بلغة عين (استخدم الأرقام العربية ٠-٩):</p>
-  <textarea id="كود_عين">غير_اللون("كحلي")
-غير_لون_النص("ابيض")
-
-أضف_عنوان("🌟 مرحباً بك في موقعي الشخصي 🌟")
-
-متغير اسمي = اطلب("ما اسمك؟")
-أضف_نص("👤 مرحباً يا " + اسمي + "!")
-
-متغير مهاراتي = ["البرمجة", "التصميم", "حل المشكلات"]
-أضف_عنوان("🛠️ مهاراتي:")
-كرر من ٠ إلى ٢ {
-  أضف_نص("★ " + مهاراتي[i])
-}
-
-متغير رقم١ = تحويل_لرقم(اطلب("أدخل الرقم الأول:"))
-متغير رقم٢ = تحويل_لرقم(اطلب("أدخل الرقم الثاني:"))
-أضف_عنوان("🧮 النتائج:")
-أضف_نص("المجموع: " + (رقم١ + رقم٢))
-أضف_نص("القسمة: " + تدوير(رقم١ / رقم٢, ٢))
-أضف_نص("جذر الأول: " + الجذر(رقم١))</textarea><br>
+  <textarea id="كود_عين">اطبع "هذا يظهر في الصندوق الأسود"
+أضف_نص("هذا يظهر في الصندوق الأزرق")</textarea><br>
   <button class="btn-primary" onclick="شغل()">▶ تشغيل</button>
   <button class="btn-warning" onclick="احفظ()">💾 حفظ الكود</button>
   <button class="btn-primary" onclick="انسخ()">📋 نسخ الناتج</button>
@@ -53,9 +32,6 @@
   <div id="مخرجات_الويب"></div>
 
   <script>
-    // ==========================================
-    // 0. دوال مساعدة
-    // ==========================================
     function تحويل_الأرقام_للإنجليزية(نص) {
       const خريطة = { '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4', '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9' };
       return نص.replace(/[٠-٩]/g, (حرف) => خريطة[حرف]);
@@ -65,171 +41,89 @@
       return String(نص).replace(/[0-9]/g, (رقم) => خريطة[رقم]);
     }
 
-    // ==========================================
-    // 🎨 خريطة الألوان العربية
-    // ==========================================
     const الألوان_العربية = {
-      'احمر': '#e74c3c', 'أحمر': '#e74c3c',
-      'ازرق': '#3498db', 'أزرق': '#3498db',
-      'اخضر': '#27ae60', 'أخضر': '#27ae60',
-      'اصفر': '#f1c40f', 'أصفر': '#f1c40f',
-      'ابيض': '#ffffff', 'أبيض': '#ffffff',
-      'اسود': '#000000', 'أسود': '#000000',
-      'برتقالي': '#e67e22',
-      'بنفسجي': '#8e44ad',
-      'وردي': '#e91e63',
-      'رمادي': '#7f8c8d',
-      'بني': '#8b4513',
-      'سماوي': '#87ceeb',
-      'ذهبي': '#ffd700',
-      'فضي': '#c0c0c0',
-      'تركوازي': '#1abc9c',
-      'كحلي': '#1a1a2e',
-      'اخضر_فاتح': '#2ecc71', 'أخضر_فاتح': '#2ecc71',
-      'ازرق_فاتح': '#aed6f1', 'أزرق_فاتح': '#aed6f1',
-      'احمر_فاتح': '#f1948a', 'أحمر_فاتح': '#f1948a',
-      'بنفسجي_فاتح': '#bb8fce',
-      'رمادي_فاتح': '#bdc3c7',
-      'بني_فاتح': '#cd853f',
-      'شفاف': 'transparent'
+      'احمر': '#e74c3c', 'أحمر': '#e74c3c', 'ازرق': '#3498db', 'أزرق': '#3498db',
+      'اخضر': '#27ae60', 'أخضر': '#27ae60', 'اصفر': '#f1c40f', 'أصفر': '#f1c40f',
+      'ابيض': '#ffffff', 'أبيض': '#ffffff', 'اسود': '#000000', 'أسود': '#000000',
+      'برتقالي': '#e67e22', 'بنفسجي': '#8e44ad', 'وردي': '#e91e63', 'رمادي': '#7f8c8d',
+      'بني': '#8b4513', 'سماوي': '#87ceeb', 'ذهبي': '#ffd700', 'فضي': '#c0c0c0',
+      'تركوازي': '#1abc9c', 'كحلي': '#1a1a2e', 'شفاف': 'transparent'
     };
-
-    function حل_لون(اسم_اللون) {
-      if (typeof اسم_اللون !== 'string') return String(اسم_اللون);
-      const مفتاح = اسم_اللون.trim();
-      if (مفتاح.startsWith('#') || مفتاح.startsWith('rgb')) return مفتاح;
-      return الألوان_العربية[مفتاح] || مفتاح;
+    function حل_لون(لون) {
+      if (typeof لون !== 'string') return String(لون);
+      const م = لون.trim();
+      if (م.startsWith('#') || م.startsWith('rgb')) return م;
+      return الألوان_العربية[م] || م;
     }
 
-    // ==========================================
-    // 1. المحلل المعجمي (Lexer)
-    // ==========================================
     function tokenize(code) {
       code = code.replace(/[\u200B-\u200D\uFEFF\u200E\u200F]/g, '');
       code = تحويل_الأرقام_للإنجليزية(code);
-      code = code.replace(/\/\/.*$/gm, ''); 
-      
+      code = code.replace(/\/\/.*$/gm, '');
       const tokens = [];
       const regex = /\s*(متغير|اطبع|إذا|آخر|كرر|من|إلى|دالة|إرجع|بينما|و|أو|[a-zA-Z\u0621-\u064A_][a-zA-Z0-9\u0621-\u064A_]*|\d+|"[^"]*"|'[^']*'|==|!=|>=|<=|[=><+\-*/%{}()\[\]،,])/g;
       let match;
       while ((match = regex.exec(code)) !== null) {
         let value = match[1];
         let type = 'معرف';
-        
-        if (['متغير', 'اطبع', 'إذا', 'آخر', 'كرر', 'من', 'إلى', 'دالة', 'إرجع', 'بينما', 'و', 'أو'].includes(value)) {
-          type = 'كلمة_محجوزة';
-        } else if (/^\d+$/.test(value)) {
-          type = 'رقم';
-        } else if (/^["'].*["']$/.test(value)) {
-          type = 'نص';
-          value = value.slice(1, -1);
-        } else if (['=', '>', '<', '==', '!=', '>=', '<=', '+', '-', '*', '/', '%', '{', '}', '(', ')', '[', ']', '،', ','].includes(value)) {
-          type = 'رمز';
-        }
+        if (['متغير', 'اطبع', 'إذا', 'آخر', 'كرر', 'من', 'إلى', 'دالة', 'إرجع', 'بينما', 'و', 'أو'].includes(value)) type = 'كلمة_محجوزة';
+        else if (/^\d+$/.test(value)) type = 'رقم';
+        else if (/^["'].*["']$/.test(value)) { type = 'نص'; value = value.slice(1, -1); }
+        else if (['=', '>', '<', '==', '!=', '>=', '<=', '+', '-', '*', '/', '%', '{', '}', '(', ')', '[', ']', '،', ','].includes(value)) type = 'رمز';
         tokens.push({ type, value });
       }
       return tokens;
     }
 
-    // ==========================================
-    // 2. المحلل النحوي (Parser)
-    // ==========================================
     function parse(tokens) {
       let pos = 0;
       function peek() { return tokens[pos]; }
       function peekNext() { return tokens[pos + 1]; }
       function consume() { return tokens[pos++]; }
 
-      function parseProgram() {
-        const statements = [];
-        while (pos < tokens.length) {
-          statements.push(parseStatement());
-        }
-        return { type: 'برنامج', body: statements };
-      }
+      function parseProgram() { const s = []; while (pos < tokens.length) s.push(parseStatement()); return { type: 'برنامج', body: s }; }
 
       function parseStatement() {
         const token = peek();
         if (!token) return null;
-
         if (token.type === 'معرف' && peekNext() && peekNext().value === '=') {
-          const name = consume().value;
-          consume();
+          const name = consume().value; consume();
           const value = parseExpression();
           return { type: 'إعادة_تعيين', name, value };
         }
-
         if (token.type === 'كلمة_محجوزة') {
           if (token.value === 'متغير') {
-            consume();
-            const name = consume().value;
-            let value = null;
-            if (peek() && peek().value === '=') {
-              consume();
-              value = parseExpression();
-            }
+            consume(); const name = consume().value; let value = null;
+            if (peek() && peek().value === '=') { consume(); value = parseExpression(); }
             return { type: 'إعلان_متغير', name, value };
           }
-          if (token.value === 'اطبع') {
-            consume();
-            const value = parseExpression();
-            return { type: 'جملة_طباعة', value };
-          }
+          if (token.value === 'اطبع') { consume(); return { type: 'جملة_طباعة', value: parseExpression() }; }
           if (token.value === 'إذا') {
-            consume(); consume();
-            const condition = parseExpression();
-            consume();
-            const consequent = parseBlock();
-            let alternate = null;
-            if (peek() && peek().value === 'آخر') {
-              consume();
-              alternate = parseBlock();
-            }
+            consume(); consume(); const condition = parseExpression(); consume();
+            const consequent = parseBlock(); let alternate = null;
+            if (peek() && peek().value === 'آخر') { consume(); alternate = parseBlock(); }
             return { type: 'جملة_شرطية', condition, consequent, alternate };
           }
           if (token.value === 'كرر') {
-            consume(); consume();
-            const start = parseExpression();
-            consume();
-            const end = parseExpression();
-            const body = parseBlock();
-            return { type: 'جملة_تكرار', start, end, body };
+            consume(); consume(); const start = parseExpression(); consume(); const end = parseExpression();
+            return { type: 'جملة_تكرار', start, end, body: parseBlock() };
           }
-          if (token.value === 'بينما') {
-            consume(); consume();
-            const condition = parseExpression();
-            consume();
-            const body = parseBlock();
-            return { type: 'جملة_بينما', condition, body };
-          }
+          if (token.value === 'بينما') { consume(); consume(); const condition = parseExpression(); consume(); return { type: 'جملة_بينما', condition, body: parseBlock() }; }
           if (token.value === 'دالة') {
-            consume();
-            const name = consume().value;
-            consume();
+            consume(); const name = consume().value; consume();
             const params = [];
-            while (peek() && peek().value !== ')') {
-              if (peek().value === '،' || peek().value === ',') { consume(); continue; }
-              params.push(consume().value);
-            }
+            while (peek() && peek().value !== ')') { if (peek().value === '،' || peek().value === ',') { consume(); continue; } params.push(consume().value); }
             consume();
-            const body = parseBlock();
-            return { type: 'دالة', name, params, body };
+            return { type: 'دالة', name, params, body: parseBlock() };
           }
-          if (token.value === 'إرجع') {
-            consume();
-            const value = parseExpression();
-            return { type: 'إرجع', value };
-          }
+          if (token.value === 'إرجع') { consume(); return { type: 'إرجع', value: parseExpression() }; }
         }
         return parseExpression();
       }
 
       function parseBlock() {
-        consume();
-        const body = [];
-        while (peek() && peek().value !== '}') {
-          body.push(parseStatement());
-        }
+        consume(); const body = [];
+        while (peek() && peek().value !== '}') body.push(parseStatement());
         consume();
         return { type: 'كتلة', body };
       }
@@ -237,124 +131,75 @@
       function parseExpression() {
         let left = parseComparison();
         while (peek() && (peek().value === 'و' || peek().value === 'أو')) {
-          const op = consume().value;
-          const right = parseComparison();
-          left = { type: 'تعبير_منطقي', operator: op, left, right };
+          const op = consume().value; left = { type: 'تعبير_منطقي', operator: op, left, right: parseComparison() };
         }
         return left;
       }
-
       function parseComparison() {
         let left = parseAdditive();
         while (peek() && ['>', '<', '==', '!=', '>=', '<='].includes(peek().value)) {
-          const op = consume().value;
-          const right = parseAdditive();
-          left = { type: 'تعبير_ثنائي', operator: op, left, right };
+          const op = consume().value; left = { type: 'تعبير_ثنائي', operator: op, left, right: parseAdditive() };
         }
         return left;
       }
-
       function parseAdditive() {
         let left = parseMultiplicative();
         while (peek() && (peek().value === '+' || peek().value === '-')) {
-          const op = consume().value;
-          const right = parseMultiplicative();
-          left = { type: 'تعبير_ثنائي', operator: op, left, right };
+          const op = consume().value; left = { type: 'تعبير_ثنائي', operator: op, left, right: parseMultiplicative() };
         }
         return left;
       }
-
       function parseMultiplicative() {
         let left = parsePrimary();
         while (peek() && (peek().value === '*' || peek().value === '/' || peek().value === '%')) {
-          const op = consume().value;
-          const right = parsePrimary();
-          left = { type: 'تعبير_ثنائي', operator: op, left, right };
+          const op = consume().value; left = { type: 'تعبير_ثنائي', operator: op, left, right: parsePrimary() };
         }
         return left;
       }
 
       function parsePrimary() {
         const token = consume();
-        if (!token) throw new Error("نهاية غير متوقعة للكود");
-        
+        if (!token) throw new Error("نهاية غير متوقعة");
         if (token.type === 'رقم') return { type: 'رقم', value: parseInt(token.value) };
         if (token.type === 'نص') return { type: 'نص', value: token.value };
-        
         if (token.value === '(') {
-          const expr = parseExpression();
-          const closing = consume();
-          if (!closing || closing.value !== ')') {
-            throw new Error("قوس إغلاق ) مفقود");
-          }
+          const expr = parseExpression(); consume();
           return expr;
         }
-
         if (token.value === '[') {
-          const elements = [];
-          while (peek() && peek().value !== ']') {
-            if (peek().value === '،' || peek().value === ',') { consume(); continue; }
-            elements.push(parseExpression());
-          }
+          const el = [];
+          while (peek() && peek().value !== ']') { if (peek().value === '،' || peek().value === ',') { consume(); continue; } el.push(parseExpression()); }
           consume();
-          return { type: 'قائمة', elements };
+          return { type: 'قائمة', elements: el };
         }
-
-        const دوال_مدمجة = ['الطول', 'النوع', 'تحويل_لنص', 'تحويل_لرقم', 'العشوائي', 'القوة', 'الجذر', 'تدوير', 'أضف_نص', 'أضف_عنوان', 'غير_اللون', 'غير_لون_النص', 'امسح_الصفحة', 'اطلب'];
-        if (دوال_مدمجة.includes(token.value)) {
-          consume();
-          const args = [];
-          while (peek() && peek().value !== ')') {
-            if (peek().value === '،' || peek().value === ',') { consume(); continue; }
-            args.push(parseExpression());
-          }
+        const مدمجة = ['الطول','النوع','تحويل_لنص','تحويل_لرقم','العشوائي','القوة','الجذر','تدوير','أضف_نص','أضف_عنوان','غير_اللون','غير_لون_النص','امسح_الصفحة','اطلب'];
+        if (مدمجة.includes(token.value)) {
+          consume(); const args = [];
+          while (peek() && peek().value !== ')') { if (peek().value === '،' || peek().value === ',') { consume(); continue; } args.push(parseExpression()); }
           consume();
           return { type: 'استدعاء_مدمج', name: token.value, args };
         }
-
         if (token.type === 'معرف') {
           if (peek() && peek().value === '(') {
-            consume();
-            const args = [];
-            while (peek() && peek().value !== ')') {
-              if (peek().value === '،' || peek().value === ',') { consume(); continue; }
-              args.push(parseExpression());
-            }
+            consume(); const args = [];
+            while (peek() && peek().value !== ')') { if (peek().value === '،' || peek().value === ',') { consume(); continue; } args.push(parseExpression()); }
             consume();
             return { type: 'استدعاء_دالة', name: token.value, args };
           }
-          if (peek() && peek().value === '[') {
-            consume();
-            const index = parseExpression();
-            consume();
-            return { type: 'وصول_قائمة', name: token.value, index };
-          }
+          if (peek() && peek().value === '[') { consume(); const index = parseExpression(); consume(); return { type: 'وصول_قائمة', name: token.value, index }; }
           return { type: 'معرف', name: token.value };
         }
         throw new Error(`خطأ في التحليل: ${token.value}`);
       }
-
       return parseProgram();
     }
 
-    // ==========================================
-    // 3. المفسر (Interpreter)
-    // ==========================================
     class البيئة {
-      constructor(الأب = null) {
-        this.القيم = {};
-        this.الأب = الأب;
-      }
+      constructor(الأب = null) { this.القيم = {}; this.الأب = الأب; }
       تعريف(اسم, قيمة) { this.القيم[اسم] = قيمة; }
       تحديث(اسم, قيمة) {
-        if (Object.prototype.hasOwnProperty.call(this.القيم, اسم)) {
-          this.القيم[اسم] = قيمة;
-          return;
-        }
-        if (this.الأب) {
-          this.الأب.تحديث(اسم, قيمة);
-          return;
-        }
+        if (Object.prototype.hasOwnProperty.call(this.القيم, اسم)) { this.القيم[اسم] = قيمة; return; }
+        if (this.الأب) { this.الأب.تحديث(اسم, قيمة); return; }
         throw new Error(`لا يمكن إعادة تعيين متغير غير موجود: ${اسم}`);
       }
       جلب(اسم) {
@@ -368,288 +213,156 @@
       function evalNode(node, currentEnv) {
         if (!node) return;
         switch (node.type) {
-          case 'برنامج':
-            node.body.forEach(child => evalNode(child, currentEnv));
-            break;
-          case 'إعلان_متغير':
-            currentEnv.تعريف(node.name, node.value ? evalNode(node.value, currentEnv) : null);
-            break;
-          case 'إعادة_تعيين':
-            currentEnv.تحديث(node.name, evalNode(node.value, currentEnv));
-            break;
-          case 'جملة_طباعة':
-            onOutput(evalNode(node.value, currentEnv));
-            break;
+          case 'برنامج': node.body.forEach(c => evalNode(c, currentEnv)); break;
+          case 'إعلان_متغير': currentEnv.تعريف(node.name, node.value ? evalNode(node.value, currentEnv) : null); break;
+          case 'إعادة_تعيين': currentEnv.تحديث(node.name, evalNode(node.value, currentEnv)); break;
+          case 'جملة_طباعة': onOutput(evalNode(node.value, currentEnv)); break;
           case 'جملة_شرطية':
-            if (evalNode(node.condition, currentEnv)) {
-              evalNode(node.consequent, currentEnv);
-            } else if (node.alternate) {
-              evalNode(node.alternate, currentEnv);
-            }
+            if (evalNode(node.condition, currentEnv)) evalNode(node.consequent, currentEnv);
+            else if (node.alternate) evalNode(node.alternate, currentEnv);
             break;
-          case 'جملة_تكرار':
-            const start = evalNode(node.start, currentEnv);
-            const end = evalNode(node.end, currentEnv);
-            for (let i = start; i <= end; i++) {
-              currentEnv.تعريف('i', i);
-              evalNode(node.body, currentEnv);
-            }
+          case 'جملة_تكرار': {
+            const s = evalNode(node.start, currentEnv), e = evalNode(node.end, currentEnv);
+            for (let i = s; i <= e; i++) { currentEnv.تعريف('i', i); evalNode(node.body, currentEnv); }
             break;
-          case 'جملة_بينما':
-            while (evalNode(node.condition, currentEnv)) {
-              evalNode(node.body, currentEnv);
-            }
-            break;
-          case 'كتلة':
-            node.body.forEach(child => evalNode(child, currentEnv));
-            break;
-          case 'دالة':
-            currentEnv.تعريف(node.name, { type: 'دالة', params: node.params, body: node.body, env: currentEnv });
-            break;
-          case 'استدعاء_دالة':
+          }
+          case 'جملة_بينما': while (evalNode(node.condition, currentEnv)) evalNode(node.body, currentEnv); break;
+          case 'كتلة': node.body.forEach(c => evalNode(c, currentEnv)); break;
+          case 'دالة': currentEnv.تعريف(node.name, { type: 'دالة', params: node.params, body: node.body, env: currentEnv }); break;
+          case 'استدعاء_دالة': {
             const func = currentEnv.جلب(node.name);
-            const args = node.args.map(arg => evalNode(arg, currentEnv));
+            const args = node.args.map(a => evalNode(a, currentEnv));
             if (func.type === 'دالة') {
-              const funcEnv = new البيئة(func.env); 
-              func.params.forEach((param, index) => {
-                funcEnv.تعريف(param, args[index] !== undefined ? args[index] : null);
-              });
-              try {
-                evalNode(func.body, funcEnv);
-              } catch (e) {
-                if (e.type === 'إرجع') return e.value;
-                throw e;
-              }
-              return null; 
-            } else if (func.type === 'دالة_مدمجة') {
-              return func.fn(args);
-            } else {
-              throw new Error(`${node.name} ليست دالة`);
-            }
-          case 'استدعاء_مدمج':
-            const argValue = node.args.length > 0 ? evalNode(node.args[0], currentEnv) : null;
-            const arg2 = node.args.length > 1 ? evalNode(node.args[1], currentEnv) : null;
+              const fe = new البيئة(func.env);
+              func.params.forEach((p, i) => fe.تعريف(p, args[i] !== undefined ? args[i] : null));
+              try { evalNode(func.body, fe); } catch (e) { if (e.type === 'إرجع') return e.value; throw e; }
+              return null;
+            } else if (func.type === 'دالة_مدمجة') return func.fn(args);
+            throw new Error(`${node.name} ليست دالة`);
+          }
+          case 'استدعاء_مدمج': {
+            const a1 = node.args.length > 0 ? evalNode(node.args[0], currentEnv) : null;
+            const a2 = node.args.length > 1 ? evalNode(node.args[1], currentEnv) : null;
             switch (node.name) {
-              case 'الطول':
-                if (typeof argValue !== 'string' && !Array.isArray(argValue)) throw new Error(`الطول() تتوقع نصاً أو قائمة`);
-                return argValue.length;
-              case 'النوع':
-                if (Array.isArray(argValue)) return 'قائمة';
-                if (typeof argValue === 'number') return 'رقم';
-                if (typeof argValue === 'string') return 'نص';
-                return typeof argValue;
-              case 'تحويل_لنص':
-                return String(argValue);
-              case 'تحويل_لرقم':
-                const num = Number(تحويل_الأرقام_للإنجليزية(String(argValue)));
-                if (isNaN(num)) throw new Error(`لا يمكن تحويل "${argValue}" إلى رقم`);
-                return num;
-              case 'العشوائي':
-                const min = argValue || 0;
-                const max = arg2 || 10;
-                return Math.floor(Math.random() * (max - min + 1)) + min;
-              case 'القوة':
-                return Math.pow(argValue, arg2);
-              case 'الجذر':
-                if (argValue < 0) throw new Error("لا يمكن حساب جذر رقم سالب");
-                return Math.sqrt(argValue);
-              case 'تدوير':
-                const عدد = Number(argValue);
-                const خانات = arg2 !== null && arg2 !== undefined ? Number(arg2) : 0;
-                return Number(عدد.toFixed(خانات));
+              case 'الطول': if (typeof a1 !== 'string' && !Array.isArray(a1)) throw new Error(`الطول() تتوقع نصاً أو قائمة`); return a1.length;
+              case 'النوع': if (Array.isArray(a1)) return 'قائمة'; if (typeof a1 === 'number') return 'رقم'; if (typeof a1 === 'string') return 'نص'; return typeof a1;
+              case 'تحويل_لنص': return String(a1);
+              case 'تحويل_لرقم': { const n = Number(تحويل_الأرقام_للإنجليزية(String(a1))); if (isNaN(n)) throw new Error(`لا يمكن تحويل "${a1}"`); return n; }
+              case 'العشوائي': { const mn = a1 || 0, mx = a2 || 10; return Math.floor(Math.random() * (mx - mn + 1)) + mn; }
+              case 'القوة': return Math.pow(a1, a2);
+              case 'الجذر': if (a1 < 0) throw new Error("جذر سالب"); return Math.sqrt(a1);
+              case 'تدوير': { const d = a2 !== null && a2 !== undefined ? Number(a2) : 0; return Number(Number(a1).toFixed(d)); }
             }
             break;
-          case 'إرجع':
-            throw { type: 'إرجع', value: evalNode(node.value, currentEnv) };
-          case 'قائمة':
-            return node.elements.map(el => evalNode(el, currentEnv));
-          case 'وصول_قائمة':
+          }
+          case 'إرجع': throw { type: 'إرجع', value: evalNode(node.value, currentEnv) };
+          case 'قائمة': return node.elements.map(e => evalNode(e, currentEnv));
+          case 'وصول_قائمة': {
             const list = currentEnv.جلب(node.name);
             if (!Array.isArray(list)) throw new Error(`${node.name} ليست قائمة`);
-            const idx = evalNode(node.index, currentEnv);
-            if (idx < 0 || idx >= list.length) throw new Error(`خطأ: الفهرس ${idx} خارج نطاق القائمة`);
-            return list[idx];
-          case 'تعبير_منطقي':
-            const leftLog = evalNode(node.left, currentEnv);
-            if (node.operator === 'و') {
-              return leftLog && evalNode(node.right, currentEnv);
-            } else if (node.operator === 'أو') {
-              return leftLog || evalNode(node.right, currentEnv);
-            }
-            break;
-          case 'تعبير_ثنائي':
-            const left = evalNode(node.left, currentEnv);
-            const right = evalNode(node.right, currentEnv);
+            const i = evalNode(node.index, currentEnv);
+            if (i < 0 || i >= list.length) throw new Error(`الفهرس ${i} خارج النطاق`);
+            return list[i];
+          }
+          case 'تعبير_منطقي': { const l = evalNode(node.left, currentEnv); if (node.operator === 'و') return l && evalNode(node.right, currentEnv); return l || evalNode(node.right, currentEnv); }
+          case 'تعبير_ثنائي': {
+            const l = evalNode(node.left, currentEnv), r = evalNode(node.right, currentEnv);
             switch (node.operator) {
-              case '>': return left > right;
-              case '<': return left < right;
-              case '==': return left == right;
-              case '!=': return left != right;
-              case '>=': return left >= right;
-              case '<=': return left <= right;
-              case '+': return left + right;
-              case '-': return left - right;
-              case '*': return left * right;
-              case '/': return left / right;
-              case '%': return left % right;
+              case '>': return l > r; case '<': return l < r;
+              case '==': return l == r; case '!=': return l != r;
+              case '>=': return l >= r; case '<=': return l <= r;
+              case '+': return l + r; case '-': return l - r;
+              case '*': return l * r; case '/': return l / r; case '%': return l % r;
             }
             break;
+          }
           case 'رقم': return node.value;
           case 'نص': return node.value;
           case 'معرف': return currentEnv.جلب(node.name);
         }
       }
 
-      // ==========================================
-      // 🛑 الأوامر التفاعلية
-      // ==========================================
-      env.تعريف('اطلب', {
-        type: 'دالة_مدمجة',
-        fn: (args) => {
-          const سؤال = args[0] ? String(args[0]) : "أدخل قيمة:";
-          return prompt(سؤال) || "";
-        }
-      });
-
-      env.تعريف('أضف_نص', {
-        type: 'دالة_مدمجة',
-        fn: (args) => {
-          const container = document.getElementById('مخرجات_الويب');
-          const p = document.createElement('p');
-          p.textContent = args.map(a => String(a)).join(' ');
-          p.style.margin = '5px 0';
-          p.style.fontSize = '16px';
-          container.appendChild(p);
-          return null;
-        }
-      });
-
-      env.تعريف('أضف_عنوان', {
-        type: 'دالة_مدمجة',
-        fn: (args) => {
-          const container = document.getElementById('مخرجات_الويب');
-          const h = document.createElement('h3');
-          h.textContent = args.map(a => String(a)).join(' ');
-          h.style.margin = '10px 0 5px 0';
-          h.style.color = '#3498db';
-          container.appendChild(h);
-          return null;
-        }
-      });
-
-      env.تعريف('غير_اللون', {
-        type: 'دالة_مدمجة',
-        fn: (args) => {
-          const color = حل_لون(args[0] || '#f0f0f0');
-          document.body.style.backgroundColor = color;
-          document.getElementById('مخرجات_الويب').style.backgroundColor = color;
-          return null;
-        }
-      });
-
-      env.تعريف('غير_لون_النص', {
-        type: 'دالة_مدمجة',
-        fn: (args) => {
-          const color = حل_لون(args[0] || '#000');
-          document.getElementById('مخرجات_الويب').style.color = color;
-          document.getElementById('العنوان_الرئيسي').style.color = color;
-          document.getElementById('الوصف').style.color = color;
-          document.getElementById('عنوان_النتيجة').style.color = color;
-          document.getElementById('عنوان_الويب').style.color = color;
-          return null;
-        }
-      });
-
-      env.تعريف('امسح_الصفحة', {
-        type: 'دالة_مدمجة',
-        fn: () => {
-          const container = document.getElementById('مخرجات_الويب');
-          container.innerHTML = '';
-          container.style.backgroundColor = 'transparent';
-          container.style.color = 'inherit';
-          document.body.style.backgroundColor = '#f0f0f0';
-          document.getElementById('العنوان_الرئيسي').style.color = '';
-          document.getElementById('الوصف').style.color = '';
-          document.getElementById('عنوان_النتيجة').style.color = '';
-          document.getElementById('عنوان_الويب').style.color = '';
-          return null;
-        }
-      });
+      env.تعريف('اطلب', { type: 'دالة_مدمجة', fn: (args) => prompt(args[0] ? String(args[0]) : "أدخل قيمة:") || "" });
+      env.تعريف('أضف_نص', { type: 'دالة_مدمجة', fn: (args) => {
+        const c = document.getElementById('مخرجات_الويب');
+        const p = document.createElement('p');
+        p.textContent = args.map(a => String(a)).join(' ');
+        p.style.margin = '5px 0'; p.style.fontSize = '16px';
+        c.appendChild(p); return null;
+      }});
+      env.تعريف('أضف_عنوان', { type: 'دالة_مدمجة', fn: (args) => {
+        const c = document.getElementById('مخرجات_الويب');
+        const h = document.createElement('h3');
+        h.textContent = args.map(a => String(a)).join(' ');
+        h.style.margin = '10px 0 5px 0'; h.style.color = '#3498db';
+        c.appendChild(h); return null;
+      }});
+      env.تعريف('غير_اللون', { type: 'دالة_مدمجة', fn: (args) => {
+        const color = حل_لون(args[0] || '#f0f0f0');
+        document.body.style.backgroundColor = color;
+        document.getElementById('مخرجات_الويب').style.backgroundColor = color;
+        return null;
+      }});
+      env.تعريف('غير_لون_النص', { type: 'دالة_مدمجة', fn: (args) => {
+        const color = حل_لون(args[0] || '#000');
+        document.getElementById('مخرجات_الويب').style.color = color;
+        document.getElementById('العنوان_الرئيسي').style.color = color;
+        document.getElementById('الوصف').style.color = color;
+        document.getElementById('عنوان_النتيجة').style.color = color;
+        document.getElementById('عنوان_الويب').style.color = color;
+        return null;
+      }});
+      env.تعريف('امسح_الصفحة', { type: 'دالة_مدمجة', fn: () => {
+        const c = document.getElementById('مخرجات_الويب');
+        c.innerHTML = ''; c.style.backgroundColor = 'transparent'; c.style.color = 'inherit';
+        document.body.style.backgroundColor = '#f0f0f0';
+        document.getElementById('العنوان_الرئيسي').style.color = '';
+        document.getElementById('الوصف').style.color = '';
+        document.getElementById('عنوان_النتيجة').style.color = '';
+        document.getElementById('عنوان_الويب').style.color = '';
+        return null;
+      }});
 
       evalNode(ast, env);
     }
 
-    // ==========================================
-    // 4. واجهة المستخدم
-    // ==========================================
     function شغل() {
       const code = document.getElementById("كود_عين").value;
-      const outputDiv = document.getElementById("الناتج");
-      const webDiv = document.getElementById("مخرجات_الويب");
-      
-      outputDiv.innerText = ""; 
-      webDiv.innerHTML = "";
-      webDiv.style.backgroundColor = 'transparent';
-      webDiv.style.color = 'inherit';
+      const out = document.getElementById("الناتج");
+      const web = document.getElementById("مخرجات_الويب");
+      out.innerText = ""; web.innerHTML = "";
+      web.style.backgroundColor = 'transparent'; web.style.color = 'inherit';
       document.body.style.backgroundColor = '#f0f0f0';
       document.getElementById('العنوان_الرئيسي').style.color = '';
       document.getElementById('الوصف').style.color = '';
       document.getElementById('عنوان_النتيجة').style.color = '';
       document.getElementById('عنوان_الويب').style.color = '';
-      
       try {
         const tokens = tokenize(code);
         const ast = parse(tokens);
         const env = new البيئة();
-        evaluate(ast, env, (msg) => {
-          outputDiv.innerText += تحويل_الأرقام_للعربية(msg) + "\n";
-        });
-      } catch (error) {
-        outputDiv.innerText = "❌ خطأ: " + error.message;
-      }
+        evaluate(ast, env, (msg) => { out.innerText += تحويل_الأرقام_للعربية(msg) + "\n"; });
+      } catch (error) { out.innerText = "❌ خطأ: " + error.message; }
     }
 
     function احفظ() {
       const كود = document.getElementById("كود_عين").value;
       const ملف = new Blob([كود], { type: "text/plain" });
-      const رابط = document.createElement("a");
-      رابط.href = URL.createObjectURL(ملف);
-      رابط.download = "الكود.ain";
-      رابط.click();
+      const ر = document.createElement("a"); ر.href = URL.createObjectURL(ملف); ر.download = "الكود.ain"; ر.click();
     }
-
     function انسخ() {
       const نص = document.getElementById("الناتج").innerText;
-      if (!نص.trim()) {
-        alert("لا يوجد ناتج لنسخه!");
-        return;
-      }
-      navigator.clipboard.writeText(نص).then(() => {
-        alert("تم نسخ الناتج!");
-      });
+      if (!نص.trim()) { alert("لا يوجد ناتج!"); return; }
+      navigator.clipboard.writeText(نص).then(() => alert("تم النسخ!"));
     }
-
     function امسح_الكود() {
-      if (document.getElementById("كود_عين").value.trim() === "") {
-        alert("المربع فارغ بالفعل!");
-        return;
-      }
-      if (confirm("هل تريد مسح الكود بالكامل؟")) {
-        document.getElementById("كود_عين").value = "";
-      }
+      if (document.getElementById("كود_عين").value.trim() === "") { alert("فارغ!"); return; }
+      if (confirm("مسح الكود؟")) document.getElementById("كود_عين").value = "";
     }
-
     function امسح_الناتج() {
-      const outputDiv = document.getElementById("الناتج");
-      const webDiv = document.getElementById("مخرجات_الويب");
-      if (outputDiv.innerText.trim() === "" && webDiv.innerHTML.trim() === "") {
-        alert("لا يوجد ناتج لمسحه!");
-        return;
-      }
-      outputDiv.innerText = "";
-      webDiv.innerHTML = "";
-      webDiv.style.backgroundColor = 'transparent';
-      webDiv.style.color = 'inherit';
+      const out = document.getElementById("الناتج"); const web = document.getElementById("مخرجات_الويب");
+      out.innerText = ""; web.innerHTML = "";
+      web.style.backgroundColor = 'transparent'; web.style.color = 'inherit';
       document.body.style.backgroundColor = '#f0f0f0';
       document.getElementById('العنوان_الرئيسي').style.color = '';
       document.getElementById('الوصف').style.color = '';
