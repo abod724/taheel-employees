@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>لغة عين - النسخة القوية</title>
+  <title>لغة عين - النسخة الاحترافية</title>
   <style>
     body { font-family: sans-serif; padding: 20px; background: #f0f0f0; direction: rtl; }
     textarea { width: 100%; height: 200px; font-family: monospace; font-size: 16px; }
@@ -12,17 +12,20 @@
   </style>
 </head>
 <body>
-  <h1>مترجم لغة عين (النسخة القوية)</h1>
+  <h1>مترجم لغة عين (النسخة الاحترافية)</h1>
   <p>اكتب كود بلغة عين (استخدم الأرقام العربية ٠-٩):</p>
-  <textarea id="كود_عين">متغير العدد = ٤
-إذا (العدد % ٢ == ٠) {
-  اطبع "العدد زوجي"
-} آخر {
-  اطبع "العدد فردي"
-}
+  <textarea id="كود_عين">متغير اسمي = "عبدالله"
+اطبع "عدد حروف اسمي: " + الطول(اسمي)
 
-متغير الناتج = (٢ + ٣) * ٤
-اطبع "الناتج هو: " + الناتج</textarea><br>
+متغير عمري = ٢٥
+اطبع "نوع المتغير عمري: " + النوع(عمري)
+
+متغير رقم = ١٠٠
+اطبع "الرقم كـ نص: " + تحويل_لنص(رقم)
+
+متغير نص_رقمي = "٥٠"
+متغير ناتج = تحويل_لرقم(نص_رقمي) + ١٠
+اطبع "الناتج بعد التحويل: " + ناتج</textarea><br>
   <button onclick="شغل()">تشغيل</button>
   <button onclick="احفظ()">حفظ الكود</button>
   <button onclick="انسخ()">نسخ الناتج</button>
@@ -47,20 +50,19 @@
     // 1. المحلل المعجمي (Lexer)
     // ==========================================
     function tokenize(code) {
-      // 🛑 إصلاح: تنظيف الأحرف الخفية التي تسبب أخطاء في التحليل
       code = code.replace(/[\u200B-\u200D\uFEFF\u200E\u200F]/g, '');
-      
       code = تحويل_الأرقام_للإنجليزية(code);
       code = code.replace(/\/\/.*$/gm, ''); 
       
       const tokens = [];
-      const regex = /\s*(متغير|اطبع|إذا|آخر|كرر|من|إلى|دالة|إرجع|بينما|و|أو|[a-zA-Z\u0621-\u064A_][a-zA-Z0-9\u0621-\u064A_]*|\d+|"[^"]*"|'[^']*'|==|!=|>=|<=|[=><+\-*/%{}()\[\]،,])/g;
+      const regex = /\s*(متغير|اطبع|إذا|آخر|كرر|من|إلى|دالة|إرجع|بينما|و|أو|الطول|النوع|تحويل_لنص|تحويل_لرقم|[a-zA-Z\u0621-\u064A_][a-zA-Z0-9\u0621-\u064A_]*|\d+|"[^"]*"|'[^']*'|==|!=|>=|<=|[=><+\-*/%{}()\[\]،,])/g;
       let match;
       while ((match = regex.exec(code)) !== null) {
         let value = match[1];
         let type = 'معرف';
         
-        if (['متغير', 'اطبع', 'إذا', 'آخر', 'كرر', 'من', 'إلى', 'دالة', 'إرجع', 'بينما', 'و', 'أو'].includes(value)) {
+        // 🛑 إضافة: الكلمات المحجوزة للدوال المدمجة
+        if (['متغير', 'اطبع', 'إذا', 'آخر', 'كرر', 'من', 'إلى', 'دالة', 'إرجع', 'بينما', 'و', 'أو', 'الطول', 'النوع', 'تحويل_لنص', 'تحويل_لرقم'].includes(value)) {
           type = 'كلمة_محجوزة';
         } else if (/^\d+$/.test(value)) {
           type = 'رقم';
@@ -163,6 +165,18 @@
             consume();
             const value = parseExpression();
             return { type: 'إرجع', value };
+          }
+          // 🛑 إضافة: التعامل مع الدوال المدمجة
+          if (['الطول', 'النوع', 'تحويل_لنص', 'تحويل_لرقم'].includes(token.value)) {
+            const funcName = consume().value;
+            consume(); // (
+            const args = [];
+            while (peek() && peek().value !== ')') {
+              if (peek().value === '،' || peek().value === ',') { consume(); continue; }
+              args.push(parseExpression());
+            }
+            consume(); // )
+            return { type: 'استدعاء_مدمج', name: funcName, args };
           }
         }
         return parseExpression();
@@ -353,6 +367,26 @@
               throw e;
             }
             return null; 
+          // 🛑 إضافة: تنفيذ الدوال المدمجة
+          case 'استدعاء_مدمج':
+            const argValue = node.args.length > 0 ? evalNode(node.args[0], currentEnv) : null;
+            switch (node.name) {
+              case 'الطول':
+                if (typeof argValue !== 'string' && !Array.isArray(argValue)) {
+                  throw new Error(`الطول() تتوقع نصاً أو قائمة، لكن تم إعطاؤها ${typeof argValue}`);
+                }
+                return argValue.length;
+              case 'النوع':
+                if (Array.isArray(argValue)) return 'قائمة';
+                return typeof argValue;
+              case 'تحويل_لنص':
+                return String(argValue);
+              case 'تحويل_لرقم':
+                const num = Number(تحويل_الأرقام_للإنجليزية(String(argValue)));
+                if (isNaN(num)) throw new Error(`لا يمكن تحويل "${argValue}" إلى رقم`);
+                return num;
+            }
+            break;
           case 'إرجع':
             throw { type: 'إرجع', value: evalNode(node.value, currentEnv) };
           case 'قائمة':
