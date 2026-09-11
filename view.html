@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>لغة عين - النسخة القوية</title>
+  <title>لغة عين - النسخة الاحترافية</title>
   <style>
     body { font-family: sans-serif; padding: 20px; background: #f0f0f0; direction: rtl; }
     textarea { width: 100%; height: 200px; font-family: monospace; font-size: 16px; }
@@ -12,18 +12,16 @@
   </style>
 </head>
 <body>
-  <h1>مترجم لغة عين (النسخة القوية)</h1>
+  <h1>مترجم لغة عين (النسخة الاحترافية)</h1>
   <p>اكتب كود بلغة عين (استخدم الأرقام العربية ٠-٩):</p>
-  <textarea id="كود_عين">متغير العدد = ٧
+  <textarea id="كود_عين">متغير الناتج = (٢ + ٣) * ٤
+اطبع "الناتج: " + الناتج
 
-إذا (العدد > ٥ و العدد < ١٠) {
-  اطبع "العدد بين ٥ و ١٠"
+متغير العدد = ٤
+إذا (العدد % ٢ == ٠) {
+  اطبع "العدد زوجي"
 } آخر {
-  اطبع "العدد خارج النطاق"
-}
-
-إذا (العدد == ٧ أو العدد == ٨) {
-  اطبع "العدد إما ٧ أو ٨"
+  اطبع "العدد فردي"
 }</textarea><br>
   <button onclick="شغل()">تشغيل</button>
   <button onclick="احفظ()">حفظ الكود</button>
@@ -53,8 +51,8 @@
       code = code.replace(/\/\/.*$/gm, ''); 
       
       const tokens = [];
-      // أضفنا رموز المقارنة الجديدة == != >= <=
-      const regex = /\s*(متغير|اطبع|إذا|آخر|كرر|من|إلى|دالة|إرجع|بينما|و|أو|[a-zA-Z\u0621-\u064A_][a-zA-Z0-9\u0621-\u064A_]*|\d+|"[^"]*"|'[^']*'|==|!=|>=|<=|[=><+\-*/{}()\[\]،,])/g;
+      // أضفنا % للعمليات الحسابية
+      const regex = /\s*(متغير|اطبع|إذا|آخر|كرر|من|إلى|دالة|إرجع|بينما|و|أو|[a-zA-Z\u0621-\u064A_][a-zA-Z0-9\u0621-\u064A_]*|\d+|"[^"]*"|'[^']*'|==|!=|>=|<=|[=><+\-*/%{}()\[\]،,])/g;
       let match;
       while ((match = regex.exec(code)) !== null) {
         let value = match[1];
@@ -67,7 +65,7 @@
         } else if (/^["'].*["']$/.test(value)) {
           type = 'نص';
           value = value.slice(1, -1);
-        } else if (['=', '>', '<', '==', '!=', '>=', '<=', '+', '-', '*', '/', '{', '}', '(', ')', '[', ']', '،', ','].includes(value)) {
+        } else if (['=', '>', '<', '==', '!=', '>=', '<=', '+', '-', '*', '/', '%', '{', '}', '(', ')', '[', ']', '،', ','].includes(value)) {
           type = 'رمز';
         }
         tokens.push({ type, value });
@@ -76,7 +74,7 @@
     }
 
     // ==========================================
-    // 2. المحلل النحوي (Parser)
+    // 2. المحلل النحوي (Parser) - مع دعم الأسبقية
     // ==========================================
     function parse(tokens) {
       let pos = 0;
@@ -178,6 +176,7 @@
         return { type: 'كتلة', body };
       }
 
+      // 🛑 تحسين: الأسبقية (logical -> comparison -> additive -> multiplicative -> primary)
       function parseExpression() {
         let left = parseComparison();
         while (peek() && (peek().value === 'و' || peek().value === 'أو')) {
@@ -189,8 +188,28 @@
       }
 
       function parseComparison() {
-        let left = parsePrimary();
+        let left = parseAdditive();
         while (peek() && ['>', '<', '==', '!=', '>=', '<='].includes(peek().value)) {
+          const op = consume().value;
+          const right = parseAdditive();
+          left = { type: 'تعبير_ثنائي', operator: op, left, right };
+        }
+        return left;
+      }
+
+      function parseAdditive() {
+        let left = parseMultiplicative();
+        while (peek() && (peek().value === '+' || peek().value === '-')) {
+          const op = consume().value;
+          const right = parseMultiplicative();
+          left = { type: 'تعبير_ثنائي', operator: op, left, right };
+        }
+        return left;
+      }
+
+      function parseMultiplicative() {
+        let left = parsePrimary();
+        while (peek() && (peek().value === '*' || peek().value === '/' || peek().value === '%')) {
           const op = consume().value;
           const right = parsePrimary();
           left = { type: 'تعبير_ثنائي', operator: op, left, right };
@@ -205,6 +224,16 @@
         if (token.type === 'رقم') return { type: 'رقم', value: parseInt(token.value) };
         if (token.type === 'نص') return { type: 'نص', value: token.value };
         
+        // 🛑 إضافة: دعم الأقواس في التعابير الحسابية
+        if (token.value === '(') {
+          const expr = parseExpression();
+          const closing = consume();
+          if (!closing || closing.value !== ')') {
+            throw new Error("قوس إغلاق ) مفقود");
+          }
+          return expr;
+        }
+
         if (token.value === '[') {
           const elements = [];
           while (peek() && peek().value !== ']') {
@@ -356,6 +385,7 @@
               case '-': return left - right;
               case '*': return left * right;
               case '/': return left / right;
+              case '%': return left % right;
             }
             break;
           case 'رقم': return node.value;
