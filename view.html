@@ -4,10 +4,9 @@
   <meta charset="UTF-8">
   <title>لغة عين - النسخة التفاعلية</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; background: #f0f0f0; direction: rtl; transition: background-color 0.5s; }
+    body { font-family: sans-serif; padding: 20px; background: #f0f0f0; direction: rtl; transition: background-color 0.5s, color 0.5s; }
     textarea { width: 100%; height: 150px; font-family: monospace; font-size: 16px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
     #الناتج { white-space: pre-wrap; background: #1e1e1e; color: #0f0; padding: 10px; margin-top: 10px; border-radius: 5px; font-family: monospace; min-height: 50px; }
-    /* 🛑 التعديل: خلفية شفافة بدل الأبيض */
     #مخرجات_الويب { background: transparent; padding: 15px; margin-top: 10px; border: 2px dashed #007bff; border-radius: 8px; min-height: 100px; color: inherit; transition: background-color 0.5s, color 0.5s; }
     button { padding: 10px 15px; margin-top: 10px; font-size: 15px; margin-left: 5px; cursor: pointer; border: none; border-radius: 5px; color: white; }
     .btn-primary { background: #007bff; }
@@ -16,45 +15,43 @@
     .btn-danger:hover { background: #a71d2a; }
     .btn-warning { background: #ffc107; color: black; }
     .btn-warning:hover { background: #d39e00; }
-    h2 { color: inherit; margin-top: 20px; }
   </style>
 </head>
 <body>
-  <h1>مترجم لغة عين (النسخة التفاعلية)</h1>
-  <p>اكتب كود بلغة عين (استخدم الأرقام العربية ٠-٩):</p>
-  <textarea id="كود_عين">// 🎨 بطاقة تعريف شخصية بلغة عين
-غير_اللون("#1a1a2e")
-غير_لون_النص("#ffffff")
+  <h1 id="العنوان_الرئيسي">مترجم لغة عين (النسخة التفاعلية)</h1>
+  <p id="الوصف">اكتب كود بلغة عين (استخدم الأرقام العربية ٠-٩):</p>
+  <textarea id="كود_عين">// 🎨 لوحة تحكم بألوان عربية
+غير_اللون("كحلي")
+غير_لون_النص("ابيض")
 
-أضف_عنوان("✨ بطاقة التعريف الشخصية ✨")
+أضف_عنوان("📊 لوحة التحكم")
+أضف_عنوان("─────────────────")
 
-متغير الاسم = "عبدالله"
-متغير التخصص = "مبرمج لغات برمجة"
-متغير المدينة = "الرياض"
+// قراءة اسم المستخدم
+متغير اسمي = اطلب("ما اسمك؟")
+أضف_نص("👤 مرحباً، " + اسمي)
 
-أضف_نص("الاسم: " + الاسم)
-أضف_نص("التخصص: " + التخصص)
-أضف_نص("المدينة: " + المدينة)
+// الإحصائيات
+متغير الزيارات = ١٢٥٠
+متغير المبيعات = ٨٧
+متغير الأرباح = ١٥٦٠٠
 
-أضف_عنوان("🛠️ مهاراتي:")
-متغير المهارات = ["البرمجة", "تصميم المواقع", "حل المشكلات", "التعلم المستمر"]
-كرر من ٠ إلى ٣ {
-  أضف_نص("★ " + المهارات[i])
-}
+أضف_عنوان("📈 الإحصائيات:")
+أضف_نص("• الزيارات: " + الزيارات)
+أضف_نص("• المبيعات: " + المبيعات)
+أضف_نص("• الأرباح: " + الأرباح + " ريال")
 
-أضف_عنوان("📊 تقييمي:")
-متغير التقييمات = [٩٥, ٨٨, ٩٢, ٩٧, ٩٠]
-متغير المجموع = ٠
-كرر من ٠ إلى ٤ {
-  المجموع = المجموع + التقييمات[i]
-}
-متغير المتوسط = المجموع / ٥
-أضف_نص("متوسط تقييماتي: " + المتوسط)
+// حساب المتوسط مع التدوير
+متغير المتوسط = الأرباح / المبيعات
+متغير المتوسط_المدور = تدوير(المتوسط, ٢)
+أضف_نص("• متوسط البيع: " + المتوسط_المدور + " ريال")
 
-إذا (المتوسط > ٩٠) {
-  أضف_نص("🏆 ممتاز! أنا من المتفوقين")
+إذا (الأرباح > ١٠٠٠٠) {
+  أضف_عنوان("✅ يوم ممتاز!")
+  أضف_نص("🎉 الأرباح تجاوزت ١٠٠٠٠ ريال")
 } آخر {
-  أضف_نص("📈 مستواي جيد، وأسعى للأفضل")
+  أضف_عنوان("⚠️ تحتاج تحسين")
+  أضف_نص("الأرباح أقل من المتوقع")
 }</textarea><br>
   <button class="btn-primary" onclick="شغل()">▶ تشغيل</button>
   <button class="btn-warning" onclick="احفظ()">💾 حفظ الكود</button>
@@ -62,10 +59,10 @@
   <button class="btn-danger" onclick="امسح_الكود()">🗑️ مسح الكود</button>
   <button class="btn-danger" onclick="امسح_الناتج()">🧹 مسح الناتج</button>
 
-  <h2>📟 الناتج (وحدة التحكم):</h2>
+  <h2 id="عنوان_النتيجة">📟 الناتج (وحدة التحكم):</h2>
   <div id="الناتج"></div>
 
-  <h2>🖥️ النتيجة على الويب (تفاعلية):</h2>
+  <h2 id="عنوان_الويب">🖥️ النتيجة على الويب (تفاعلية):</h2>
   <div id="مخرجات_الويب"></div>
 
   <script>
@@ -79,6 +76,44 @@
     function تحويل_الأرقام_للعربية(نص) {
       const خريطة = { '0': '٠', '1': '١', '2': '٢', '3': '٣', '4': '٤', '5': '٥', '6': '٦', '7': '٧', '8': '٨', '9': '٩' };
       return String(نص).replace(/[0-9]/g, (رقم) => خريطة[رقم]);
+    }
+
+    // ==========================================
+    // 🎨 خريطة الألوان العربية
+    // ==========================================
+    const الألوان_العربية = {
+      'احمر': '#e74c3c', 'أحمر': '#e74c3c',
+      'ازرق': '#3498db', 'أزرق': '#3498db',
+      'اخضر': '#27ae60', 'أخضر': '#27ae60',
+      'اصفر': '#f1c40f', 'أصفر': '#f1c40f',
+      'ابيض': '#ffffff', 'أبيض': '#ffffff',
+      'اسود': '#000000', 'أسود': '#000000',
+      'برتقالي': '#e67e22',
+      'بنفسجي': '#8e44ad',
+      'وردي': '#e91e63',
+      'رمادي': '#7f8c8d',
+      'بني': '#8b4513',
+      'سماوي': '#87ceeb',
+      'ذهبي': '#ffd700',
+      'فضي': '#c0c0c0',
+      'تركوازي': '#1abc9c',
+      'كحلي': '#1a1a2e',
+      'اخضر_فاتح': '#2ecc71', 'أخضر_فاتح': '#2ecc71',
+      'ازرق_فاتح': '#aed6f1', 'أزرق_فاتح': '#aed6f1',
+      'احمر_فاتح': '#f1948a', 'أحمر_فاتح': '#f1948a',
+      'بنفسجي_فاتح': '#bb8fce',
+      'رمادي_فاتح': '#bdc3c7',
+      'بني_فاتح': '#cd853f',
+      'شفاف': 'transparent'
+    };
+
+    function حل_لون(اسم_اللون) {
+      if (typeof اسم_اللون !== 'string') return String(اسم_اللون);
+      const مفتاح = اسم_اللون.trim();
+      // إذا كان كود Hex، رجّعه كما هو
+      if (مفتاح.startsWith('#') || مفتاح.startsWith('rgb')) return مفتاح;
+      // إذا كان اسم عربي، رجّع الكود
+      return الألوان_العربية[مفتاح] || مفتاح;
     }
 
     // ==========================================
@@ -134,7 +169,7 @@
 
         if (token.type === 'معرف' && peekNext() && peekNext().value === '=') {
           const name = consume().value;
-          consume(); // =
+          consume();
           const value = parseExpression();
           return { type: 'إعادة_تعيين', name, value };
         }
@@ -145,7 +180,7 @@
             const name = consume().value;
             let value = null;
             if (peek() && peek().value === '=') {
-              consume(); // =
+              consume();
               value = parseExpression();
             }
             return { type: 'إعلان_متغير', name, value };
@@ -156,9 +191,9 @@
             return { type: 'جملة_طباعة', value };
           }
           if (token.value === 'إذا') {
-            consume(); consume(); // (
+            consume(); consume();
             const condition = parseExpression();
-            consume(); // )
+            consume();
             const consequent = parseBlock();
             let alternate = null;
             if (peek() && peek().value === 'آخر') {
@@ -168,30 +203,30 @@
             return { type: 'جملة_شرطية', condition, consequent, alternate };
           }
           if (token.value === 'كرر') {
-            consume(); consume(); // من
+            consume(); consume();
             const start = parseExpression();
-            consume(); // إلى
+            consume();
             const end = parseExpression();
             const body = parseBlock();
             return { type: 'جملة_تكرار', start, end, body };
           }
           if (token.value === 'بينما') {
-            consume(); consume(); // (
+            consume(); consume();
             const condition = parseExpression();
-            consume(); // )
+            consume();
             const body = parseBlock();
             return { type: 'جملة_بينما', condition, body };
           }
           if (token.value === 'دالة') {
             consume();
             const name = consume().value;
-            consume(); // (
+            consume();
             const params = [];
             while (peek() && peek().value !== ')') {
               if (peek().value === '،' || peek().value === ',') { consume(); continue; }
               params.push(consume().value);
             }
-            consume(); // )
+            consume();
             const body = parseBlock();
             return { type: 'دالة', name, params, body };
           }
@@ -205,12 +240,12 @@
       }
 
       function parseBlock() {
-        consume(); // {
+        consume();
         const body = [];
         while (peek() && peek().value !== '}') {
           body.push(parseStatement());
         }
-        consume(); // }
+        consume();
         return { type: 'كتلة', body };
       }
 
@@ -276,36 +311,37 @@
             if (peek().value === '،' || peek().value === ',') { consume(); continue; }
             elements.push(parseExpression());
           }
-          consume(); // ]
+          consume();
           return { type: 'قائمة', elements };
         }
 
-        if (['الطول', 'النوع', 'تحويل_لنص', 'تحويل_لرقم', 'العشوائي', 'القوة', 'الجذر', 'أضف_نص', 'أضف_عنوان', 'غير_اللون', 'غير_لون_النص', 'امسح_الصفحة'].includes(token.value)) {
-          consume(); // (
+        const دوال_مدمجة = ['الطول', 'النوع', 'تحويل_لنص', 'تحويل_لرقم', 'العشوائي', 'القوة', 'الجذر', 'تدوير', 'أضف_نص', 'أضف_عنوان', 'غير_اللون', 'غير_لون_النص', 'امسح_الصفحة', 'اطلب'];
+        if (دوال_مدمجة.includes(token.value)) {
+          consume();
           const args = [];
           while (peek() && peek().value !== ')') {
             if (peek().value === '،' || peek().value === ',') { consume(); continue; }
             args.push(parseExpression());
           }
-          consume(); // )
+          consume();
           return { type: 'استدعاء_مدمج', name: token.value, args };
         }
 
         if (token.type === 'معرف') {
           if (peek() && peek().value === '(') {
-            consume(); // (
+            consume();
             const args = [];
             while (peek() && peek().value !== ')') {
               if (peek().value === '،' || peek().value === ',') { consume(); continue; }
               args.push(parseExpression());
             }
-            consume(); // )
+            consume();
             return { type: 'استدعاء_دالة', name: token.value, args };
           }
           if (peek() && peek().value === '[') {
-            consume(); // [
+            consume();
             const index = parseExpression();
-            consume(); // ]
+            consume();
             return { type: 'وصول_قائمة', name: token.value, index };
           }
           return { type: 'معرف', name: token.value };
@@ -432,6 +468,10 @@
               case 'الجذر':
                 if (argValue < 0) throw new Error("لا يمكن حساب جذر رقم سالب");
                 return Math.sqrt(argValue);
+              case 'تدوير':
+                const عدد = Number(argValue);
+                const خانات = arg2 !== null && arg2 !== undefined ? Number(arg2) : 0;
+                return Number(عدد.toFixed(خانات));
             }
             break;
           case 'إرجع':
@@ -476,8 +516,16 @@
       }
 
       // ==========================================
-      // 🛑 الأوامر التفاعلية (تتعامل مع الويب)
+      // 🛑 الأوامر التفاعلية
       // ==========================================
+      env.تعريف('اطلب', {
+        type: 'دالة_مدمجة',
+        fn: (args) => {
+          const سؤال = args[0] ? String(args[0]) : "أدخل قيمة:";
+          return prompt(سؤال) || "";
+        }
+      });
+
       env.تعريف('أضف_نص', {
         type: 'دالة_مدمجة',
         fn: (args) => {
@@ -498,34 +546,36 @@
           const h = document.createElement('h3');
           h.textContent = args.map(a => String(a)).join(' ');
           h.style.margin = '10px 0 5px 0';
-          h.style.color = '#007bff';
+          h.style.color = '#3498db';
           container.appendChild(h);
           return null;
         }
       });
 
-      // 🛑 التعديل: غير_اللون يغير خلفية الصفحة والصندوق معاً
       env.تعريف('غير_اللون', {
         type: 'دالة_مدمجة',
         fn: (args) => {
-          const color = String(args[0] || '#f0f0f0');
+          const color = حل_لون(args[0] || '#f0f0f0');
           document.body.style.backgroundColor = color;
           document.getElementById('مخرجات_الويب').style.backgroundColor = color;
           return null;
         }
       });
 
+      // 🛑 إصلاح: تغيير لون النص والعناوين الرئيسية
       env.تعريف('غير_لون_النص', {
         type: 'دالة_مدمجة',
         fn: (args) => {
-          const container = document.getElementById('مخرجات_الويب');
-          const color = String(args[0] || '#000');
-          container.style.color = color;
+          const color = حل_لون(args[0] || '#000');
+          document.getElementById('مخرجات_الويب').style.color = color;
+          document.getElementById('العنوان_الرئيسي').style.color = color;
+          document.getElementById('الوصف').style.color = color;
+          document.getElementById('عنوان_النتيجة').style.color = color;
+          document.getElementById('عنوان_الويب').style.color = color;
           return null;
         }
       });
 
-      // 🛑 التعديل: امسح_الصفحة يرجّع كل شيء للون الأصلي
       env.تعريف('امسح_الصفحة', {
         type: 'دالة_مدمجة',
         fn: () => {
@@ -534,6 +584,10 @@
           container.style.backgroundColor = 'transparent';
           container.style.color = 'inherit';
           document.body.style.backgroundColor = '#f0f0f0';
+          document.getElementById('العنوان_الرئيسي').style.color = '';
+          document.getElementById('الوصف').style.color = '';
+          document.getElementById('عنوان_النتيجة').style.color = '';
+          document.getElementById('عنوان_الويب').style.color = '';
           return null;
         }
       });
@@ -554,6 +608,10 @@
       webDiv.style.backgroundColor = 'transparent';
       webDiv.style.color = 'inherit';
       document.body.style.backgroundColor = '#f0f0f0';
+      document.getElementById('العنوان_الرئيسي').style.color = '';
+      document.getElementById('الوصف').style.color = '';
+      document.getElementById('عنوان_النتيجة').style.color = '';
+      document.getElementById('عنوان_الويب').style.color = '';
       
       try {
         const tokens = tokenize(code);
@@ -609,6 +667,10 @@
       webDiv.style.backgroundColor = 'transparent';
       webDiv.style.color = 'inherit';
       document.body.style.backgroundColor = '#f0f0f0';
+      document.getElementById('العنوان_الرئيسي').style.color = '';
+      document.getElementById('الوصف').style.color = '';
+      document.getElementById('عنوان_النتيجة').style.color = '';
+      document.getElementById('عنوان_الويب').style.color = '';
     }
   </script>
 </body>
