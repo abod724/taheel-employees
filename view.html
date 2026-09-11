@@ -1,334 +1,89 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="ar">
+<html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الدورات القادمة وورش العمل - مركز التأهيل الشامل</title>
-    
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="logo.jpg">
-
-    <script src="https://formspree.io/js/formbutton-v1.min.js" defer></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body {
-            background: #f4f8f9;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .card {
-            max-width: 780px;
-            width: 100%;
-            background: #ffffff;
-            border-radius: 24px;
-            padding: 35px 30px;
-            box-shadow: 0 10px 35px rgba(0, 77, 77, 0.08);
-            border: 1px solid #e0ecec;
-        }
-        /* ===== الشعار ===== */
-        .logo-container {
-            text-align: center;
-            margin-bottom: 18px;
-        }
-        .logo-container img {
-            max-height: 95px;
-            width: auto;
-            border-radius: 10px;
-            display: inline-block;
-        }
-
-        .header {
-            text-align: center;
-            border-bottom: 1px solid #e0ecec;
-            padding-bottom: 20px;
-            margin-bottom: 25px;
-        }
-        .header h1 { 
-            font-size: 1.9rem; 
-            color: #004d4d; 
-            font-weight: 700; 
-        }
-        .header p { 
-            color: #4d6b6b; 
-            font-size: 1rem; 
-            margin-top: 6px; 
-        }
-
-        .section-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #004d4d;
-            margin: 25px 0 15px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .section-title .icon { font-size: 1.7rem; }
-
-        .form-group {
-            margin-bottom: 22px;
-            background: #f7fbfb;
-            padding: 18px 20px;
-            border-radius: 16px;
-            border: 1px solid #e0ecec;
-            transition: 0.2s;
-        }
-        .form-group:hover { 
-            border-color: #80b8b8; 
-            background: #f1f8f8;
-        }
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            color: #004d4d;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
-        .form-group label .required { 
-            color: #d32f2f; 
-            margin-right: 4px; 
-        }
-        input[type="text"], input[type="email"], select, textarea {
-            width: 100%;
-            padding: 14px 18px;
-            border: 1.5px solid #cfe0e0;
-            border-radius: 12px;
-            font-size: 1rem;
-            background: #fff;
-            transition: 0.2s;
-            color: #1d3b3b;
-        }
-        input:focus, select:focus, textarea:focus {
-            border-color: #004d4d;
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(0, 77, 77, 0.08);
-        }
-        textarea { min-height: 80px; resize: vertical; }
-
-        .btn-group {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-        .btn {
-            padding: 15px 32px;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            flex: 1;
-            transition: 0.2s;
-            text-align: center;
-            letter-spacing: 0.2px;
-        }
-        .btn-primary {
-            background: #004d4d;
-            color: #fff;
-            box-shadow: 0 4px 12px rgba(0, 77, 77, 0.20);
-        }
-        .btn-primary:hover { 
-            background: #003838; 
-            box-shadow: 0 6px 18px rgba(0, 77, 77, 0.30);
-        }
-        .btn-outline {
-            background: transparent;
-            color: #004d4d;
-            border: 1.5px solid #004d4d;
-        }
-        .btn-outline:hover { 
-            background: #004d4d; 
-            color: #fff; 
-        }
-
-        .footer {
-            margin-top: 28px;
-            font-size: 0.8rem;
-            color: #4d6b6b;
-            text-align: center;
-            border-top: 1px solid #e0ecec;
-            padding-top: 18px;
-        }
-        .credit {
-            font-weight: 600;
-            color: #004d4d;
-            background: #eaf4f4;
-            padding: 6px 18px;
-            border-radius: 30px;
-            display: inline-block;
-            font-size: 0.85rem;
-        }
-
-        .modal-overlay {
-            display: none; position: fixed; top:0;left:0;width:100%;height:100%;
-            background: rgba(0, 77, 77, 0.45); backdrop-filter: blur(3px);
-            justify-content: center; align-items: center; z-index: 999;
-        }
-        .modal-box {
-            background: #fff; padding: 35px 30px; border-radius: 24px;
-            text-align: center; max-width: 370px; width: 90%;
-            box-shadow: 0 25px 60px rgba(0, 77, 77, 0.25);
-        }
-        .modal-box .icon { font-size: 4.2rem; }
-        .modal-box h2 { color: #004d4d; margin: 8px 0; font-size: 1.7rem; }
-        .modal-box p { color: #4d6b6b; margin-bottom: 22px; font-size: 0.95rem; }
-        .modal-box .btn-close-modal {
-            background: #004d4d; color: #fff; border: none;
-            padding: 12px 45px;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .modal-box .btn-close-modal:hover { background: #003838; }
-
-        @media (max-width: 600px) {
-            .card { padding: 20px 15px; }
-            .section-title { font-size: 1.1rem; }
-            .form-group { padding: 14px; }
-            .btn { padding: 14px 20px; font-size: 1rem; }
-            .logo-container img { max-height: 65px; }
-            .header h1 { font-size: 1.4rem; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>لغة عين - مترجم</title>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f0f0f0; direction: rtl; }
+    textarea { width: 100%; height: 150px; font-family: monospace; }
+    #الناتج { white-space: pre; background: #fff; padding: 10px; margin-top: 10px; border: 1px solid #ccc; }
+    button { padding: 10px 20px; margin-top: 10px; font-size: 16px; margin-left: 5px; }
+  </style>
 </head>
 <body>
-    <div class="card">
-        <!-- الشعار -->
-        <div class="logo-container">
-            <img src="./logo.jpg" alt="شعار مركز التأهيل الشامل" />
-        </div>
+  <h1>مترجم لغة عين</h1>
+  <p>اكتب كود بلغة عين:</p>
+  <textarea id="كود_عين">متغير العدد = 5
+إذا (العدد > 3) {
+  اطبع "العدد أكبر من 3"
+} آخر {
+  اطبع "العدد صغير"
+}
 
-        <div class="header">
-            <h1> الدورات القادمة وورش العمل</h1>
-            <p>مركز التأهيل الشامل بحفر الباطن</p>
-        </div>
+كرر من 1 إلى 3 {
+  اطبع "مرحباً"
+}</textarea><br>
+  <button onclick="شغل()">ترجمة وتشغيل</button>
+  <button onclick="احفظ()">حفظ الكود</button>
+  <button onclick="انسخ()">نسخ الناتج</button>
 
-        <div class="section-title">
-            <span class="icon"></span> استبيان رغبات الدورات وورش العمل
-        </div>
-        <form id="surveyForm">
-            <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 5px;">
-                <div style="flex: 1; min-width: 150px;">
-                    <label style="font-weight:600; color:#004d4d; font-size:0.9rem;">الاسم (اختياري)</label>
-                    <input type="text" id="name" placeholder="أدخل اسمك" style="margin-top:5px;" />
-                </div>
-                <div style="flex: 1; min-width: 150px;">
-                    <label style="font-weight:600; color:#004d4d; font-size:0.9rem;">القسم <span class="required">*</span></label>
-                    <input type="text" id="dept" required placeholder="مثال: تمريض، علاج طبيعي" style="margin-top:5px;" />
-                </div>
-            </div>
+  <h2>الناتج:</h2>
+  <div id="الناتج"></div>
 
-            <div class="form-group">
-                <label>ما هي الدورة أو ورشة العمل التي ترغب في حضورها في الفترة القادمة؟ <span class="required">*</span></label>
-                <select id="courseInterest" required style="width:100%;">
-                    <option value="">-- اختر الدورة أو الورشة --</option>
-                    <option value="الصرع وطرق التعامل معه">🧠 الصرع وطرق التعامل معه</option>
-                    <option value="النطق والتخاطب">🗣️ النطق والتخاطب</option>
-                    <option value="الإسعافات الأولية">🚑 الإسعافات الأولية</option>
-                    <option value="التعامل مع الضغوط النفسية">🧘 التعامل مع الضغوط النفسية</option>
-                    <option value="التواصل الفعال مع المرضى">💬 التواصل الفعال مع المرضى</option>
-                    <option value="أخرى (اكتبها في الاقتراحات)">📌 أخرى</option>
-                </select>
-            </div>
+  <script>
+    let جاهز = loadPyodide();
 
-            <div class="form-group">
-                <label>هل لديك أفكار أو مقترحات لدورات أو ورش عمل جديدة؟</label>
-                <textarea id="suggestions" placeholder="اكتب اقتراحاتك هنا..."></textarea>
-            </div>
+    async function شغل() {
+      const كود = document.getElementById("كود_عين").value;
+      const بايثون = ترجم(كود);
+      const بايثون_جاهز = await جاهز;
+      try {
+        await بايثون_جاهز.runPythonAsync(`\n${بايثون}`);
+        document.getElementById("الناتج").innerText = "تم التنفيذ بنجاح";
+      } catch (خطأ) {
+        document.getElementById("الناتج").innerText = "خطأ: " + خطأ;
+      }
+    }
 
-            <div class="btn-group">
-                <button type="submit" class="btn btn-primary">📧 إرسال الاقتراح</button>
-                <button type="reset" class="btn btn-outline">🗑️ تفريغ</button>
-            </div>
-        </form>
+    function ترجم(كود) {
+      كود = كود.replace(/متغير\s+(\w+)\s*=\s*(.+)/g, "$1 = $2");
+      كود = كود.replace(/اطبع\s+\"(.+?)\"/g, 'print("$1")');
+      كود = كود.replace(/إذا\s*\((.+?)\)\s*\{/g, "if ($1):");
+      كود = كود.replace(/\}\s*آخر\s*\{/g, "else:");
+      كود = كود.replace(/\u0643\u0631\u0631 من (\d+) إلى (\d+)\s*\{/g, "for i in range($1, $2+1):");
+      كود = كود.replace(/\}/g, "");
 
-        <div class="footer">
-            <div class="credit">
-                🖥️ برمجة وتصميم: <span>عبدالله حسين المطيري</span> | <span>بدر فريح الحربي</span>
-            </div>
-            <br />
-            <span>© 2026 – مركز التأهيل الشامل بحفر الباطن</span>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="thankYouModal">
-        <div class="modal-box">
-            <div class="icon">🙏</div>
-            <h2>شكراً لمشاركتك</h2>
-            <p>تم استلام اقتراحك بنجاح، وسيتم دراسته مع فريق التدريب.</p>
-            <button class="btn-close-modal" onclick="closeModal()">حسناً</button>
-        </div>
-    </div>
-
-    <script>
-        const FORM_ID = 'maeyalyd';
-
-        window.formbutton = window.formbutton || function() { (formbutton.q = formbutton.q || []).push(arguments); };
-        formbutton("create", {
-            action: "https://formspree.io/f/" + FORM_ID,
-            title: "📩 تواصل معنا",
-            description: "لديك استفسار عن الدورات أو ورش العمل؟ اكتب لنا.",
-            fields: [
-                { type: "email", label: "📧 بريدك الإلكتروني:", name: "email", required: true, placeholder: "your@email.com" },
-                { type: "textarea", label: "💬 رسالتك:", name: "message", placeholder: "اكتب استفسارك أو اقتراحك هنا..." },
-                { type: "submit", value: "إرسال" }
-            ],
-            styles: {
-                title: { backgroundColor: "#004d4d", color: "#ffffff" },
-                button: {
-                    backgroundColor: "#004d4d", color: "#ffffff",
-                    position: "fixed", bottom: "20px", left: "20px",
-                    fontSize: "15px", padding: "12px 22px", borderRadius: "10px",
-                    boxShadow: "0 4px 15px rgba(0,77,77,0.30)",
-                    border: "none", cursor: "pointer", zIndex: "999"
-                },
-                dialog: { borderRadius: "20px", boxShadow: "0 20px 60px rgba(0,77,77,0.20)" }
-            },
-            initiallyVisible: false
-        });
-
-        document.getElementById('surveyForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const name = document.getElementById('name').value.trim() || 'لم يذكر';
-            const dept = document.getElementById('dept').value.trim();
-            const course = document.getElementById('courseInterest').value;
-            const suggestions = document.getElementById('suggestions').value.trim() || 'لا يوجد';
-
-            if (!dept || !course) {
-                alert('⚠️ الرجاء تعبئة جميع الحقول الإجبارية (التي تحمل علامة *)');
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append('النوع', 'اقتراح دورة أو ورشة عمل قادمة');
-            formData.append('الاسم', name);
-            formData.append('القسم', dept);
-            formData.append('الدورة_المطلوبة', course);
-            formData.append('الاقتراحات', suggestions);
-
-            fetch("https://formspree.io/f/" + FORM_ID, {
-                method: 'POST',
-                body: formData,
-                mode: 'no-cors'
-            }).then(() => {
-                document.getElementById('thankYouModal').style.display = 'flex';
-                document.getElementById('surveyForm').reset();
-            }).catch(() => {
-                document.getElementById('thankYouModal').style.display = 'flex';
-                document.getElementById('surveyForm').reset();
-            });
-        });
-
-        function closeModal() {
-            document.getElementById('thankYouModal').style.display = 'none';
+      let أسطر = كود.split("\n");
+      let مسافة = "";
+      let نتيجة = "";
+      for (let سطر of أسطر) {
+        سطر = سطر.trim();
+        if (سطر.endsWith(":")) {
+          نتيجة += مسافة + سطر + "\n";
+          مسافة += "    ";
+        } else {
+          نتيجة += مسافة + سطر + "\n";
         }
-    </script>
+      }
+      return نتيجة;
+    }
+
+    function احفظ() {
+      const كود = document.getElementById("كود_عين").value;
+      const ملف = new Blob([كود], { type: "text/plain" });
+      const رابط = document.createElement("a");
+      رابط.href = URL.createObjectURL(ملف);
+      رابط.download = "الكود.ain";
+      رابط.click();
+    }
+
+    function انسخ() {
+      const نص = document.getElementById("الناتج").innerText;
+      navigator.clipboard.writeText(نص).then(() => {
+        alert("تم نسخ الناتج!");
+      });
+    }
+  </script>
 </body>
 </html>
