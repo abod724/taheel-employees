@@ -2,43 +2,44 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>لغة عين - النسخة الاحترافية</title>
+  <title>لغة عين - النسخة التفاعلية</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; background: #f0f0f0; direction: rtl; }
-    textarea { width: 100%; height: 200px; font-family: monospace; font-size: 16px; }
-    #الناتج { white-space: pre-wrap; background: #fff; padding: 10px; margin-top: 10px; border: 1px solid #ccc; font-family: monospace; min-height: 50px; }
-    button { padding: 10px 20px; margin-top: 10px; font-size: 16px; margin-left: 5px; cursor: pointer; border: none; border-radius: 5px; color: white; }
+    body { font-family: sans-serif; padding: 20px; background: #f0f0f0; direction: rtl; transition: background-color 0.5s; }
+    textarea { width: 100%; height: 150px; font-family: monospace; font-size: 16px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
+    #الناتج { white-space: pre-wrap; background: #1e1e1e; color: #0f0; padding: 10px; margin-top: 10px; border-radius: 5px; font-family: monospace; min-height: 50px; }
+    #مخرجات_الويب { background: #fff; padding: 15px; margin-top: 10px; border: 2px dashed #007bff; border-radius: 8px; min-height: 100px; }
+    button { padding: 10px 15px; margin-top: 10px; font-size: 15px; margin-left: 5px; cursor: pointer; border: none; border-radius: 5px; color: white; }
     .btn-primary { background: #007bff; }
     .btn-primary:hover { background: #0056b3; }
     .btn-danger { background: #dc3545; }
     .btn-danger:hover { background: #a71d2a; }
     .btn-warning { background: #ffc107; color: black; }
     .btn-warning:hover { background: #d39e00; }
+    h2 { color: #333; margin-top: 20px; }
   </style>
 </head>
 <body>
-  <h1>مترجم لغة عين (النسخة الاحترافية)</h1>
+  <h1>مترجم لغة عين (النسخة التفاعلية)</h1>
   <p>اكتب كود بلغة عين (استخدم الأرقام العربية ٠-٩):</p>
-  <textarea id="كود_عين">متغير اسمي = "عبدالله"
-اطبع "عدد حروف اسمي: " + الطول(اسمي)
+  <textarea id="كود_عين">// تجربة الأوامر التفاعلية
+غير_اللون("#e3f2fd")
+أضف_عنوان("أهلاً بك في لغة عين!")
+أضف_نص("هذا النص مكتوب بلغتنا العربية.")
+أضف_نص("جرب تغيير اللون أو إضافة نصوص جديدة.")
 
-متغير عمري = ٢٥
-اطبع "نوع المتغير عمري: " + النوع(عمري)
-
-متغير رقم = ١٠٠
-اطبع "الرقم كـ نص: " + تحويل_لنص(رقم)
-
-متغير نص_رقمي = "٥٠"
-متغير ناتج = تحويل_لرقم(نص_رقمي) + ١٠
-اطبع "الناتج بعد التحويل: " + ناتج</textarea><br>
+متغير اسمي = "عبدالله"
+أضف_نص("مرحباً يا " + اسمي + "!")</textarea><br>
   <button class="btn-primary" onclick="شغل()">▶ تشغيل</button>
   <button class="btn-warning" onclick="احفظ()">💾 حفظ الكود</button>
   <button class="btn-primary" onclick="انسخ()">📋 نسخ الناتج</button>
   <button class="btn-danger" onclick="امسح_الكود()">🗑️ مسح الكود</button>
   <button class="btn-danger" onclick="امسح_الناتج()">🧹 مسح الناتج</button>
 
-  <h2>الناتج:</h2>
+  <h2>📟 الناتج (وحدة التحكم):</h2>
   <div id="الناتج"></div>
+
+  <h2>🖥️ النتيجة على الويب (تفاعلية):</h2>
+  <div id="مخرجات_الويب"></div>
 
   <script>
     // ==========================================
@@ -446,6 +447,63 @@
           case 'معرف': return currentEnv.جلب(node.name);
         }
       }
+
+      // ==========================================
+      // 🛑 الأوامر التفاعلية (تتعامل مع الويب)
+      // ==========================================
+      env.تعريف('أضف_نص', {
+        type: 'دالة_مدمجة',
+        fn: (args) => {
+          const container = document.getElementById('مخرجات_الويب');
+          const p = document.createElement('p');
+          p.textContent = args.map(a => String(a)).join(' ');
+          p.style.margin = '5px 0';
+          p.style.fontSize = '16px';
+          container.appendChild(p);
+          return null;
+        }
+      });
+
+      env.تعريف('أضف_عنوان', {
+        type: 'دالة_مدمجة',
+        fn: (args) => {
+          const container = document.getElementById('مخرجات_الويب');
+          const h = document.createElement('h3');
+          h.textContent = args.map(a => String(a)).join(' ');
+          h.style.margin = '10px 0 5px 0';
+          h.style.color = '#007bff';
+          container.appendChild(h);
+          return null;
+        }
+      });
+
+      env.تعريف('غير_اللون', {
+        type: 'دالة_مدمجة',
+        fn: (args) => {
+          document.body.style.backgroundColor = String(args[0] || '#f0f0f0');
+          return null;
+        }
+      });
+
+      env.تعريف('غير_لون_النص', {
+        type: 'دالة_مدمجة',
+        fn: (args) => {
+          const container = document.getElementById('مخرجات_الويب');
+          container.style.color = String(args[0] || '#000');
+          return null;
+        }
+      });
+
+      env.تعريف('امسح_الصفحة', {
+        type: 'دالة_مدمجة',
+        fn: () => {
+          document.getElementById('مخرجات_الويب').innerHTML = '';
+          document.body.style.backgroundColor = '#f0f0f0';
+          document.getElementById('مخرجات_الويب').style.color = '#000';
+          return null;
+        }
+      });
+
       evalNode(ast, env);
     }
 
@@ -455,7 +513,10 @@
     function شغل() {
       const code = document.getElementById("كود_عين").value;
       const outputDiv = document.getElementById("الناتج");
+      const webDiv = document.getElementById("مخرجات_الويب");
+      
       outputDiv.innerText = ""; 
+      webDiv.innerHTML = ""; // مسح النتيجة القديمة
       
       try {
         const tokens = tokenize(code);
@@ -489,7 +550,6 @@
       });
     }
 
-    // 🛑 إضافة: دالة مسح الكود
     function امسح_الكود() {
       if (document.getElementById("كود_عين").value.trim() === "") {
         alert("المربع فارغ بالفعل!");
@@ -500,13 +560,15 @@
       }
     }
 
-    // 🛑 إضافة: دالة مسح الناتج
     function امسح_الناتج() {
-      if (document.getElementById("الناتج").innerText.trim() === "") {
-        alert("الناتج فارغ بالفعل!");
+      const outputDiv = document.getElementById("الناتج");
+      const webDiv = document.getElementById("مخرجات_الويب");
+      if (outputDiv.innerText.trim() === "" && webDiv.innerHTML.trim() === "") {
+        alert("لا يوجد ناتج لمسحه!");
         return;
       }
-      document.getElementById("الناتج").innerText = "";
+      outputDiv.innerText = "";
+      webDiv.innerHTML = "";
     }
   </script>
 </body>
