@@ -55,7 +55,6 @@
       code = code.replace(/\/\/.*$/gm, ''); 
       
       const tokens = [];
-      // تمت إزالة الدوال المدمجة من هنا لتُعامل كـ معرف (Identifier)
       const regex = /\s*(متغير|اطبع|إذا|آخر|كرر|من|إلى|دالة|إرجع|بينما|و|أو|[a-zA-Z\u0621-\u064A_][a-zA-Z0-9\u0621-\u064A_]*|\d+|"[^"]*"|'[^']*'|==|!=|>=|<=|[=><+\-*/%{}()\[\]،,])/g;
       let match;
       while ((match = regex.exec(code)) !== null) {
@@ -246,6 +245,18 @@
           return { type: 'قائمة', elements };
         }
 
+        // 🛑 الإصلاح: التعامل مع الدوال المدمجة داخل التعابير
+        if (['الطول', 'النوع', 'تحويل_لنص', 'تحويل_لرقم'].includes(token.value)) {
+          consume(); // (
+          const args = [];
+          while (peek() && peek().value !== ')') {
+            if (peek().value === '،' || peek().value === ',') { consume(); continue; }
+            args.push(parseExpression());
+          }
+          consume(); // )
+          return { type: 'استدعاء_مدمج', name: token.value, args };
+        }
+
         if (token.type === 'معرف') {
           if (peek() && peek().value === '(') {
             consume(); // (
@@ -343,7 +354,6 @@
           case 'استدعاء_دالة':
             const func = currentEnv.جلب(node.name);
             const args = node.args.map(arg => evalNode(arg, currentEnv));
-            
             if (func.type === 'دالة') {
               const funcEnv = new البيئة(func.env); 
               func.params.forEach((param, index) => {
@@ -361,6 +371,28 @@
             } else {
               throw new Error(`${node.name} ليست دالة`);
             }
+          // 🛑 الإصلاح: تنفيذ الدوال المدمجة داخل التعابير
+          case 'استدعاء_مدمج':
+            const argValue = node.args.length > 0 ? evalNode(node.args[0], currentEnv) : null;
+            switch (node.name) {
+              case 'الطول':
+                if (typeof argValue !== 'string' && !Array.isArray(argValue)) {
+                  throw new Error(`الطول() تتوقع نصاً أو قائمة`);
+                }
+                return argValue.length;
+              case 'النوع':
+                if (Array.isArray(argValue)) return 'قائمة';
+                if (typeof argValue === 'number') return 'رقم';
+                if (typeof argValue === 'string') return 'نص';
+                return typeof argValue;
+              case 'تحويل_لنص':
+                return String(argValue);
+              case 'تحويل_لرقم':
+                const num = Number(تحويل_الأرقام_للإنجليزية(String(argValue)));
+                if (isNaN(num)) throw new Error(`لا يمكن تحويل "${argValue}" إلى رقم`);
+                return num;
+            }
+            break;
           case 'إرجع':
             throw { type: 'إرجع', value: evalNode(node.value, currentEnv) };
           case 'قائمة':
@@ -401,41 +433,6 @@
           case 'معرف': return currentEnv.جلب(node.name);
         }
       }
-      
-      // 🛑 إضافة: تعريف الدوال المدمجة في البيئة الأساسية
-      env.تعريف('الطول', { 
-        type: 'دالة_مدمجة', 
-        fn: (args) => {
-          if (args.length === 0) throw new Error("الطول() تتوقع وسيطاً واحداً");
-          if (typeof args[0] !== 'string' && !Array.isArray(args[0])) throw new Error(`الطول() تتوقع نصاً أو قائمة، لكن تم إعطاؤها ${typeof args[0]}`);
-          return args[0].length;
-        }
-      });
-      env.تعريف('النوع', { 
-        type: 'دالة_مدمجة', 
-        fn: (args) => {
-          if (args.length === 0) throw new Error("النوع() تتوقع وسيطاً واحداً");
-          const val = args[0];
-          if (Array.isArray(val)) return 'قائمة';
-          if (typeof val === 'number') return 'رقم';
-          if (typeof val === 'string') return 'نص';
-          if (typeof val === 'boolean') return 'منطقي';
-          return typeof val;
-        }
-      });
-      env.تعريف('تحويل_لنص', { 
-        type: 'دالة_مدمجة', 
-        fn: (args) => String(args[0])
-      });
-      env.تعريف('تحويل_لرقم', { 
-        type: 'دالة_مدمجة', 
-        fn: (args) => {
-          const num = Number(تحويل_الأرقام_للإنجليزية(String(args[0])));
-          if (isNaN(num)) throw new Error(`لا يمكن تحويل "${args[0]}" إلى رقم`);
-          return num;
-        }
-      });
-
       evalNode(ast, env);
     }
 
