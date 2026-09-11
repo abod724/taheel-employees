@@ -7,7 +7,8 @@
     body { font-family: sans-serif; padding: 20px; background: #f0f0f0; direction: rtl; transition: background-color 0.5s; }
     textarea { width: 100%; height: 150px; font-family: monospace; font-size: 16px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
     #الناتج { white-space: pre-wrap; background: #1e1e1e; color: #0f0; padding: 10px; margin-top: 10px; border-radius: 5px; font-family: monospace; min-height: 50px; }
-    #مخرجات_الويب { background: #fff; padding: 15px; margin-top: 10px; border: 2px dashed #007bff; border-radius: 8px; min-height: 100px; }
+    /* 🛑 التعديل: خلفية شفافة بدل الأبيض */
+    #مخرجات_الويب { background: transparent; padding: 15px; margin-top: 10px; border: 2px dashed #007bff; border-radius: 8px; min-height: 100px; color: inherit; transition: background-color 0.5s, color 0.5s; }
     button { padding: 10px 15px; margin-top: 10px; font-size: 15px; margin-left: 5px; cursor: pointer; border: none; border-radius: 5px; color: white; }
     .btn-primary { background: #007bff; }
     .btn-primary:hover { background: #0056b3; }
@@ -15,20 +16,46 @@
     .btn-danger:hover { background: #a71d2a; }
     .btn-warning { background: #ffc107; color: black; }
     .btn-warning:hover { background: #d39e00; }
-    h2 { color: #333; margin-top: 20px; }
+    h2 { color: inherit; margin-top: 20px; }
   </style>
 </head>
 <body>
   <h1>مترجم لغة عين (النسخة التفاعلية)</h1>
   <p>اكتب كود بلغة عين (استخدم الأرقام العربية ٠-٩):</p>
-  <textarea id="كود_عين">// تجربة الأوامر التفاعلية
-غير_اللون("#e3f2fd")
-أضف_عنوان("أهلاً بك في لغة عين!")
-أضف_نص("هذا النص مكتوب بلغتنا العربية.")
-أضف_نص("جرب تغيير اللون أو إضافة نصوص جديدة.")
+  <textarea id="كود_عين">// 🎨 بطاقة تعريف شخصية بلغة عين
+غير_اللون("#1a1a2e")
+غير_لون_النص("#ffffff")
 
-متغير اسمي = "عبدالله"
-أضف_نص("مرحباً يا " + اسمي + "!")</textarea><br>
+أضف_عنوان("✨ بطاقة التعريف الشخصية ✨")
+
+متغير الاسم = "عبدالله"
+متغير التخصص = "مبرمج لغات برمجة"
+متغير المدينة = "الرياض"
+
+أضف_نص("الاسم: " + الاسم)
+أضف_نص("التخصص: " + التخصص)
+أضف_نص("المدينة: " + المدينة)
+
+أضف_عنوان("🛠️ مهاراتي:")
+متغير المهارات = ["البرمجة", "تصميم المواقع", "حل المشكلات", "التعلم المستمر"]
+كرر من ٠ إلى ٣ {
+  أضف_نص("★ " + المهارات[i])
+}
+
+أضف_عنوان("📊 تقييمي:")
+متغير التقييمات = [٩٥, ٨٨, ٩٢, ٩٧, ٩٠]
+متغير المجموع = ٠
+كرر من ٠ إلى ٤ {
+  المجموع = المجموع + التقييمات[i]
+}
+متغير المتوسط = المجموع / ٥
+أضف_نص("متوسط تقييماتي: " + المتوسط)
+
+إذا (المتوسط > ٩٠) {
+  أضف_نص("🏆 ممتاز! أنا من المتفوقين")
+} آخر {
+  أضف_نص("📈 مستواي جيد، وأسعى للأفضل")
+}</textarea><br>
   <button class="btn-primary" onclick="شغل()">▶ تشغيل</button>
   <button class="btn-warning" onclick="احفظ()">💾 حفظ الكود</button>
   <button class="btn-primary" onclick="انسخ()">📋 نسخ الناتج</button>
@@ -253,7 +280,7 @@
           return { type: 'قائمة', elements };
         }
 
-        if (['الطول', 'النوع', 'تحويل_لنص', 'تحويل_لرقم', 'العشوائي', 'القوة', 'الجذر'].includes(token.value)) {
+        if (['الطول', 'النوع', 'تحويل_لنص', 'تحويل_لرقم', 'العشوائي', 'القوة', 'الجذر', 'أضف_نص', 'أضف_عنوان', 'غير_اللون', 'غير_لون_النص', 'امسح_الصفحة'].includes(token.value)) {
           consume(); // (
           const args = [];
           while (peek() && peek().value !== ')') {
@@ -477,10 +504,13 @@
         }
       });
 
+      // 🛑 التعديل: غير_اللون يغير خلفية الصفحة والصندوق معاً
       env.تعريف('غير_اللون', {
         type: 'دالة_مدمجة',
         fn: (args) => {
-          document.body.style.backgroundColor = String(args[0] || '#f0f0f0');
+          const color = String(args[0] || '#f0f0f0');
+          document.body.style.backgroundColor = color;
+          document.getElementById('مخرجات_الويب').style.backgroundColor = color;
           return null;
         }
       });
@@ -489,17 +519,21 @@
         type: 'دالة_مدمجة',
         fn: (args) => {
           const container = document.getElementById('مخرجات_الويب');
-          container.style.color = String(args[0] || '#000');
+          const color = String(args[0] || '#000');
+          container.style.color = color;
           return null;
         }
       });
 
+      // 🛑 التعديل: امسح_الصفحة يرجّع كل شيء للون الأصلي
       env.تعريف('امسح_الصفحة', {
         type: 'دالة_مدمجة',
         fn: () => {
-          document.getElementById('مخرجات_الويب').innerHTML = '';
+          const container = document.getElementById('مخرجات_الويب');
+          container.innerHTML = '';
+          container.style.backgroundColor = 'transparent';
+          container.style.color = 'inherit';
           document.body.style.backgroundColor = '#f0f0f0';
-          document.getElementById('مخرجات_الويب').style.color = '#000';
           return null;
         }
       });
@@ -516,7 +550,10 @@
       const webDiv = document.getElementById("مخرجات_الويب");
       
       outputDiv.innerText = ""; 
-      webDiv.innerHTML = ""; // مسح النتيجة القديمة
+      webDiv.innerHTML = "";
+      webDiv.style.backgroundColor = 'transparent';
+      webDiv.style.color = 'inherit';
+      document.body.style.backgroundColor = '#f0f0f0';
       
       try {
         const tokens = tokenize(code);
@@ -569,6 +606,9 @@
       }
       outputDiv.innerText = "";
       webDiv.innerHTML = "";
+      webDiv.style.backgroundColor = 'transparent';
+      webDiv.style.color = 'inherit';
+      document.body.style.backgroundColor = '#f0f0f0';
     }
   </script>
 </body>
