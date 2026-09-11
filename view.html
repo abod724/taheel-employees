@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>لغة عين - عربية خالصة مع منطق</title>
+  <title>لغة عين - النسخة القوية</title>
   <style>
     body { font-family: sans-serif; padding: 20px; background: #f0f0f0; direction: rtl; }
     textarea { width: 100%; height: 200px; font-family: monospace; font-size: 16px; }
@@ -12,7 +12,7 @@
   </style>
 </head>
 <body>
-  <h1>مترجم لغة عين (مع العمليات المنطقية)</h1>
+  <h1>مترجم لغة عين (النسخة القوية)</h1>
   <p>اكتب كود بلغة عين (استخدم الأرقام العربية ٠-٩):</p>
   <textarea id="كود_عين">متغير العدد = ٧
 
@@ -53,8 +53,8 @@
       code = code.replace(/\/\/.*$/gm, ''); 
       
       const tokens = [];
-      // أضفنا && و || كرموز منطقية (و و أو ستكون كلمات محجوزة)
-      const regex = /\s*(متغير|اطبع|إذا|آخر|كرر|من|إلى|دالة|إرجع|بينما|و|أو|[a-zA-Z\u0621-\u064A_][a-zA-Z0-9\u0621-\u064A_]*|\d+|"[^"]*"|'[^']*'|[=><+\-*/{}()\[\]،,])/g;
+      // أضفنا رموز المقارنة الجديدة == != >= <=
+      const regex = /\s*(متغير|اطبع|إذا|آخر|كرر|من|إلى|دالة|إرجع|بينما|و|أو|[a-zA-Z\u0621-\u064A_][a-zA-Z0-9\u0621-\u064A_]*|\d+|"[^"]*"|'[^']*'|==|!=|>=|<=|[=><+\-*/{}()\[\]،,])/g;
       let match;
       while ((match = regex.exec(code)) !== null) {
         let value = match[1];
@@ -67,7 +67,7 @@
         } else if (/^["'].*["']$/.test(value)) {
           type = 'نص';
           value = value.slice(1, -1);
-        } else if (['=', '>', '<', '+', '-', '*', '/', '{', '}', '(', ')', '[', ']', '،', ','].includes(value)) {
+        } else if (['=', '>', '<', '==', '!=', '>=', '<=', '+', '-', '*', '/', '{', '}', '(', ')', '[', ']', '،', ','].includes(value)) {
           type = 'رمز';
         }
         tokens.push({ type, value });
@@ -178,7 +178,6 @@
         return { type: 'كتلة', body };
       }
 
-      // 🛑 إضافة: التعامل مع العمليات المنطقية (و / أو)
       function parseExpression() {
         let left = parseComparison();
         while (peek() && (peek().value === 'و' || peek().value === 'أو')) {
@@ -191,7 +190,7 @@
 
       function parseComparison() {
         let left = parsePrimary();
-        while (peek() && ['>', '<'].includes(peek().value)) { // يمكن إضافة == و != هنا
+        while (peek() && ['>', '<', '==', '!=', '>=', '<='].includes(peek().value)) {
           const op = consume().value;
           const right = parsePrimary();
           left = { type: 'تعبير_ثنائي', operator: op, left, right };
@@ -335,7 +334,6 @@
             const idx = evalNode(node.index, currentEnv);
             if (idx < 0 || idx >= list.length) throw new Error(`خطأ: الفهرس ${idx} خارج نطاق القائمة`);
             return list[idx];
-          // 🛑 إضافة: تنفيذ العمليات المنطقية
           case 'تعبير_منطقي':
             const leftLog = evalNode(node.left, currentEnv);
             if (node.operator === 'و') {
@@ -350,6 +348,10 @@
             switch (node.operator) {
               case '>': return left > right;
               case '<': return left < right;
+              case '==': return left == right;
+              case '!=': return left != right;
+              case '>=': return left >= right;
+              case '<=': return left <= right;
               case '+': return left + right;
               case '-': return left - right;
               case '*': return left * right;
