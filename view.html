@@ -32,7 +32,7 @@
 أضف_عنوان("تجربة لغة عين للبرمجة")
 
 // متغيرات
-متغير الاسم = "أحمد"
+متغير الاسم = "عبدالله"
 متغير العمر = ٢٥
 اطبع("الاسم: " + الاسم)
 اطبع("العمر: " + العمر)
@@ -56,8 +56,8 @@
 اطبع("نتيجة الجمع: " + جمع(٣، ٧))
 
 // أوامر الصفحة
-أضف_زر("اذهب إلى Google", "https://google.com")
-أضف_رابط("أو اضغط هنا مباشرة", "https://example.com")
+أضف_زر("اذهب إلى نبراس GP", "https://nibras-al.onrender.com/")
+أضف_رابط("أو اضغط هنا مباشرة", "https://google.com")
 أضف_صورة("https://picsum.photos/400/180", "صورة تجريبية")
 اطبع("تم عرض كل شيء ✅")</textarea><br>
   <button class="btn-primary" onclick="شغل()">▶ تشغيل</button>
@@ -89,7 +89,6 @@ function tokenize(code) {
   code = تحويل_الأرقام_للإنجليزية(code);
 
   const tokens = [];
-  // ملاحظة: نمط التعليق "//..." داخل الـregex مباشرة (قبل النصوص) حتى لا يحذف روابط مثل https://
   const regex = /\s*(\/\/[^\n]*|==|!=|>=|<=|[=<>+\-*/%(){}\[\],،!]|"[^"]*"|'[^']*'|[\p{L}_][\p{L}\p{N}_]*|\d+(?:\.\d+)?)/gu;
 
   let m, آخر_موضع = 0;
@@ -97,7 +96,6 @@ function tokenize(code) {
     آخر_موضع = regex.lastIndex;
     let value = m[1];
 
-    // تخطّي التعليقات
     if (value.startsWith('//')) continue;
 
     let type = 'معرف';
@@ -238,7 +236,6 @@ function parse(tokens) {
     return { type: 'كتلة', body };
   }
 
-  // أولويات التعبيرات
   function parseExpression() { return parseOr(); }
   function parseOr() {
     let l = parseAnd();
