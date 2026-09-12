@@ -8,74 +8,24 @@
   * { box-sizing: border-box; }
   body { font-family: Tahoma, sans-serif; padding: 20px; padding-bottom: 100px; background: #f0f0f0; transition: background-color 0.5s; }
   textarea { width: 100%; height: 320px; font-family: 'Consolas', monospace; font-size: 15px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; line-height: 1.7; }
-  #الناتج { white-space: pre-wrap; background: #fff; color: #333; padding: 15px; margin-top: 10px; border-radius: 5px; min-height: 50px; border: 1px solid #ccc; font-family: 'Consolas', monospace; font-size: 15px; line-height: 1.8; }
+  #الناتج { white-space: pre-wrap; background: #fff; color: #333; padding: 10px; margin-top: 10px; border-radius: 5px; min-height: 50px; border: 1px solid #ccc; font-family: 'Consolas', monospace; }
   #مخرجات_الويب { background: #fff; padding: 15px; margin-top: 10px; border: 2px dashed #007bff; border-radius: 8px; min-height: 100px; }
   button { padding: 10px 15px; margin: 5px; font-size: 15px; cursor: pointer; border: none; border-radius: 5px; color: white; }
-  .btn-primary { background: #007bff; }
-  .btn-primary:hover { background: #0056b3; }
-  .btn-danger { background: #dc3545; }
-  .btn-danger:hover { background: #a71d2a; }
-  .btn-warning { background: #ffc107; color: #000; }
-  .btn-warning:hover { background: #d39e00; }
-  .btn-success { background: #28a745; }
-  .btn-success:hover { background: #1e7e34; }
+  .btn-primary { background: #007bff; } .btn-primary:hover { background: #0056b3; }
+  .btn-danger { background: #dc3545; } .btn-danger:hover { background: #a71d2a; }
+  .btn-warning { background: #ffc107; color: #000; } .btn-warning:hover { background: #d39e00; }
+  .btn-success { background: #28a745; } .btn-success:hover { background: #1e7e34; }
   h2 { color: #333; margin-top: 20px; }
   #مخرجات_الويب p { margin: 8px 0; font-size: 16px; }
   #مخرجات_الويب h3 { margin: 12px 0 6px 0; color: #007bff; }
-  #مخرجات_الويب .زر-عين { display: inline-block; padding: 10px 20px; background: #007bff; color: #fff !important; border-radius: 6px; text-decoration: none; margin: 6px; }
-  #مخرجات_الويب a { color: #007bff; text-decoration: none; margin: 4px; display: inline-block; }
-  #مخرجات_الويب img { max-width: 100%; border-radius: 6px; margin: 10px 0; }
+  #مخرجات_الويب .زر-عين { display:inline-block; padding:10px 20px; background:#007bff; color:#fff !important; border-radius:6px; text-decoration:none; margin:6px; }
+  #مخرجات_الويب .زر-عين:hover { background:#0056b3; }
+  #مخرجات_الويب a { color:#007bff; text-decoration:none; margin:4px; display:inline-block; }
+  #مخرجات_الويب a:hover { text-decoration: underline; }
+  #مخرجات_الويب img { max-width:100%; border-radius:6px; margin:10px 0; }
   .hint { color: #666; font-size: 13px; }
 
-  .خطأ-عنوان {
-    background: #fee2e2;
-    color: #b91c1c;
-    padding: 12px 16px;
-    border-radius: 8px;
-    border-right: 4px solid #dc2626;
-    font-weight: 700;
-    margin-bottom: 12px;
-  }
-  .اقتراح {
-    background: #ecfdf5;
-    border: 1px solid #a7f3d0;
-    border-radius: 10px;
-    padding: 16px;
-    margin-top: 14px;
-  }
-  .اقتراح .عنوان {
-    color: #047857;
-    font-weight: 900;
-    font-size: 17px;
-    margin-bottom: 10px;
-  }
-  .اقتراح .شرح {
-    color: #065f46;
-    font-size: 15px;
-    margin-bottom: 12px;
-    line-height: 1.7;
-  }
-  .اقتراح .مثال-عنوان {
-    color: #047857;
-    font-weight: 700;
-    font-size: 14px;
-    margin-bottom: 6px;
-  }
-  .اقتراح pre {
-    background: #064e3b;
-    color: #d1fae5;
-    padding: 12px 14px;
-    border-radius: 6px;
-    font-family: 'Consolas', monospace;
-    font-size: 14px;
-    line-height: 1.9;
-    white-space: pre-wrap;
-    direction: rtl;
-    text-align: right;
-    margin: 0;
-    overflow-x: auto;
-  }
-
+  /* الأزرار في صف واحد */
   .أزرار {
     display: flex;
     flex-wrap: wrap;
@@ -83,6 +33,7 @@
     margin-top: 10px;
   }
 
+  /* ============ 🌟 أيقونة نبراس العائمة ============ */
   .أيقونة-نبراس {
     position: fixed;
     bottom: 20px;
@@ -106,216 +57,169 @@
   }
   @media (max-width: 600px) {
     body { padding-bottom: 90px; }
-    .أيقونة-نبراس { bottom: 14px; left: 14px; padding: 12px 22px; font-size: 14px; }
+    .أيقونة-نبراس {
+      bottom: 14px;
+      left: 14px;
+      padding: 12px 22px;
+      font-size: 14px;
+    }
   }
 </style>
 </head>
 <body>
 
-<a href="https://nibras-al.onrender.com/" target="_blank" rel="noopener" class="أيقونة-نبراس">نبراس GP</a>
+  <!-- 🌟 أيقونة نبراس العائمة -->
+  <a href="https://nibras-al.onrender.com/" target="_blank" rel="noopener" class="أيقونة-نبراس">
+    نبراس GP
+  </a>
 
-<h1>لغة عين للبرمجة</h1>
-<p class="hint">اكتب كودك بالعربي أدناه — وإذا طلع خطأ، المترجم يعطيك اقتراح للحل</p>
+  <h1>لغة عين للبرمجة</h1>
+  <p class="hint">اكتب كودك بالعربي أدناه — يدعم: متغيرات، شروط، حلقات، دوال، مكتبات، أوامر صفحة.</p>
 
-<textarea id="كود_عين">غير_اللون("#eef2ff")
-أضف_عنوان("لغة عين للبرمجة")
+  <textarea id="كود_عين">غير_اللون("#eef2ff")
+أضف_عنوان("🐍 لغة عين للبرمجة")
 
+# متغيرات
 الاسم = "عبدالله"
 العمر = ٢٥
+المدينة = "الرياض"
 
 اطبع("أهلاً " + الاسم)
+اطبع("عمرك: " + العمر)
+اطبع("من " + المدينة)
 
+# شرط
 إذا (العمر >= ١٨) {
-  اطبع("أنت بالغ")
+  اطبع("أنت بالغ ✅")
 } آخر {
-  اطبع("أنت قاصر")
+  اطبع("أنت قاصر ❌")
 }
 
+# دالة
+دالة تحية(شخص) {
+  إرجع "مرحبًا يا " + شخص
+}
+اطبع(تحية("سارة"))
+
+# حلقة
 كرر ع من ١ إلى ٥ {
   اطبع("العدد: " + ع)
 }
 
+# مكتبات
 اطبع("جذر ٤٩ = " + جذر(٤٩))
-اطبع("تم")</textarea>
+اطبع("٣ أس ٤ = " + قوة(٣، ٤))
+اطبع("عشوائي (١، ١٠٠) = " + عشوائي(١، ١٠٠))
 
-<div class="أزرار">
-  <button class="btn-primary" onclick="شغل()">▶ تشغيل</button>
-  <button class="btn-warning" onclick="احفظ()">💾 حفظ</button>
-  <button class="btn-success" onclick="انسخ()">📋 نسخ الناتج</button>
-  <button class="btn-danger" onclick="امسح_الكود()">🗑️ مسح الكود</button>
-  <button class="btn-danger" onclick="امسح_الناتج()">🧹 مسح الناتج</button>
-</div>
+# قائمة
+أرقام = [١٠، ٢٠، ٣٠، ٤٠]
+اطبع("مجموع الأرقام: " + مجموع(أرقام))
 
-<h2>الناتج:</h2>
-<div id="الناتج"></div>
+# صفحة
+أضف_زر("نبراس GP", "https://nibras-al.onrender.com/")
+أضف_رابط("Google", "https://google.com")
+أضف_صورة("https://picsum.photos/400/180", "صورة")
+اطبع("✅ تم")</textarea>
 
-<h2>معاينة الصفحة:</h2>
-<div id="مخرجات_الويب"></div>
+  <div class="أزرار">
+    <button class="btn-primary" onclick="شغل()">▶ تشغيل</button>
+    <button class="btn-warning" onclick="احفظ()">💾 حفظ الكود</button>
+    <button class="btn-success" onclick="انسخ()">📋 نسخ الناتج</button>
+    <button class="btn-danger" onclick="امسح_الكود()">🗑️ مسح الكود</button>
+    <button class="btn-danger" onclick="امسح_الناتج()">🧹 مسح الناتج</button>
+  </div>
+
+  <h2>📟 الناتج:</h2>
+  <div id="الناتج"></div>
+
+  <h2>🖥️ معاينة الصفحة:</h2>
+  <div id="مخرجات_الويب"></div>
 
 <script>
-// ════════ أدوات ════════
-var خريطة_ع_إ = {'٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'};
-var خريطة_إ_ع = {'0':'٠','1':'١','2':'٢','3':'٣','4':'٤','5':'٥','6':'٦','7':'٧','8':'٨','9':'٩'};
+// ============ أدوات ============
+const خريطة_ع_إ = {'٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'};
+const خريطة_إ_ع = {'0':'٠','1':'١','2':'٢','3':'٣','4':'٤','5':'٥','6':'٦','7':'٧','8':'٨','9':'٩'};
+const تحويل_الأرقام_للإنجليزية = ن => ن.replace(/[٠-٩]/g, ح => خريطة_ع_إ[ح]);
+const تحويل_الأرقام_للعربية   = ن => String(ن).replace(/[0-9]/g, ر => خريطة_إ_ع[ر]);
 
-function تحويل_الأرقام_للإنجليزية(ن) {
-  return ن.replace(/[٠-٩]/g, function(ح) { return خريطة_ع_إ[ح]; });
-}
-function تحويل_الأرقام_للعربية(ن) {
-  return String(ن).replace(/[0-9]/g, function(ر) { return خريطة_إ_ع[ر]; });
-}
-
-// ════════ كلمات إنجليزية → عربية ════════
-var الإنجليزي_للعربي = {
-  'print': 'اطبع',
-  'console': 'اطبع',
-  'log': 'اطبع',
-  'if': 'إذا',
-  'else': 'آخر',
-  'for': 'كرر',
-  'while': 'بينما',
-  'function': 'دالة',
-  'def': 'دالة',
-  'return': 'إرجع',
-  'var': 'اكتب اسم المتغير مباشرة',
-  'let': 'اكتب اسم المتغير مباشرة',
-  'const': 'اكتب اسم المتغير مباشرة',
-  'true': 'صحيح',
-  'false': 'خطأ'
+// ============ المكتبات ============
+const مكتبة_رياضيات = {
+  'رقم': (ق) => Number(ق), 'عدد': (ق) => Number(ق),
+  'جذر': (ن) => Math.sqrt(Number(ن)), 'قوة': (أ, ب) => Math.pow(Number(أ), Number(ب)),
+  'مطلق': (ن) => Math.abs(Number(ن)), 'أكبر': (أ, ب) => Math.max(Number(أ), Number(ب)),
+  'أصغر': (أ, ب) => Math.min(Number(أ), Number(ب)), 'دائري': (ن) => Math.round(Number(ن)),
+  'أرضية': (ن) => Math.floor(Number(ن)), 'سقفية': (ن) => Math.ceil(Number(ن)),
+  'عشوائي': (أ, ب) => Math.floor(Math.random() * (Number(ب) - Number(أ) + 1)) + Number(أ),
+  'باي': () => Math.PI, 'مجموع': (ق) => ق.reduce((س, ع) => س + Number(ع), 0),
 };
-
-// ════════ الاقتراح الذكي ════════
-function اقترح_حل(خطأ) {
-  var رسالة = (خطأ && خطأ.message) ? خطأ.message : String(خطأ);
-
-  // فحص الكلمات الإنجليزية
-  var كلمات_إنجليزية = ['print','console','log','if','else','for','while','function','def','return','var','let','const','true','false'];
-  for (var i = 0; i < كلمات_إنجليزية.length; i++) {
-    var كلمة = كلمات_إنجليزية[i];
-    if (رسالة.indexOf('"' + كلمة + '"') !== -1 || رسالة.indexOf(': ' + كلمة) !== -1) {
-      var بديل = الإنجليزي_للعربي[كلمة] || '';
-      return {
-        العنوان: 'هذي كلمة إنجليزية: "' + كلمة + '"',
-        الشرح: 'لغة عين تفهم العربي فقط. بدّل "' + كلمة + '" بـ "' + بديل + '"',
-        المثال: 'بدّل "' + كلمة + '" بـ "' + بديل + '"'
-      };
-    }
-  }
-
-  if (رسالة.indexOf('متوقع "}"') !== -1) {
-    return { العنوان: 'نسيت قوس إغلاق البلوك }', الشرح: 'كل بلوك يبدأ بـ { لازم ينتهي بـ }.', المثال: 'كرر ع من ١ إلى ٥ {\n  اطبع(ع)\n}' };
-  }
-  if (رسالة.indexOf('متوقع "("') !== -1) {
-    return { العنوان: 'نسيت القوس (', الشرح: 'أوامر إذا وكرر والدوال لازم بعدها قوس فتح.', المثال: 'إذا (العمر >= ١٨) { }\nكرر ع من ١ إلى ٥ { }' };
-  }
-  if (رسالة.indexOf('متوقع ")"') !== -1) {
-    return { العنوان: 'نسيت قوس الإغلاق )', الشرح: 'كل قوس فتح ( لازم يقابله قوس إغلاق ).', المثال: 'إذا (العمر >= ١٨) { }' };
-  }
-  if (رسالة.indexOf('متوقع "{"') !== -1) {
-    return { العنوان: 'نسيت قوس فتح البلوك {', الشرح: 'بعد الشرط أو الحلقة، لازم تفتح بلوك بـ {.', المثال: 'إذا (العمر >= ١٨) {\n  اطبع("بالغ")\n}' };
-  }
-  if (رسالة.indexOf('متوقع "]"') !== -1) {
-    return { العنوان: 'نسيت فاصلة في المصفوفة', الشرح: 'بين كل عنصر وعنصر فاصلة (،) أو (,).', المثال: 'أرقام = [١، ٢، ٣، ٤]   ← صح\nأرقام = [١ ٢ ٣ ٤]    ← غلط' };
-  }
-  if (رسالة.indexOf('متغير غير معرّف:') !== -1) {
-    var اسم = رسالة.split(':').pop().trim();
-    return { العنوان: 'ما عرّفت المتغير "' + اسم + '"', الشرح: 'قبل ما تستخدم متغير، لازم تعطيه قيمة أول.', المثال: اسم + ' = "قيمة"\nاطبع(' + اسم + ')' };
-  }
-  if (رسالة.indexOf('دالة غير معرّفة:') !== -1) {
-    var اسم٢ = رسالة.split(':').pop().trim();
-    return { العنوان: 'ما عرّفت الدالة "' + اسم٢ + '"', الشرح: 'عرّف الدالة أول قبل ما تستخدمها.', المثال: 'دالة ' + اسم٢ + '(أ، ب) {\n  إرجع أ + ب\n}' };
-  }
-  if (رسالة.indexOf('تعبير غير مكتمل') !== -1) {
-    return { العنوان: 'تعبيرك ناقص', الشرح: 'غالباً نسيت علامة تنصيب، أو فتحت قوس وما قفلته.', المثال: 'اطبع("أهلاً)    ← غلط\nاطبع("أهلاً")   ← صح' };
-  }
-  if (رسالة.indexOf('حلقة لا نهائية') !== -1) {
-    return { العنوان: 'الحلقة ما توقف', الشرح: 'تأكد إن الشرط يتغير داخل الحلقة.', المثال: 'س = ٠\nبينما (س < ٥) {\n  اطبع(س)\n  س = س + ١\n}' };
-  }
-  if (رسالة.indexOf('رمز غير متوقع:') !== -1) {
-    return { العنوان: 'فيه رمز غير مدعوم', الشرح: 'الرموز المدعومة فقط: + - * / % = == != > < >= <= ( ) { } [ ] ، ,', المثال: 'تأكد إنك ما كتبت ; أو : أو رموز أخرى' };
-  }
-  return null;
-}
-
-// ════════ المكتبات ════════
-var المكتبات = {
-  'رقم': function(ق) { return Number(ق); },
-  'عدد': function(ق) { return Number(ق); },
-  'جذر': function(ن) { return Math.sqrt(Number(ن)); },
-  'قوة': function(أ, ب) { return Math.pow(Number(أ), Number(ب)); },
-  'مطلق': function(ن) { return Math.abs(Number(ن)); },
-  'أكبر': function(أ, ب) { return Math.max(Number(أ), Number(ب)); },
-  'أصغر': function(أ, ب) { return Math.min(Number(أ), Number(ب)); },
-  'دائري': function(ن) { return Math.round(Number(ن)); },
-  'أرضية': function(ن) { return Math.floor(Number(ن)); },
-  'سقفية': function(ن) { return Math.ceil(Number(ن)); },
-  'عشوائي': function(أ, ب) { return Math.floor(Math.random() * (Number(ب) - Number(أ) + 1)) + Number(أ); },
-  'باي': function() { return Math.PI; },
-  'مجموع': function(ق) { return ق.reduce(function(س, ع) { return س + Number(ع); }, 0); },
-  'طول': function(ن) { return String(ن).length; },
-  'جزء': function(ن, م, إ) { return String(ن).slice(Number(م), Number(إ)); },
-  'يحتوي': function(ن, ج) { return String(ن).indexOf(String(ج)) !== -1; },
-  'استبدل': function(ن, ق, ج) { return String(ن).split(String(ق)).join(String(ج)); },
-  'قسم': function(ن, ف) { return String(ن).split(String(ف)); },
-  'رابط': function(ق, ف) { return ق.join(ف || ' '); },
-  'أزل_فراغ': function(ن) { return String(ن).trim(); },
-  'كبير': function(ن) { return String(ن).toUpperCase(); },
-  'صغير': function(ن) { return String(ن).toLowerCase(); },
-  'طول_قائمة': function(ق) { return ق.length; },
-  'رتب': function(ق) { return ق.slice().sort(function(أ, ب) { return أ > ب ? 1 : -1; }); },
-  'اعكس': function(ق) { return ق.slice().reverse(); },
-  'أول': function(ق) { return ق[0]; },
-  'آخر': function(ق) { return ق[ق.length - 1]; },
-  'السنة': function() { return new Date().getFullYear(); },
-  'الشهر': function() { return new Date().getMonth() + 1; },
-  'اليوم': function() { return new Date().getDate(); },
-  'الساعة': function() { return new Date().getHours(); },
-  'الدقيقة': function() { return new Date().getMinutes(); },
-  'تاريخ_اليوم': function() { return new Date().toLocaleDateString('ar-EG'); },
-  'اطلب': function(س) { return prompt(String(س)) || ''; },
-  'تأكيد': function(س) { return confirm(String(س)); },
-  'نبه': function(ر) { alert(String(ر)); return null; },
-  'لون_عشوائي': function() { return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0'); },
-  'لون_فاتح': function() { return '#' + ['e3f2fd','e8f5e9','fce4ec','fff8e1','f3e5f5','f0f9ff'][Math.floor(Math.random()*6)]; }
+const مكتبة_نصوص = {
+  'طول': (ن) => String(ن).length, 'جزء': (ن, م, إ) => String(ن).slice(Number(م), Number(إ)),
+  'بحث': (ن, ج) => String(ن).indexOf(String(ج)),
+  'استبدل': (ن, ق, ج) => String(ن).split(String(ق)).join(String(ج)),
+  'قسم': (ن, ف) => String(ن).split(String(ف)), 'رابط': (ق, ف) => ق.join(ف ?? ' '),
+  'يحتوي': (ن, ج) => String(ن).includes(String(ج)),
+  'أزل_فراغ': (ن) => String(ن).trim(),
+  'كبير': (ن) => String(ن).toUpperCase(), 'صغير': (ن) => String(ن).toLowerCase(),
 };
+const مكتبة_قوائم = {
+  'أضف_عنصر': (ق, ع) => { ق.push(ع); return ق; },
+  'احذف_الأخير': (ق) => { ق.pop(); return ق; },
+  'طول_قائمة': (ق) => ق.length, 'رتب': (ق) => [...ق].sort((أ, ب) => أ > ب ? 1 : -1),
+  'اعكس': (ق) => [...ق].reverse(), 'في_القائمة': (ق, ع) => ق.includes(ع),
+  'أول': (ق) => ق[0], 'آخر': (ق) => ق[ق.length - 1],
+};
+const مكتبة_وقت = {
+  'السنة': () => new Date().getFullYear(), 'الشهر': () => new Date().getMonth() + 1,
+  'اليوم': () => new Date().getDate(), 'الساعة': () => new Date().getHours(),
+  'الدقيقة': () => new Date().getMinutes(),
+  'تاريخ_اليوم': () => new Date().toLocaleDateString('ar-EG'),
+};
+const مكتبة_تفاعل = {
+  'اطلب': (س) => prompt(String(س)) ?? '', 'تأكيد': (س) => confirm(String(س)),
+  'نبه': (ر) => { alert(String(ر)); return null; },
+};
+const مكتبة_ألوان = {
+  'لون_عشوائي': () => '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0'),
+  'لون_فاتح': () => '#' + ['e3f2fd','e8f5e9','fce4ec','fff8e1','f3e5f5','f0f9ff'][Math.floor(Math.random()*6)],
+  'لون_غامق': () => '#' + ['1e293b','0f172a','111827','1f2937','3f3f46'][Math.floor(Math.random()*5)],
+};
+const المكتبات = { ...مكتبة_رياضيات, ...مكتبة_نصوص, ...مكتبة_قوائم, ...مكتبة_وقت, ...مكتبة_تفاعل, ...مكتبة_ألوان };
 
-var الكلمات_المحجوزة = ['متغير','اطبع','إذا','آخر','كرر','من','إلى','دالة','إرجع','بينما','و','أو','أضف_نص','أضف_عنوان','غير_اللون','أضف_زر','أضف_رابط','أضف_صورة','عيّن_الخط'];
-
-// ════════ Tokenizer ════════
+// ============ Tokenizer ============
+const الكلمات_المحجوزة = new Set([
+  'متغير','اطبع','إذا','آخر','كرر','من','إلى','دالة','إرجع','بينما','و','أو',
+  'أضف_نص','أضف_عنوان','غير_اللون','أضف_زر','أضف_رابط','أضف_صورة','عيّن_الخط'
+]);
 function tokenize(code) {
   code = تحويل_الأرقام_للإنجليزية(code);
-  var tokens = [];
-  var regex = /\s*(#[^\n]*|\/\/[^\n]*|==|!=|>=|<=|[=<>+\-*/%(){}\[\],،!]|"[^"]*"|'[^']*'|[\p{L}_][\p{L}\p{N}_]*|\d+(?:\.\d+)?)/gu;
-  var m;
+  const tokens = [];
+  const regex = /\s*(#[^\n]*|\/\/[^\n]*|==|!=|>=|<=|[=<>+\-*/%(){}\[\],،!]|"[^"]*"|'[^']*'|[\p{L}_][\p{L}\p{N}_]*|\d+(?:\.\d+)?)/gu;
+  let m;
   while ((m = regex.exec(code)) !== null) {
-    var value = m[1];
-    if (value.charAt(0) === '#' || value.substring(0, 2) === '//') continue;
-    var type = 'معرف';
-    if (الكلمات_المحجوزة.indexOf(value) !== -1) type = 'كلمة_محجوزة';
+    let value = m[1];
+    if (value.startsWith('#') || value.startsWith('//')) continue;
+    let type = 'معرف';
+    if (الكلمات_المحجوزة.has(value)) type = 'كلمة_محجوزة';
     else if (/^\d/.test(value)) type = 'رقم';
     else if (/^["']/.test(value)) { type = 'نص'; value = value.slice(1, -1); }
     else if (/^[=<>+\-*/%(){}\[\],،!]/.test(value)) type = 'رمز';
-    tokens.push({ type: type, value: value });
+    tokens.push({ type, value });
   }
   tokens.push({ type: 'نهاية', value: '' });
   return tokens;
 }
 
-// ════════ Parser ════════
+// ============ Parser ============
 function parse(tokens) {
-  var pos = 0;
-  function peek(ن) { if (ن === undefined) ن = 0; return tokens[pos + ن] || tokens[tokens.length - 1]; }
-  function consume() { return tokens[pos++]; }
-  function expect(v) {
-    if (peek().value !== v) throw new Error('متوقع "' + v + '" لكن وجدت "' + (peek().value || 'نهاية') + '"');
-    return consume();
-  }
-
-  function parseProgram() { var b = []; while (peek().type !== 'نهاية') b.push(parseStatement()); return { type: 'برنامج', body: b }; }
-
+  let pos = 0;
+  const peek = (ن = 0) => tokens[pos + ن] || tokens[tokens.length - 1];
+  const consume = () => tokens[pos++];
+  const expect = v => { if (peek().value !== v) throw new Error(`متوقع "${v}" لكن وجدت "${peek().value || 'نهاية'}"`); return consume(); };
+  function parseProgram() { const b = []; while (peek().type !== 'نهاية') b.push(parseStatement()); return { type: 'برنامج', body: b }; }
   function parseStatement() {
-    var t = peek();
+    const t = peek();
     if (t.type === 'كلمة_محجوزة') {
-      if (['أضف_نص','أضف_عنوان','غير_اللون','أضف_زر','أضف_رابط','أضف_صورة','عيّن_الخط'].indexOf(t.value) !== -1) return parsePageCall();
+      if (['أضف_نص','أضف_عنوان','غير_اللون','أضف_زر','أضف_رابط','أضف_صورة','عيّن_الخط'].includes(t.value)) return parsePageCall();
       if (t.value === 'اطبع') return parsePrint();
       if (t.value === 'متغير') return parseVar();
       if (t.value === 'إذا') return parseIf();
@@ -324,328 +228,156 @@ function parse(tokens) {
       if (t.value === 'دالة') return parseFunc();
       if (t.value === 'إرجع') return parseReturn();
     }
-    if (t.type === 'معرف' && peek(1).value === '=') {
-      var n = consume().value; consume();
-      return { type: 'متغير', name: n, val: parseExpression() };
-    }
+    if (t.type === 'معرف' && peek(1).value === '=') { const n = consume().value; consume(); return { type: 'متغير', name: n, val: parseExpression() }; }
     return { type: 'تعبير', expr: parseExpression() };
   }
-
   function parsePageCall() {
-    var n = consume().value; expect('(');
-    var a = [];
+    const n = consume().value; expect('(');
+    const a = [];
     while (peek().value !== ')') { a.push(parseExpression()); if (peek().value === ',' || peek().value === '،') consume(); else break; }
     expect(')');
     return { type: 'استدعاء_صفحة', name: n, args: a };
   }
-  function parsePrint() { consume(); expect('('); var e = parseExpression(); expect(')'); return { type: 'طباعة', expr: e }; }
-  function parseVar() { consume(); var n = consume().value; var v = null; if (peek().value === '=') { consume(); v = parseExpression(); } return { type: 'متغير', name: n, val: v }; }
-  function parseIf() {
-    consume(); expect('('); var c = parseExpression(); expect(')');
-    var b = parseBlock(); var a = null;
-    if (peek().value === 'آخر') { consume(); a = parseBlock(); }
-    return { type: 'شرط', cond: c, block: b, alt: a };
-  }
-  function parseWhile() { consume(); expect('('); var c = parseExpression(); expect(')'); return { type: 'بينما', cond: c, block: parseBlock() }; }
+  function parsePrint() { consume(); expect('('); const e = parseExpression(); expect(')'); return { type: 'طباعة', expr: e }; }
+  function parseVar() { consume(); const n = consume().value; let v = null; if (peek().value === '=') { consume(); v = parseExpression(); } return { type: 'متغير', name: n, val: v }; }
+  function parseIf() { consume(); expect('('); const c = parseExpression(); expect(')'); const b = parseBlock(); let a = null; if (peek().value === 'آخر') { consume(); a = parseBlock(); } return { type: 'شرط', cond: c, block: b, alt: a }; }
+  function parseWhile() { consume(); expect('('); const c = parseExpression(); expect(')'); return { type: 'بينما', cond: c, block: parseBlock() }; }
   function parseRepeat() {
     consume();
-    if (peek().type === 'معرف' && peek(1).value === 'من') {
-      var n = consume().value; consume();
-      var f = parseExpression(); consume();
-      var t = parseExpression();
-      return { type: 'كرر_من_إلى', name: n, from: f, to: t, block: parseBlock() };
-    }
+    if (peek().type === 'معرف' && peek(1).value === 'من') { const n = consume().value; consume(); const f = parseExpression(); consume(); const t = parseExpression(); return { type: 'كرر_من_إلى', name: n, from: f, to: t, block: parseBlock() }; }
     return { type: 'كرر', count: parseExpression(), block: parseBlock() };
   }
-  function parseFunc() {
-    consume(); var n = consume().value; expect('(');
-    var p = [];
-    while (peek().value !== ')') { p.push(consume().value); if (peek().value === ',' || peek().value === '،') consume(); else break; }
-    expect(')');
-    return { type: 'دالة', name: n, params: p, block: parseBlock() };
-  }
+  function parseFunc() { consume(); const n = consume().value; expect('('); const p = []; while (peek().value !== ')') { p.push(consume().value); if (peek().value === ',' || peek().value === '،') consume(); else break; } expect(')'); return { type: 'دالة', name: n, params: p, block: parseBlock() }; }
   function parseReturn() { consume(); if (peek().value === '}' || peek().type === 'نهاية') return { type: 'إرجع', expr: null }; return { type: 'إرجع', expr: parseExpression() }; }
-  function parseBlock() { expect('{'); var b = []; while (peek().value !== '}') b.push(parseStatement()); expect('}'); return { type: 'كتلة', body: b }; }
-
+  function parseBlock() { expect('{'); const b = []; while (peek().value !== '}') b.push(parseStatement()); expect('}'); return { type: 'كتلة', body: b }; }
   function parseExpression() { return parseOr(); }
-  function parseOr() { var l = parseAnd(); while (peek().value === 'أو') { consume(); l = { type: 'ثنائي', op: 'أو', l: l, r: parseAnd() }; } return l; }
-  function parseAnd() { var l = parseComp(); while (peek().value === 'و') { consume(); l = { type: 'ثنائي', op: 'و', l: l, r: parseComp() }; } return l; }
-  function parseComp() {
-    var l = parseAdd();
-    while (['==','!=','>','<','>=','<='].indexOf(peek().value) !== -1) {
-      var op = consume().value;
-      l = { type: 'ثنائي', op: op, l: l, r: parseAdd() };
-    }
-    return l;
-  }
-  function parseAdd() {
-    var l = parseMul();
-    while (peek().value === '+' || peek().value === '-') {
-      var op = consume().value;
-      l = { type: 'ثنائي', op: op, l: l, r: parseMul() };
-    }
-    return l;
-  }
-  function parseMul() {
-    var l = parseUnary();
-    while (['*','/','%'].indexOf(peek().value) !== -1) {
-      var op = consume().value;
-      l = { type: 'ثنائي', op: op, l: l, r: parseUnary() };
-    }
-    return l;
-  }
-  function parseUnary() {
-    if (peek().value === '-') { consume(); return { type: 'أحادي', op: '-', expr: parseUnary() }; }
-    if (peek().value === '!') { consume(); return { type: 'أحادي', op: '!', expr: parseUnary() }; }
-    return parseCall();
-  }
-  function parseCall() {
-    var e = parsePrim();
-    while (peek().value === '(') {
-      consume(); var a = [];
-      while (peek().value !== ')') { a.push(parseExpression()); if (peek().value === ',' || peek().value === '،') consume(); else break; }
-      expect(')');
-      e = { type: 'استدعاء_دالة', callee: e, args: a };
-    }
-    return e;
-  }
+  function parseOr() { let l = parseAnd(); while (peek().value === 'أو') { consume(); l = { type:'ثنائي', op:'أو', l, r: parseAnd() }; } return l; }
+  function parseAnd() { let l = parseComp(); while (peek().value === 'و') { consume(); l = { type:'ثنائي', op:'و', l, r: parseComp() }; } return l; }
+  function parseComp() { let l = parseAdd(); while (['==','!=','>','<','>=','<='].includes(peek().value)) { const op = consume().value; l = { type:'ثنائي', op, l, r: parseAdd() }; } return l; }
+  function parseAdd() { let l = parseMul(); while (peek().value === '+' || peek().value === '-') { const op = consume().value; l = { type:'ثنائي', op, l, r: parseMul() }; } return l; }
+  function parseMul() { let l = parseUnary(); while (['*','/','%'].includes(peek().value)) { const op = consume().value; l = { type:'ثنائي', op, l, r: parseUnary() }; } return l; }
+  function parseUnary() { if (peek().value === '-') { consume(); return { type:'أحادي', op:'-', expr: parseUnary() }; } if (peek().value === '!') { consume(); return { type:'أحادي', op:'!', expr: parseUnary() }; } return parseCall(); }
+  function parseCall() { let e = parsePrim(); while (peek().value === '(') { consume(); const a = []; while (peek().value !== ')') { a.push(parseExpression()); if (peek().value === ',' || peek().value === '،') consume(); else break; } expect(')'); e = { type:'استدعاء_دالة', callee: e, args: a }; } return e; }
   function parsePrim() {
-    var t = peek();
+    const t = peek();
     if (!t || t.type === 'نهاية') throw new Error('تعبير غير مكتمل');
-    if (t.type === 'رقم') { consume(); return { type: 'رقم', val: parseFloat(t.value) }; }
-    if (t.type === 'نص') { consume(); return { type: 'نص', val: t.value }; }
-    if (t.value === '(') { consume(); var e = parseExpression(); expect(')'); return e; }
-    if (t.value === '[') {
-      consume(); var items = [];
-      while (peek().value !== ']') { items.push(parseExpression()); if (peek().value === ',' || peek().value === '،') consume(); else break; }
-      expect(']');
-      return { type: 'مصفوفة', items: items };
-    }
-    if (t.type === 'معرف' || t.type === 'كلمة_محجوزة') { consume(); return { type: 'متغير_مرجع', name: t.value }; }
-    throw new Error('رمز غير متوقع: "' + t.value + '"');
+    if (t.type === 'رقم') { consume(); return { type:'رقم', val: parseFloat(t.value) }; }
+    if (t.type === 'نص') { consume(); return { type:'نص', val: t.value }; }
+    if (t.value === '(') { consume(); const e = parseExpression(); expect(')'); return e; }
+    if (t.value === '[') { consume(); const items = []; while (peek().value !== ']') { items.push(parseExpression()); if (peek().value === ',' || peek().value === '،') consume(); else break; } expect(']'); return { type:'مصفوفة', items }; }
+    if (t.type === 'معرف' || t.type === 'كلمة_محجوزة') { consume(); return { type:'متغير_مرجع', name: t.value }; }
+    throw new Error(`رمز غير متوقع: "${t.value}"`);
   }
-
   return parseProgram();
 }
 
-// ════════ تنفيذ ════════
+// ============ Interpreter ============
 function تنفيذ(ast, طباعة) {
-  var صندوق = document.getElementById('مخرجات_الويب');
-  var بيئة_عالمية = {};
-  var دوال = {};
-
-  function تنسيق(v) {
-    if (v === null || v === undefined) return '';
-    if (typeof v === 'boolean') return v ? 'صحيح' : 'خطأ';
-    if (Array.isArray(v)) return '[' + v.map(تنسيق).join('، ') + ']';
-    return String(v);
-  }
+  const صندوق = document.getElementById('مخرجات_الويب');
+  const بيئة_عالمية = {};
+  const دوال = {};
+  const تنسيق = v => { if (v === null || v === undefined) return ''; if (typeof v === 'boolean') return v ? 'صحيح' : 'خطأ'; if (Array.isArray(v)) return '[' + v.map(تنسيق).join('، ') + ']'; return String(v); };
 
   function قيمة(عقدة, بيئة) {
     if (!عقدة) return null;
-    if (عقدة.type === 'رقم' || عقدة.type === 'نص') return عقدة.val;
-    if (عقدة.type === 'مصفوفة') return عقدة.items.map(function(i) { return قيمة(i, بيئة); });
-    if (عقدة.type === 'متغير_مرجع') {
-      if (عقدة.name in بيئة) return بيئة[عقدة.name];
-      if (عقدة.name in بيئة_عالمية) return بيئة_عالمية[عقدة.name];
-      throw new Error('متغير غير معرّف: ' + عقدة.name);
-    }
-    if (عقدة.type === 'أحادي') {
-      var v = قيمة(عقدة.expr, بيئة);
-      return عقدة.op === '-' ? -v : !v;
-    }
-    if (عقدة.type === 'ثنائي') {
-      if (عقدة.op === 'و') {
-        var ل1 = قيمة(عقدة.l, بيئة);
-        return ل1 ? قيمة(عقدة.r, بيئة) : ل1;
+    switch (عقدة.type) {
+      case 'رقم': case 'نص': return عقدة.val;
+      case 'مصفوفة': return عقدة.items.map(i => قيمة(i, بيئة));
+      case 'متغير_مرجع':
+        if (عقدة.name in بيئة) return بيئة[عقدة.name];
+        if (عقدة.name in بيئة_عالمية) return بيئة_عالمية[عقدة.name];
+        throw new Error(`متغير غير معرّف: ${عقدة.name}`);
+      case 'أحادي': { const v = قيمة(عقدة.expr, بيئة); return عقدة.op === '-' ? -v : !v; }
+      case 'ثنائي': {
+        if (عقدة.op === 'و') { const ل = قيمة(عقدة.l, بيئة); return ل ? قيمة(عقدة.r, بيئة) : ل; }
+        if (عقدة.op === 'أو') { const ل = قيمة(عقدة.l, بيئة); return ل ? ل : قيمة(عقدة.r, بيئة); }
+        const ل = قيمة(عقدة.l, بيئة), ر = قيمة(عقدة.r, بيئة);
+        switch (عقدة.op) {
+          case '+': return ل + ر; case '-': return ل - ر; case '*': return ل * ر;
+          case '/': return ل / ر; case '%': return ل % ر;
+          case '==': return ل == ر; case '!=': return ل != ر;
+          case '>': return ل > ر; case '<': return ل < ر;
+          case '>=': return ل >= ر; case '<=': return ل <= ر;
+        }
+        throw new Error(`عملية غير معروفة: ${عقدة.op}`);
       }
-      if (عقدة.op === 'أو') {
-        var ل2 = قيمة(عقدة.l, بيئة);
-        return ل2 ? ل2 : قيمة(عقدة.r, بيئة);
+      case 'استدعاء_دالة': {
+        const name = عقدة.callee.name;
+        const args = عقدة.args.map(a => قيمة(a, بيئة));
+        if (دوال[name]) return استدعاء_دالة(دوال[name], args);
+        if (المكتبات[name]) return المكتبات[name](...args);
+        throw new Error(`دالة غير معرّفة: ${name}`);
       }
-      var ل = قيمة(عقدة.l, بيئة);
-      var ر = قيمة(عقدة.r, بيئة);
-      if (عقدة.op === '+') return ل + ر;
-      if (عقدة.op === '-') return ل - ر;
-      if (عقدة.op === '*') return ل * ر;
-      if (عقدة.op === '/') return ل / ر;
-      if (عقدة.op === '%') return ل % ر;
-      if (عقدة.op === '==') return ل == ر;
-      if (عقدة.op === '!=') return ل != ر;
-      if (عقدة.op === '>') return ل > ر;
-      if (عقدة.op === '<') return ل < ر;
-      if (عقدة.op === '>=') return ل >= ر;
-      if (عقدة.op === '<=') return ل <= ر;
-      throw new Error('عملية غير معروفة: ' + عقدة.op);
     }
-    if (عقدة.type === 'استدعاء_دالة') {
-      var name = عقدة.callee.name;
-      var args = عقدة.args.map(function(a) { return قيمة(a, بيئة); });
-      if (دوال[name]) return استدعاء_دالة(دوال[name], args);
-      if (المكتبات[name]) return المكتبات[name].apply(null, args);
-      throw new Error('دالة غير معرّفة: ' + name);
-    }
-    throw new Error('لا يمكن تقييم: ' + عقدة.type);
+    throw new Error(`لا يمكن تقييم: ${عقدة.type}`);
   }
 
   function استدعاء_دالة(دالة, args) {
-    var بيئة_محلية = {};
-    دالة.params.forEach(function(p, i) { بيئة_محلية[p] = args[i] !== undefined ? args[i] : null; });
-    try {
-      for (var i = 0; i < دالة.block.body.length; i++) نفّذ_عقدة(دالة.block.body[i], بيئة_محلية);
-    } catch (e) {
-      if (e && e.__إرجع) return e.value;
-      throw e;
-    }
+    const بيئة_محلية = {};
+    دالة.params.forEach((p, i) => { بيئة_محلية[p] = args[i] ?? null; });
+    try { for (const s of دالة.block.body) نفّذ_عقدة(s, بيئة_محلية); }
+    catch (e) { if (e && e.__إرجع) return e.value; throw e; }
     return null;
   }
 
   function نفّذ_عقدة(عقدة, بيئة) {
     if (!عقدة) return;
-    if (عقدة.type === 'برنامج') {
-      for (var i = 0; i < عقدة.body.length; i++) نفّذ_عقدة(عقدة.body[i], بيئة_عالمية);
-      return;
+    switch (عقدة.type) {
+      case 'برنامج': for (const s of عقدة.body) نفّذ_عقدة(s, بيئة_عالمية); break;
+      case 'كتلة': for (const s of عقدة.body) نفّذ_عقدة(s, بيئة); break;
+      case 'متغير': بيئة[عقدة.name] = عقدة.val ? قيمة(عقدة.val, بيئة) : null; break;
+      case 'تعبير': قيمة(عقدة.expr, بيئة); break;
+      case 'طباعة': طباعة(تحويل_الأرقام_للعربية(تنسيق(قيمة(عقدة.expr, بيئة)))); break;
+      case 'شرط': if (قيمة(عقدة.cond, بيئة)) نفّذ_عقدة(عقدة.block, بيئة); else if (عقدة.alt) نفّذ_عقدة(عقدة.alt, بيئة); break;
+      case 'بينما': { let ح = 0; while (قيمة(عقدة.cond, بيئة)) { نفّذ_عقدة(عقدة.block, بيئة); if (++ح > 100000) throw new Error('حلقة لا نهائية'); } break; }
+      case 'كرر': { const n = Number(قيمة(عقدة.count, بيئة)); if (!Number.isFinite(n) || n < 0) throw new Error('عدد تكرارات غير صحيح'); for (let i = 0; i < n; i++) نفّذ_عقدة(عقدة.block, بيئة); break; }
+      case 'كرر_من_إلى': { const from = Number(قيمة(عقدة.from, بيئة)); const to = Number(قيمة(عقدة.to, بيئة)); for (let i = from; i <= to; i++) { بيئة[عقدة.name] = i; نفّذ_عقدة(عقدة.block, بيئة); } break; }
+      case 'دالة': دوال[عقدة.name] = { params: عقدة.params, block: عقدة.block }; break;
+      case 'إرجع': throw { __إرجع: true, value: عقدة.expr ? قيمة(عقدة.expr, بيئة) : null };
+      case 'استدعاء_صفحة': صفحة(عقدة, بيئة); break;
     }
-    if (عقدة.type === 'كتلة') {
-      for (var i = 0; i < عقدة.body.length; i++) نفّذ_عقدة(عقدة.body[i], بيئة);
-      return;
-    }
-    if (عقدة.type === 'متغير') {
-      بيئة[عقدة.name] = عقدة.val ? قيمة(عقدة.val, بيئة) : null;
-      return;
-    }
-    if (عقدة.type === 'تعبير') { قيمة(عقدة.expr, بيئة); return; }
-    if (عقدة.type === 'طباعة') {
-      طباعة(تحويل_الأرقام_للعربية(تنسيق(قيمة(عقدة.expr, بيئة))));
-      return;
-    }
-    if (عقدة.type === 'شرط') {
-      if (قيمة(عقدة.cond, بيئة)) نفّذ_عقدة(عقدة.block, بيئة);
-      else if (عقدة.alt) نفّذ_عقدة(عقدة.alt, بيئة);
-      return;
-    }
-    if (عقدة.type === 'بينما') {
-      var حماية = 0;
-      while (قيمة(عقدة.cond, بيئة)) {
-        نفّذ_عقدة(عقدة.block, بيئة);
-        حماية++;
-        if (حماية > 100000) throw new Error('حلقة لا نهائية');
-      }
-      return;
-    }
-    if (عقدة.type === 'كرر') {
-      var n = Number(قيمة(عقدة.count, بيئة));
-      if (!isFinite(n) || n < 0) throw new Error('عدد تكرارات غير صحيح');
-      for (var i = 0; i < n; i++) نفّذ_عقدة(عقدة.block, بيئة);
-      return;
-    }
-    if (عقدة.type === 'كرر_من_إلى') {
-      var from = Number(قيمة(عقدة.from, بيئة));
-      var to = Number(قيمة(عقدة.to, بيئة));
-      for (var i = from; i <= to; i++) {
-        بيئة[عقدة.name] = i;
-        نفّذ_عقدة(عقدة.block, بيئة);
-      }
-      return;
-    }
-    if (عقدة.type === 'دالة') {
-      دوال[عقدة.name] = { params: عقدة.params, block: عقدة.block };
-      return;
-    }
-    if (عقدة.type === 'إرجع') {
-      throw { __إرجع: true, value: عقدة.expr ? قيمة(عقدة.expr, بيئة) : null };
-    }
-    if (عقدة.type === 'استدعاء_صفحة') { صفحة(عقدة, بيئة); return; }
   }
 
   function صفحة(عقدة, بيئة) {
-    var ق = عقدة.args.map(function(a) { return قيمة(a, بيئة); });
-    if (عقدة.name === 'أضف_نص') {
-      var p = document.createElement('p');
-      p.textContent = تحويل_الأرقام_للعربية(ق.join(''));
-      صندوق.appendChild(p);
-    } else if (عقدة.name === 'أضف_عنوان') {
-      var h = document.createElement('h3');
-      h.textContent = تحويل_الأرقام_للعربية(ق.join(''));
-      صندوق.appendChild(h);
-    } else if (عقدة.name === 'غير_اللون') {
-      document.body.style.backgroundColor = String(ق[0] || '#f0f0f0');
-    } else if (عقدة.name === 'أضف_زر') {
-      var z = document.createElement('a');
-      z.href = String(ق[1] || '#');
-      z.target = '_blank';
-      z.rel = 'noopener';
-      z.className = 'زر-عين';
-      z.textContent = String(ق[0] || 'زر');
-      صندوق.appendChild(z);
-    } else if (عقدة.name === 'أضف_رابط') {
-      var l = document.createElement('a');
-      l.href = String(ق[1] || '#');
-      l.target = '_blank';
-      l.rel = 'noopener';
-      l.textContent = String(ق[0] || 'رابط');
-      صندوق.appendChild(document.createElement('br'));
-      صندوق.appendChild(l);
-    } else if (عقدة.name === 'أضف_صورة') {
-      var im = document.createElement('img');
-      im.src = String(ق[0] || '');
-      im.alt = String(ق[1] || 'صورة');
-      صندوق.appendChild(im);
-    } else if (عقدة.name === 'عيّن_الخط') {
-      صندوق.style.fontFamily = String(ق[0] || 'Tahoma');
-      صندوق.style.fontSize = ق[1] ? Number(ق[1]) + 'px' : '16px';
+    const ق = عقدة.args.map(a => قيمة(a, بيئة));
+    switch (عقدة.name) {
+      case 'أضف_نص': { const p = document.createElement('p'); p.textContent = تحويل_الأرقام_للعربية(ق.join('')); صندوق.appendChild(p); break; }
+      case 'أضف_عنوان': { const h = document.createElement('h3'); h.textContent = تحويل_الأرقام_للعربية(ق.join('')); صندوق.appendChild(h); break; }
+      case 'غير_اللون': document.body.style.backgroundColor = String(ق[0] || '#f0f0f0'); break;
+      case 'أضف_زر': { const z = document.createElement('a'); z.href = String(ق[1] || '#'); z.target = '_blank'; z.rel = 'noopener'; z.className = 'زر-عين'; z.textContent = String(ق[0] || 'زر'); صندوق.appendChild(z); break; }
+      case 'أضف_رابط': { const l = document.createElement('a'); l.href = String(ق[1] || '#'); l.target = '_blank'; l.rel = 'noopener'; l.textContent = String(ق[0] || 'رابط'); صندوق.appendChild(document.createElement('br')); صندوق.appendChild(l); break; }
+      case 'أضف_صورة': { const i = document.createElement('img'); i.src = String(ق[0] || ''); i.alt = String(ق[1] || 'صورة'); i.title = i.alt; صندوق.appendChild(i); break; }
+      case 'عيّن_الخط': { صندوق.style.fontFamily = String(ق[0] || 'Tahoma'); صندوق.style.fontSize = ق[1] ? Number(ق[1]) + 'px' : '16px'; break; }
     }
   }
 
   نفّذ_عقدة(ast, بيئة_عالمية);
 }
 
-// ════════ الواجهة ════════
+// ============ الواجهة ============
 function شغل() {
-  var كود = document.getElementById('كود_عين').value;
-  var ناتج = document.getElementById('الناتج');
-  var ويب = document.getElementById('مخرجات_الويب');
-  ناتج.innerHTML = '';
-  ويب.innerHTML = '';
-
-  if (!كود.trim()) {
-    ناتج.innerHTML = '<div class="اقتراح"><div class="عنوان">المربع فاضي</div><div class="شرح">اكتب كود أول ثم اضغط تشغيل.</div></div>';
-    return;
-  }
-
+  const كود = document.getElementById('كود_عين').value;
+  const ناتج = document.getElementById('الناتج');
+  const ويب = document.getElementById('مخرجات_الويب');
+  ناتج.innerText = '';
+  ويب.replaceChildren();
   try {
-    var رموز = tokenize(كود);
-    var شجرة = parse(رموز);
-    var مخرجات_نص = '';
-    تنفيذ(شجرة, function(ر) { مخرجات_نص += ر + '\n'; });
-    ناتج.textContent = مخرجات_نص;
+    const رموز = tokenize(كود);
+    const شجرة = parse(رموز);
+    تنفيذ(شجرة, ر => { ناتج.innerText += ر + '\n'; });
   } catch (err) {
-    var رسالة = (err && err.message) ? err.message : String(err);
-    var html = '<div class="خطأ-عنوان">خطأ: ' + رسالة + '</div>';
-    var اقتراح = اقترح_حل(err);
-    if (اقتراح) {
-      html += '<div class="اقتراح">';
-      html += '<div class="عنوان">' + اقتراح.العنوان + '</div>';
-      html += '<div class="شرح">' + اقتراح.الشرح + '</div>';
-      if (اقتراح.المثال) {
-        html += '<div class="مثال-عنوان">📝 مثال صحيح:</div>';
-        html += '<pre>' + اقتراح.المثال + '</pre>';
-      }
-      html += '</div>';
-    } else {
-      html += '<div class="اقتراح"><div class="عنوان">نصيحة</div>';
-      html += '<div class="شرح">راجع الكود، وتأكد من الأقواس والفواصل. أو انسخ الرسالة وأرسلها لـ نبراس GP.</div></div>';
-    }
-    ناتج.innerHTML = html;
+    ناتج.innerText = '❌ خطأ: ' + (err && err.message ? err.message : String(err));
   }
 }
 
 function احفظ() {
-  var كودي = document.getElementById('كود_عين').value;
-  var ب = new Blob(['\uFEFF' + كودي], { type: 'text/plain;charset=utf-8' });
-  var ر = document.createElement('a');
+  const كودي = document.getElementById('كود_عين').value;
+  const آمن = كودي.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const ص = '<!DOCTYPE html>\n<html lang="ar" dir="rtl">\n<head>\n<meta charset="UTF-8">\n<title>كودي بلغة عين</title>\n<style>\n  body { font-family: Tahoma, sans-serif; padding: 20px; background: #f0f0f0; }\n  h1 { color: #007bff; }\n  textarea { width: 100%; min-height: 500px; font-family: Consolas, monospace; font-size: 16px; padding: 15px; border-radius: 8px; border: 2px solid #007bff; line-height: 1.9; background: #fff; direction: rtl; }\n  button { padding: 12px 24px; margin: 10px 5px 0 0; background: #007bff; color: #fff; border: none; border-radius: 6px; font-size: 15px; cursor: pointer; }\n</style>\n</head>\n<body>\n  <h1>📝 كودي بلغة عين</h1>\n  <textarea id="ك" readonly>' + آمن + '</textarea>\n  <br>\n  <button onclick="navigator.clipboard.writeText(document.getElementById(\'ك\').value).then(()=>alert(\'✅ تم النسخ!\'))">📋 نسخ الكود</button>\n</body>\n</html>';
+  const ب = new Blob(['\uFEFF' + ص], { type: 'text/html;charset=utf-8' });
+  const ر = document.createElement('a');
   ر.href = URL.createObjectURL(ب);
-  ر.download = 'كود_عين.txt';
+  ر.download = 'كودي_عين.html';
   document.body.appendChild(ر);
   ر.click();
   document.body.removeChild(ر);
@@ -653,28 +385,26 @@ function احفظ() {
 }
 
 function انسخ() {
-  var ن = document.getElementById('الناتج').innerText;
-  if (!ن.trim()) { alert('لا يوجد نص لنسخه'); return; }
-  var ta = document.createElement('textarea');
-  ta.value = ن;
-  ta.style.position = 'fixed';
-  ta.style.top = '-1000px';
-  document.body.appendChild(ta);
-  ta.select();
-  var ok = false;
-  try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
-  document.body.removeChild(ta);
-  alert(ok ? '✅ تم النسخ!' : '❌ فشل النسخ');
+  const ن = document.getElementById('الناتج').innerText;
+  if (!ن.trim()) { alert('لا يوجد نص لنسخه!'); return; }
+  const بديل = () => {
+    const ta = document.createElement('textarea');
+    ta.value = ن;
+    ta.style.position = 'fixed'; ta.style.top = '-1000px';
+    document.body.appendChild(ta);
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    alert(ok ? '✅ تم النسخ!' : '❌ فشل النسخ');
+  };
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(ن).then(() => alert('✅ تم النسخ!')).catch(بديل);
+  } else بديل();
 }
 
-function امسح_الكود() {
-  if (confirm('مسح الكود؟')) document.getElementById('كود_عين').value = '';
-}
-
-function امسح_الناتج() {
-  document.getElementById('الناتج').innerHTML = '';
-  document.getElementById('مخرجات_الويب').innerHTML = '';
-}
+function امسح_الكود() { if (confirm('مسح الكود؟')) document.getElementById('كود_عين').value = ''; }
+function امسح_الناتج() { document.getElementById('الناتج').innerText = ''; document.getElementById('مخرجات_الويب').replaceChildren(); }
 </script>
 </body>
 </html>
