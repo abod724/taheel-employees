@@ -6,7 +6,7 @@
 <style>
   * { box-sizing: border-box; }
   body { font-family: Tahoma, sans-serif; padding: 20px; background: #f0f0f0; transition: background-color 0.5s; }
-  textarea { width: 100%; height: 220px; font-family: 'Consolas', monospace; font-size: 15px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
+  textarea { width: 100%; height: 320px; font-family: 'Consolas', monospace; font-size: 15px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; line-height: 1.7; }
   #الناتج { white-space: pre-wrap; background: #fff; color: #333; padding: 10px; margin-top: 10px; border-radius: 5px; min-height: 50px; border: 1px solid #ccc; font-family: 'Consolas', monospace; }
   #مخرجات_الويب { background: #fff; padding: 15px; margin-top: 10px; border: 2px dashed #007bff; border-radius: 8px; min-height: 100px; }
   button { padding: 10px 15px; margin: 5px; font-size: 15px; cursor: pointer; border: none; border-radius: 5px; color: white; }
@@ -27,46 +27,51 @@
 </head>
 <body>
   <h1>لغة عين للبرمجة</h1>
-  <p class="hint">اكتب كودك أدناه — يدعم: متغيرات، شروط، حلقات، دوال، مكتبات، أوامر صفحة.</p>
-  <textarea id="كود_عين">غير_اللون("#eef2ff")
-أضف_عنوان("تجربة لغة عين للبرمجة")
+  <p class="hint">اكتب كودك أدناه — يدعم: متغيرات، شروط، حلقات، دوال، مكتبات، أوامر صفحة. أسلوب شبيه بـ Python بالعربي 🐍</p>
+  <textarea id="كود_عين"># ═══════════════════════════════════
+#   لغة عين — شبيهة بـ Python بالعربي
+# ═══════════════════════════════════
 
-// متغيرات
-متغير الاسم = "عبدالله"
-متغير العمر = ٢٥
-اطبع("الاسم: " + الاسم)
-اطبع("العمر: " + العمر)
+# ١) متغيرات (بدون كلمة "متغير" — مثل بايثون)
+الاسم = "عبدالله"
+العمر = ٢٥
+المدينة = "الرياض"
 
-// شرط
+اطبع("أهلاً " + الاسم)
+اطبع("عمرك: " + العمر)
+اطبع("من " + المدينة)
+
+# ٢) شرط
 إذا (العمر >= ١٨) {
   اطبع("أنت بالغ ✅")
 } آخر {
   اطبع("أنت قاصر ❌")
 }
 
-// حلقة من..إلى
-كرر ع من ١ إلى ٣ {
+# ٣) دالة
+دالة تحية(شخص) {
+  إرجع "مرحبًا يا " + شخص
+}
+اطبع(تحية("سارة"))
+
+# ٤) حلقة
+كرر ع من ١ إلى ٥ {
   اطبع("العدد: " + ع)
 }
 
-// دالة
-دالة جمع(أ، ب) {
-  إرجع أ + ب
-}
-اطبع("نتيجة الجمع: " + جمع(٣، ٧))
-
-// مكتبة الرياضيات
-اطبع("جذر ١٦ = " + جذر(16))
-اطبع("٢ أس ٨ = " + قوة(2, 8))
+# ٥) مكتبات مدمجة
+اطبع("جذر ٤٩ = " + جذر(49))
+اطبع("٥ أس ٣ = " + قوة(5, 3))
 اطبع("عشوائي (١، ١٠٠) = " + عشوائي(1, 100))
 
-// مكتبة النصوص
-متغير جملة = "أنا أحب لغة عين"
-اطبع("طول الجملة: " + طول(جملة))
-اطبع("تحتوي على 'عين': " + يحتوي(جملة, "عين"))
+# ٦) قوائم
+أرقام = [١٠، ٢٠، ٣٠، ٤٠]
+اطبع("مجموع الأرقام: " + مجموع(أرقام))
 
-// أوامر الصفحة
-أضف_زر("اذهب إلى نبراس GP", "https://nibras-al.onrender.com/")
+# ٧) أوامر الصفحة
+غير_اللون("#eef2ff")
+أضف_عنوان("🐍 لغة عين — شبيهة بـ Python")
+أضف_زر("نبراس GP", "https://nibras-al.onrender.com/")
 أضف_رابط("أو اضغط هنا مباشرة", "https://google.com")
 أضف_صورة("https://picsum.photos/400/180", "صورة تجريبية")
 اطبع("تم عرض كل شيء ✅")</textarea><br>
@@ -91,6 +96,8 @@ const تحويل_الأرقام_للعربية   = ن => String(ن).replace(/[0-
 
 // ============ المكتبات المدمجة ============
 const مكتبة_رياضيات = {
+  'رقم':    (قيمة)   => Number(قيمة),
+  'عدد':    (قيمة)   => Number(قيمة),
   'جذر':    (ن)      => Math.sqrt(Number(ن)),
   'قوة':    (أ, ب)    => Math.pow(Number(أ), Number(ب)),
   'مطلق':   (ن)      => Math.abs(Number(ن)),
@@ -174,13 +181,15 @@ function tokenize(code) {
   code = تحويل_الأرقام_للإنجليزية(code);
 
   const tokens = [];
-  const regex = /\s*(\/\/[^\n]*|==|!=|>=|<=|[=<>+\-*/%(){}\[\],،!]|"[^"]*"|'[^']*'|[\p{L}_][\p{L}\p{N}_]*|\d+(?:\.\d+)?)/gu;
+  // يدعم # و // للتعليقات — مثل بايثون
+  const regex = /\s*(#[^\n]*|\/\/[^\n]*|==|!=|>=|<=|[=<>+\-*/%(){}\[\],،!]|"[^"]*"|'[^']*'|[\p{L}_][\p{L}\p{N}_]*|\d+(?:\.\d+)?)/gu;
 
   let m, آخر_موضع = 0;
   while ((m = regex.exec(code)) !== null) {
     آخر_موضع = regex.lastIndex;
     let value = m[1];
-    if (value.startsWith('//')) continue;
+    // تخطّي التعليقات
+    if (value.startsWith('#') || value.startsWith('//')) continue;
 
     let type = 'معرف';
     if (الكلمات_المحجوزة.has(value)) type = 'كلمة_محجوزة';
@@ -225,6 +234,13 @@ function parse(tokens) {
       if (t.value === 'كرر') return parseRepeat();
       if (t.value === 'دالة') return parseFunc();
       if (t.value === 'إرجع') return parseReturn();
+    }
+    // ✅ أسلوب بايثون: معرف = قيمة (بدون كلمة "متغير")
+    if (t.type === 'معرف' && peek(1).value === '=') {
+      const name = consume().value;
+      consume(); // =
+      const val = parseExpression();
+      return { type: 'متغير', name, val };
     }
     return { type: 'تعبير', expr: parseExpression() };
   }
@@ -457,9 +473,7 @@ function تنفيذ(ast, طباعة_في_الكونسول) {
       case 'استدعاء_دالة': {
         const name = عقدة.callee.name;
         const args = عقدة.args.map(a => احصل_على_قيمة(a, بيئة));
-        // 1) دوال المستخدم
         if (دوال[name]) return استدعاء_دالة(دوال[name], args);
-        // 2) دوال المكتبات المدمجة
         if (المكتبات[name]) return المكتبات[name](...args);
         throw new Error(`دالة غير معرّفة: ${name}`);
       }
