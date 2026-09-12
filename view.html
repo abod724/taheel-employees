@@ -1,562 +1,576 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>لغة عين للبرمجه - النسخة التفاعلية</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; background: #f0f0f0; direction: rtl; transition: background-color 0.5s; }
-    textarea { width: 100%; height: 150px; font-family: monospace; font-size: 16px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
-    #الناتج { white-space: pre-wrap; background: #ffffff; color: #333; padding: 10px; margin-top: 10px; border-radius: 5px; font-family: monospace; min-height: 50px; border: 1px solid #ccc; }
-    #مخرجات_الويب { background: #fff; padding: 15px; margin-top: 10px; border: 2px dashed #007bff; border-radius: 8px; min-height: 100px; }
-    button { padding: 10px 15px; margin-top: 10px; font-size: 15px; margin-left: 5px; cursor: pointer; border: none; border-radius: 5px; color: white; }
-    .btn-primary { background: #007bff; }
-    .btn-primary:hover { background: #0056b3; }
-    .btn-danger { background: #dc3545; }
-    .btn-danger:hover { background: #a71d2a; }
-    .btn-warning { background: #ffc107; color: black; }
-    .btn-warning:hover { background: #d39e00; }
-    h2 { color: #333; margin-top: 20px; }
-  </style>
+<meta charset="UTF-8">
+<title>لغة عين للبرمجه - النسخة التفاعلية</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Tahoma, sans-serif; padding: 20px; background: #f0f0f0; transition: background-color 0.5s; }
+  textarea { width: 100%; height: 220px; font-family: 'Consolas', monospace; font-size: 15px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
+  #الناتج { white-space: pre-wrap; background: #fff; color: #333; padding: 10px; margin-top: 10px; border-radius: 5px; min-height: 50px; border: 1px solid #ccc; font-family: 'Consolas', monospace; }
+  #مخرجات_الويب { background: #fff; padding: 15px; margin-top: 10px; border: 2px dashed #007bff; border-radius: 8px; min-height: 100px; }
+  button { padding: 10px 15px; margin: 5px; font-size: 15px; cursor: pointer; border: none; border-radius: 5px; color: white; }
+  .btn-primary { background: #007bff; } .btn-primary:hover { background: #0056b3; }
+  .btn-danger { background: #dc3545; } .btn-danger:hover { background: #a71d2a; }
+  .btn-warning { background: #ffc107; color: #000; } .btn-warning:hover { background: #d39e00; }
+  .btn-success { background: #28a745; } .btn-success:hover { background: #1e7e34; }
+  h2 { color: #333; margin-top: 20px; }
+  #مخرجات_الويب p { margin: 8px 0; font-size: 16px; }
+  #مخرجات_الويب h3 { margin: 12px 0 6px 0; color: #007bff; }
+  #مخرجات_الويب .زر-عين { display:inline-block; padding:10px 20px; background:#007bff; color:#fff !important; border-radius:6px; text-decoration:none; margin:6px; }
+  #مخرجات_الويب .زر-عين:hover { background:#0056b3; }
+  #مخرجات_الويب a { color:#007bff; text-decoration:none; margin:4px; display:inline-block; }
+  #مخرجات_الويب a:hover { text-decoration: underline; }
+  #مخرجات_الويب img { max-width:100%; border-radius:6px; margin:10px 0; }
+  .hint { color: #666; font-size: 13px; }
+</style>
 </head>
 <body>
-  <h1> لغة عين (النسخة التفاعلية)</h1>
-  <p>اكتب كود بلغة عين (استخدم الأرقام العربية ٠-٩):</p>
-  <textarea id="كود_عين">غير_اللون("#e3f2fd")
-أضف_عنوان("🌟 مرحباً بك في لغة عين!")
-متغير أ = ١٠
-متغير ب = ٣
-أضف_عنوان("🧮 العمليات:")
-أضف_نص("جمع: " + (أ + ب))
-أضف_نص("قسمة: " + تدوير(أ / ب, ٢))
-أضف_نص("ضرب: " + (أ * ب))</textarea><br>
+  <h1>مترجم لغة عين</h1>
+  <p class="hint">اكتب كودك أدناه — يدعم: متغيرات، شروط، حلقات، دوال، أوامر صفحة.</p>
+  <textarea id="كود_عين">غير_اللون("#eef2ff")
+أضف_عنوان("تجربة لغة عين")
+
+// متغيرات
+متغير الاسم = "أحمد"
+متغير العمر = ٢٥
+اطبع("الاسم: " + الاسم)
+اطبع("العمر: " + العمر)
+
+// شرط
+إذا (العمر >= ١٨) {
+  أضف_نص("أنت بالغ ✅")
+} آخر {
+  أضف_نص("أنت قاصر ❌")
+}
+
+// حلقة من..إلى
+كرر ع من ١ إلى ٣ {
+  أضف_نص("العدد: " + ع)
+}
+
+// دالة
+دالة جمع(أ، ب) {
+  إرجع أ + ب
+}
+اطبع("نتيجة الجمع: " + جمع(٣، ٧))
+
+// أوامر الصفحة
+أضف_زر("اذهب إلى Google", "https://google.com")
+أضف_رابط("أو اضغط هنا مباشرة", "https://example.com")
+أضف_صورة("https://picsum.photos/400/180", "صورة تجريبية")
+اطبع("تم عرض كل شيء ✅")</textarea><br>
   <button class="btn-primary" onclick="شغل()">▶ تشغيل</button>
-  <button class="btn-warning" onclick="احفظ()">💾 حفظ الكود</button>
-  <button class="btn-primary" onclick="انسخ()">📋 نسخ الناتج</button>
+  <button class="btn-warning" onclick="احفظ()">💾 حفظ</button>
+  <button class="btn-success" onclick="انسخ()">📋 نسخ الناتج</button>
   <button class="btn-danger" onclick="امسح_الكود()">🗑️ مسح الكود</button>
   <button class="btn-danger" onclick="امسح_الناتج()">🧹 مسح الناتج</button>
 
-  <h2>📟 الناتج (وحدة التحكم):</h2>
+  <h2>📟 الناتج:</h2>
   <div id="الناتج"></div>
 
-  <h2>🖥️ النتيجة على الويب (تفاعلية):</h2>
+  <h2>🖥️ معاينة الصفحة:</h2>
   <div id="مخرجات_الويب"></div>
 
-  <script>
-    function تحويل_الأرقام_للإنجليزية(نص) {
-      const خريطة = { '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4', '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9' };
-      return نص.replace(/[٠-٩]/g, (حرف) => خريطة[حرف]);
+<script>
+// ============ أدوات ============
+const خريطة_ع_إ = {'٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'};
+const خريطة_إ_ع = {'0':'٠','1':'١','2':'٢','3':'٣','4':'٤','5':'٥','6':'٦','7':'٧','8':'٨','9':'٩'};
+const تحويل_الأرقام_للإنجليزية = ن => ن.replace(/[٠-٩]/g, ح => خريطة_ع_إ[ح]);
+const تحويل_الأرقام_للعربية   = ن => String(ن).replace(/[0-9]/g, ر => خريطة_إ_ع[ر]);
+
+// ============ Tokenizer ============
+const الكلمات_المحجوزة = new Set([
+  'متغير','اطبع','إذا','آخر','كرر','من','إلى','دالة','إرجع','بينما','و','أو',
+  'أضف_نص','أضف_عنوان','غير_اللون','أضف_زر','أضف_رابط','أضف_صورة','عيّن_الخط'
+]);
+
+function tokenize(code) {
+  code = تحويل_الأرقام_للإنجليزية(code);
+  code = code.replace(/\/\/[^\n]*/g, '');
+
+  const tokens = [];
+  const regex = /\s*(==|!=|>=|<=|[=<>+\-*/%(){}\[\],،!]|"[^"]*"|'[^']*'|[\p{L}_][\p{L}\p{N}_]*|\d+(?:\.\d+)?)/gu;
+
+  let m, آخر_موضع = 0;
+  while ((m = regex.exec(code)) !== null) {
+    آخر_موضع = regex.lastIndex;
+    let value = m[1];
+    let type = 'معرف';
+    if (الكلمات_المحجوزة.has(value)) type = 'كلمة_محجوزة';
+    else if (/^\d/.test(value)) type = 'رقم';
+    else if (/^["']/.test(value)) { type = 'نص'; value = value.slice(1, -1); }
+    else if (/^[=<>+\-*/%(){}\[\],،!]/.test(value)) type = 'رمز';
+    tokens.push({ type, value });
+  }
+  const بقايا = code.slice(آخر_موضع).trim();
+  if (بقايا) throw new Error(`رمز غير معروف: "${بقايا.slice(0, 20)}"`);
+
+  tokens.push({ type: 'نهاية', value: '' });
+  return tokens;
+}
+
+// ============ Parser ============
+function parse(tokens) {
+  let pos = 0;
+  const peek = (ن = 0) => tokens[pos + ن] || tokens[tokens.length - 1];
+  const consume = () => tokens[pos++];
+  const expect = v => {
+    if (peek().value !== v) throw new Error(`متوقع "${v}" لكن وجدت "${peek().value || 'نهاية'}"`);
+    return consume();
+  };
+
+  function parseProgram() {
+    const body = [];
+    while (peek().type !== 'نهاية') body.push(parseStatement());
+    return { type: 'برنامج', body };
+  }
+
+  function parseStatement() {
+    const t = peek();
+    if (t.type === 'كلمة_محجوزة') {
+      if (['أضف_نص','أضف_عنوان','غير_اللون','أضف_زر','أضف_رابط','أضف_صورة','عيّن_الخط'].includes(t.value))
+        return parsePageCall();
+      if (t.value === 'اطبع') return parsePrint();
+      if (t.value === 'متغير') return parseVar();
+      if (t.value === 'إذا') return parseIf();
+      if (t.value === 'بينما') return parseWhile();
+      if (t.value === 'كرر') return parseRepeat();
+      if (t.value === 'دالة') return parseFunc();
+      if (t.value === 'إرجع') return parseReturn();
     }
-    function تحويل_الأرقام_للعربية(نص) {
-      const خريطة = { '0': '٠', '1': '١', '2': '٢', '3': '٣', '4': '٤', '5': '٥', '6': '٦', '7': '٧', '8': '٨', '9': '٩' };
-      return String(نص).replace(/[0-9]/g, (رقم) => خريطة[رقم]);
+    return { type: 'تعبير', expr: parseExpression() };
+  }
+
+  function parsePageCall() {
+    const name = consume().value;
+    expect('(');
+    const args = [];
+    while (peek().value !== ')') {
+      args.push(parseExpression());
+      if (peek().value === ',' || peek().value === '،') consume();
+      else break;
     }
+    expect(')');
+    return { type: 'استدعاء_صفحة', name, args };
+  }
 
-    function tokenize(code) {
-      code = code.replace(/[\u200B-\u200D\uFEFF\u200E\u200F]/g, '');
-      code = تحويل_الأرقام_للإنجليزية(code);
-      code = code.replace(/\/\/.*$/gm, ''); 
-      
-      const tokens = [];
-      const regex = /\s*(متغير|اطبع|إذا|آخر|كرر|من|إلى|دالة|إرجع|بينما|و|أو|[a-zA-Z\u0621-\u064A_][a-zA-Z0-9\u0621-\u064A_]*|\d+|"[^"]*"|'[^']*'|==|!=|>=|<=|[=><+\-*/%{}()\[\]،,])/g;
-      let match;
-      while ((match = regex.exec(code)) !== null) {
-        let value = match[1];
-        let type = 'معرف';
-        
-        if (['متغير', 'اطبع', 'إذا', 'آخر', 'كرر', 'من', 'إلى', 'دالة', 'إرجع', 'بينما', 'و', 'أو'].includes(value)) {
-          type = 'كلمة_محجوزة';
-        } else if (/^\d+$/.test(value)) {
-          type = 'رقم';
-        } else if (/^["'].*["']$/.test(value)) {
-          type = 'نص';
-          value = value.slice(1, -1);
-        } else if (['=', '>', '<', '==', '!=', '>=', '<=', '+', '-', '*', '/', '%', '{', '}', '(', ')', '[', ']', '،', ','].includes(value)) {
-          type = 'رمز';
-        }
-        tokens.push({ type, value });
-      }
-      return tokens;
+  function parsePrint() {
+    consume(); expect('(');
+    const expr = parseExpression();
+    expect(')');
+    return { type: 'طباعة', expr };
+  }
+
+  function parseVar() {
+    consume();
+    const name = consume().value;
+    let val = null;
+    if (peek().value === '=') { consume(); val = parseExpression(); }
+    return { type: 'متغير', name, val };
+  }
+
+  function parseIf() {
+    consume(); expect('(');
+    const cond = parseExpression();
+    expect(')');
+    const block = parseBlock();
+    let alt = null;
+    if (peek().value === 'آخر') { consume(); alt = parseBlock(); }
+    return { type: 'شرط', cond, block, alt };
+  }
+
+  function parseWhile() {
+    consume(); expect('(');
+    const cond = parseExpression();
+    expect(')');
+    const block = parseBlock();
+    return { type: 'بينما', cond, block };
+  }
+
+  function parseRepeat() {
+    consume();
+    // الصيغة: كرر i من a إلى b { }
+    if (peek().type === 'معرف' && peek(1).value === 'من') {
+      const name = consume().value;
+      consume(); // من
+      const from = parseExpression();
+      consume(); // إلى
+      const to = parseExpression();
+      const block = parseBlock();
+      return { type: 'كرر_من_إلى', name, from, to, block };
     }
+    const count = parseExpression();
+    const block = parseBlock();
+    return { type: 'كرر', count, block };
+  }
 
-    function parse(tokens) {
-      let pos = 0;
-      function peek() { return tokens[pos]; }
-      function peekNext() { return tokens[pos + 1]; }
-      function consume() { return tokens[pos++]; }
-
-      function parseProgram() {
-        const statements = [];
-        while (pos < tokens.length) {
-          statements.push(parseStatement());
-        }
-        return { type: 'برنامج', body: statements };
-      }
-
-      function parseStatement() {
-        const token = peek();
-        if (!token) return null;
-
-        if (token.type === 'معرف' && peekNext() && peekNext().value === '=') {
-          const name = consume().value;
-          consume();
-          const value = parseExpression();
-          return { type: 'إعادة_تعيين', name, value };
-        }
-
-        if (token.type === 'كلمة_محجوزة') {
-          if (token.value === 'متغير') {
-            consume();
-            const name = consume().value;
-            let value = null;
-            if (peek() && peek().value === '=') {
-              consume();
-              value = parseExpression();
-            }
-            return { type: 'إعلان_متغير', name, value };
-          }
-          if (token.value === 'اطبع') {
-            consume();
-            const value = parseExpression();
-            return { type: 'جملة_طباعة', value };
-          }
-          if (token.value === 'إذا') {
-            consume(); consume();
-            const condition = parseExpression();
-            consume();
-            const consequent = parseBlock();
-            let alternate = null;
-            if (peek() && peek().value === 'آخر') {
-              consume();
-              alternate = parseBlock();
-            }
-            return { type: 'جملة_شرطية', condition, consequent, alternate };
-          }
-          if (token.value === 'كرر') {
-            consume(); consume();
-            const start = parseExpression();
-            consume();
-            const end = parseExpression();
-            const body = parseBlock();
-            return { type: 'جملة_تكرار', start, end, body };
-          }
-          if (token.value === 'بينما') {
-            consume(); consume();
-            const condition = parseExpression();
-            consume();
-            const body = parseBlock();
-            return { type: 'جملة_بينما', condition, body };
-          }
-          if (token.value === 'دالة') {
-            consume();
-            const name = consume().value;
-            consume();
-            const params = [];
-            while (peek() && peek().value !== ')') {
-              if (peek().value === '،' || peek().value === ',') { consume(); continue; }
-              params.push(consume().value);
-            }
-            consume();
-            const body = parseBlock();
-            return { type: 'دالة', name, params, body };
-          }
-          if (token.value === 'إرجع') {
-            consume();
-            const value = parseExpression();
-            return { type: 'إرجع', value };
-          }
-        }
-        return parseExpression();
-      }
-
-      function parseBlock() {
-        consume();
-        const body = [];
-        while (peek() && peek().value !== '}') {
-          body.push(parseStatement());
-        }
-        consume();
-        return { type: 'كتلة', body };
-      }
-
-      function parseExpression() {
-        let left = parseComparison();
-        while (peek() && (peek().value === 'و' || peek().value === 'أو')) {
-          const op = consume().value;
-          const right = parseComparison();
-          left = { type: 'تعبير_منطقي', operator: op, left, right };
-        }
-        return left;
-      }
-
-      function parseComparison() {
-        let left = parseAdditive();
-        while (peek() && ['>', '<', '==', '!=', '>=', '<='].includes(peek().value)) {
-          const op = consume().value;
-          const right = parseAdditive();
-          left = { type: 'تعبير_ثنائي', operator: op, left, right };
-        }
-        return left;
-      }
-
-      function parseAdditive() {
-        let left = parseMultiplicative();
-        while (peek() && (peek().value === '+' || peek().value === '-')) {
-          const op = consume().value;
-          const right = parseMultiplicative();
-          left = { type: 'تعبير_ثنائي', operator: op, left, right };
-        }
-        return left;
-      }
-
-      function parseMultiplicative() {
-        let left = parsePrimary();
-        while (peek() && (peek().value === '*' || peek().value === '/' || peek().value === '%')) {
-          const op = consume().value;
-          const right = parsePrimary();
-          left = { type: 'تعبير_ثنائي', operator: op, left, right };
-        }
-        return left;
-      }
-
-      function parsePrimary() {
-        const token = consume();
-        if (!token) throw new Error("نهاية غير متوقعة للكود");
-        
-        if (token.type === 'رقم') return { type: 'رقم', value: parseInt(token.value) };
-        if (token.type === 'نص') return { type: 'نص', value: token.value };
-        
-        if (token.value === '(') {
-          const expr = parseExpression();
-          const closing = consume();
-          if (!closing || closing.value !== ')') {
-            throw new Error("قوس إغلاق ) مفقود");
-          }
-          return expr;
-        }
-
-        if (token.value === '[') {
-          const elements = [];
-          while (peek() && peek().value !== ']') {
-            if (peek().value === '،' || peek().value === ',') { consume(); continue; }
-            elements.push(parseExpression());
-          }
-          consume();
-          return { type: 'قائمة', elements };
-        }
-
-        if (['الطول', 'النوع', 'تحويل_لنص', 'تحويل_لرقم', 'العشوائي', 'القوة', 'الجذر', 'تدوير'].includes(token.value)) {
-          consume();
-          const args = [];
-          while (peek() && peek().value !== ')') {
-            if (peek().value === '،' || peek().value === ',') { consume(); continue; }
-            args.push(parseExpression());
-          }
-          consume();
-          return { type: 'استدعاء_مدمج', name: token.value, args };
-        }
-
-        if (token.type === 'معرف') {
-          if (peek() && peek().value === '(') {
-            consume();
-            const args = [];
-            while (peek() && peek().value !== ')') {
-              if (peek().value === '،' || peek().value === ',') { consume(); continue; }
-              args.push(parseExpression());
-            }
-            consume();
-            return { type: 'استدعاء_دالة', name: token.value, args };
-          }
-          if (peek() && peek().value === '[') {
-            consume();
-            const index = parseExpression();
-            consume();
-            return { type: 'وصول_قائمة', name: token.value, index };
-          }
-          return { type: 'معرف', name: token.value };
-        }
-        throw new Error(`خطأ في التحليل: ${token.value}`);
-      }
-
-      return parseProgram();
+  function parseFunc() {
+    consume();
+    const name = consume().value;
+    expect('(');
+    const params = [];
+    while (peek().value !== ')') {
+      params.push(consume().value);
+      if (peek().value === ',' || peek().value === '،') consume();
+      else break;
     }
+    expect(')');
+    const block = parseBlock();
+    return { type: 'دالة', name, params, block };
+  }
 
-    class البيئة {
-      constructor(الأب = null) {
-        this.القيم = {};
-        this.الأب = الأب;
-      }
-      تعريف(اسم, قيمة) { this.القيم[اسم] = قيمة; }
-      تحديث(اسم, قيمة) {
-        if (Object.prototype.hasOwnProperty.call(this.القيم, اسم)) {
-          this.القيم[اسم] = قيمة;
-          return;
-        }
-        if (this.الأب) {
-          this.الأب.تحديث(اسم, قيمة);
-          return;
-        }
-        throw new Error(`لا يمكن إعادة تعيين متغير غير موجود: ${اسم}`);
-      }
-      جلب(اسم) {
-        if (Object.prototype.hasOwnProperty.call(this.القيم, اسم)) return this.القيم[اسم];
-        if (this.الأب) return this.الأب.جلب(اسم);
-        throw new Error(`متغير غير معرف: ${اسم}`);
-      }
+  function parseReturn() {
+    consume();
+    if (peek().value === '}' || peek().type === 'نهاية') return { type: 'إرجع', expr: null };
+    return { type: 'إرجع', expr: parseExpression() };
+  }
+
+  function parseBlock() {
+    expect('{');
+    const body = [];
+    while (peek().value !== '}') body.push(parseStatement());
+    expect('}');
+    return { type: 'كتلة', body };
+  }
+
+  // أولويات التعبيرات
+  function parseExpression() { return parseOr(); }
+  function parseOr() {
+    let l = parseAnd();
+    while (peek().value === 'أو') { consume(); l = { type:'ثنائي', op:'أو', l, r: parseAnd() }; }
+    return l;
+  }
+  function parseAnd() {
+    let l = parseComparison();
+    while (peek().value === 'و') { consume(); l = { type:'ثنائي', op:'و', l, r: parseComparison() }; }
+    return l;
+  }
+  function parseComparison() {
+    let l = parseAdd();
+    while (['==','!=','>','<','>=','<='].includes(peek().value)) {
+      const op = consume().value;
+      l = { type:'ثنائي', op, l, r: parseAdd() };
     }
-
-    function evaluate(ast, env, onOutput) {
-      function evalNode(node, currentEnv) {
-        if (!node) return;
-        switch (node.type) {
-          case 'برنامج':
-            node.body.forEach(child => evalNode(child, currentEnv));
-            break;
-          case 'إعلان_متغير':
-            currentEnv.تعريف(node.name, node.value ? evalNode(node.value, currentEnv) : null);
-            break;
-          case 'إعادة_تعيين':
-            currentEnv.تحديث(node.name, evalNode(node.value, currentEnv));
-            break;
-          case 'جملة_طباعة':
-            onOutput(evalNode(node.value, currentEnv));
-            break;
-          case 'جملة_شرطية':
-            if (evalNode(node.condition, currentEnv)) {
-              evalNode(node.consequent, currentEnv);
-            } else if (node.alternate) {
-              evalNode(node.alternate, currentEnv);
-            }
-            break;
-          case 'جملة_تكرار':
-            const start = evalNode(node.start, currentEnv);
-            const end = evalNode(node.end, currentEnv);
-            for (let i = start; i <= end; i++) {
-              currentEnv.تعريف('i', i);
-              evalNode(node.body, currentEnv);
-            }
-            break;
-          case 'جملة_بينما':
-            while (evalNode(node.condition, currentEnv)) {
-              evalNode(node.body, currentEnv);
-            }
-            break;
-          case 'كتلة':
-            node.body.forEach(child => evalNode(child, currentEnv));
-            break;
-          case 'دالة':
-            currentEnv.تعريف(node.name, { type: 'دالة', params: node.params, body: node.body, env: currentEnv });
-            break;
-          case 'استدعاء_دالة':
-            const func = currentEnv.جلب(node.name);
-            const args = node.args.map(arg => evalNode(arg, currentEnv));
-            if (func.type === 'دالة') {
-              const funcEnv = new البيئة(func.env); 
-              func.params.forEach((param, index) => {
-                funcEnv.تعريف(param, args[index] !== undefined ? args[index] : null);
-              });
-              try {
-                evalNode(func.body, funcEnv);
-              } catch (e) {
-                if (e.type === 'إرجع') return e.value;
-                throw e;
-              }
-              return null; 
-            } else if (func.type === 'دالة_مدمجة') {
-              return func.fn(args);
-            } else {
-              throw new Error(`${node.name} ليست دالة`);
-            }
-          case 'استدعاء_مدمج':
-            const argValue = node.args.length > 0 ? evalNode(node.args[0], currentEnv) : null;
-            const arg2 = node.args.length > 1 ? evalNode(node.args[1], currentEnv) : null;
-            switch (node.name) {
-              case 'الطول':
-                if (typeof argValue !== 'string' && !Array.isArray(argValue)) throw new Error(`الطول() تتوقع نصاً أو قائمة`);
-                return argValue.length;
-              case 'النوع':
-                if (Array.isArray(argValue)) return 'قائمة';
-                if (typeof argValue === 'number') return 'رقم';
-                if (typeof argValue === 'string') return 'نص';
-                return typeof argValue;
-              case 'تحويل_لنص':
-                return String(argValue);
-              case 'تحويل_لرقم':
-                const num = Number(تحويل_الأرقام_للإنجليزية(String(argValue)));
-                if (isNaN(num)) throw new Error(`لا يمكن تحويل "${argValue}" إلى رقم`);
-                return num;
-              case 'العشوائي':
-                const min = argValue || 0;
-                const max = arg2 || 10;
-                return Math.floor(Math.random() * (max - min + 1)) + min;
-              case 'القوة':
-                return Math.pow(argValue, arg2);
-              case 'الجذر':
-                if (argValue < 0) throw new Error("لا يمكن حساب جذر رقم سالب");
-                return Math.sqrt(argValue);
-              case 'تدوير':
-                const d = arg2 != null ? Number(arg2) : 0;
-                return Number(Number(argValue).toFixed(d));
-            }
-            break;
-          case 'إرجع':
-            throw { type: 'إرجع', value: evalNode(node.value, currentEnv) };
-          case 'قائمة':
-            return node.elements.map(el => evalNode(el, currentEnv));
-          case 'وصول_قائمة':
-            const list = currentEnv.جلب(node.name);
-            if (!Array.isArray(list)) throw new Error(`${node.name} ليست قائمة`);
-            const idx = evalNode(node.index, currentEnv);
-            if (idx < 0 || idx >= list.length) throw new Error(`خطأ: الفهرس ${idx} خارج نطاق القائمة`);
-            return list[idx];
-          case 'تعبير_منطقي':
-            const leftLog = evalNode(node.left, currentEnv);
-            if (node.operator === 'و') {
-              return leftLog && evalNode(node.right, currentEnv);
-            } else if (node.operator === 'أو') {
-              return leftLog || evalNode(node.right, currentEnv);
-            }
-            break;
-          case 'تعبير_ثنائي':
-            const left = evalNode(node.left, currentEnv);
-            const right = evalNode(node.right, currentEnv);
-            switch (node.operator) {
-              case '>': return left > right;
-              case '<': return left < right;
-              case '==': return left == right;
-              case '!=': return left != right;
-              case '>=': return left >= right;
-              case '<=': return left <= right;
-              case '+': return left + right;
-              case '-': return left - right;
-              case '*': return left * right;
-              case '/': return left / right;
-              case '%': return left % right;
-            }
-            break;
-          case 'رقم': return node.value;
-          case 'نص': return node.value;
-          case 'معرف': return currentEnv.جلب(node.name);
-        }
-      }
-
-      // 🎯 التعديل: أضفنا تحويل_الأرقام_للعربية
-      env.تعريف('أضف_نص', {
-        type: 'دالة_مدمجة',
-        fn: (args) => {
-          const container = document.getElementById('مخرجات_الويب');
-          const p = document.createElement('p');
-          p.textContent = تحويل_الأرقام_للعربية(args.map(a => String(a)).join(' '));
-          p.style.margin = '5px 0';
-          p.style.fontSize = '16px';
-          container.appendChild(p);
-          return null;
-        }
-      });
-
-      // 🎯 التعديل: أضفنا تحويل_الأرقام_للعربية
-      env.تعريف('أضف_عنوان', {
-        type: 'دالة_مدمجة',
-        fn: (args) => {
-          const container = document.getElementById('مخرجات_الويب');
-          const h = document.createElement('h3');
-          h.textContent = تحويل_الأرقام_للعربية(args.map(a => String(a)).join(' '));
-          h.style.margin = '10px 0 5px 0';
-          h.style.color = '#007bff';
-          container.appendChild(h);
-          return null;
-        }
-      });
-
-      env.تعريف('غير_اللون', {
-        type: 'دالة_مدمجة',
-        fn: (args) => {
-          document.body.style.backgroundColor = String(args[0] || '#f0f0f0');
-          return null;
-        }
-      });
-
-      env.تعريف('غير_لون_النص', {
-        type: 'دالة_مدمجة',
-        fn: (args) => {
-          const container = document.getElementById('مخرجات_الويب');
-          container.style.color = String(args[0] || '#000');
-          return null;
-        }
-      });
-
-      env.تعريف('امسح_الصفحة', {
-        type: 'دالة_مدمجة',
-        fn: () => {
-          document.getElementById('مخرجات_الويب').innerHTML = '';
-          document.body.style.backgroundColor = '#f0f0f0';
-          document.getElementById('مخرجات_الويب').style.color = '#000';
-          return null;
-        }
-      });
-
-      evalNode(ast, env);
+    return l;
+  }
+  function parseAdd() {
+    let l = parseMul();
+    while (peek().value === '+' || peek().value === '-') {
+      const op = consume().value;
+      l = { type:'ثنائي', op, l, r: parseMul() };
     }
+    return l;
+  }
+  function parseMul() {
+    let l = parseUnary();
+    while (['*','/','%'].includes(peek().value)) {
+      const op = consume().value;
+      l = { type:'ثنائي', op, l, r: parseUnary() };
+    }
+    return l;
+  }
+  function parseUnary() {
+    if (peek().value === '-') { consume(); return { type:'أحادي', op:'-', expr: parseUnary() }; }
+    if (peek().value === '!') { consume(); return { type:'أحادي', op:'!', expr: parseUnary() }; }
+    return parseCall();
+  }
+  function parseCall() {
+    let expr = parsePrim();
+    while (peek().value === '(') {
+      consume();
+      const args = [];
+      while (peek().value !== ')') {
+        args.push(parseExpression());
+        if (peek().value === ',' || peek().value === '،') consume();
+        else break;
+      }
+      expect(')');
+      expr = { type:'استدعاء_دالة', callee: expr, args };
+    }
+    return expr;
+  }
+  function parsePrim() {
+    const t = peek();
+    if (!t || t.type === 'نهاية') throw new Error('تعبير غير مكتمل');
+    if (t.type === 'رقم') { consume(); return { type:'رقم', val: parseFloat(t.value) }; }
+    if (t.type === 'نص')  { consume(); return { type:'نص',  val: t.value }; }
+    if (t.value === '(')  { consume(); const e = parseExpression(); expect(')'); return e; }
+    if (t.value === '[') {
+      consume();
+      const items = [];
+      while (peek().value !== ']') {
+        items.push(parseExpression());
+        if (peek().value === ',' || peek().value === '،') consume();
+        else break;
+      }
+      expect(']');
+      return { type:'مصفوفة', items };
+    }
+    if (t.type === 'معرف' || t.type === 'كلمة_محجوزة') { consume(); return { type:'متغير_مرجع', name: t.value }; }
+    throw new Error(`رمز غير متوقع: "${t.value}"`);
+  }
 
-    function شغل() {
-      const code = document.getElementById("كود_عين").value;
-      const outputDiv = document.getElementById("الناتج");
-      const webDiv = document.getElementById("مخرجات_الويب");
-      
-      outputDiv.innerText = ""; 
-      webDiv.innerHTML = "";
-      
-      try {
-        const tokens = tokenize(code);
-        const ast = parse(tokens);
-        const env = new البيئة();
-        evaluate(ast, env, (msg) => {
-          outputDiv.innerText += تحويل_الأرقام_للعربية(msg) + "\n";
-        });
-      } catch (error) {
-        outputDiv.innerText = "❌ خطأ: " + error.message;
+  return parseProgram();
+}
+
+// ============ Interpreter ============
+function تنفيذ(ast, طباعة_في_الكونسول) {
+  const صندوق_الويب = document.getElementById('مخرجات_الويب');
+  const بيئة_عالمية = {};
+  const دوال = {};
+
+  const تنسيق = v => {
+    if (v === null || v === undefined) return '';
+    if (typeof v === 'boolean') return v ? 'صحيح' : 'خطأ';
+    if (Array.isArray(v)) return '[' + v.map(تنسيق).join('، ') + ']';
+    return String(v);
+  };
+
+  function احصل_على_قيمة(عقدة, بيئة) {
+    if (!عقدة) return null;
+    switch (عقدة.type) {
+      case 'رقم': case 'نص': return عقدة.val;
+      case 'مصفوفة': return عقدة.items.map(i => احصل_على_قيمة(i, بيئة));
+      case 'متغير_مرجع': {
+        if (عقدة.name in بيئة) return بيئة[عقدة.name];
+        if (عقدة.name in بيئة_عالمية) return بيئة_عالمية[عقدة.name];
+        throw new Error(`متغير غير معرّف: ${عقدة.name}`);
+      }
+      case 'أحادي': {
+        const v = احصل_على_قيمة(عقدة.expr, بيئة);
+        if (عقدة.op === '-') return -v;
+        if (عقدة.op === '!') return !v;
+        return v;
+      }
+      case 'ثنائي': {
+        if (عقدة.op === 'و') {
+          const ل = احصل_على_قيمة(عقدة.l, بيئة);
+          return ل ? احصل_على_قيمة(عقدة.r, بيئة) : ل;
+        }
+        if (عقدة.op === 'أو') {
+          const ل = احصل_على_قيمة(عقدة.l, بيئة);
+          return ل ? ل : احصل_على_قيمة(عقدة.r, بيئة);
+        }
+        const ل = احصل_على_قيمة(عقدة.l, بيئة);
+        const ر = احصل_على_قيمة(عقدة.r, بيئة);
+        switch (عقدة.op) {
+          case '+': return ل + ر;
+          case '-': return ل - ر;
+          case '*': return ل * ر;
+          case '/': return ل / ر;
+          case '%': return ل % ر;
+          case '==': return ل == ر;
+          case '!=': return ل != ر;
+          case '>':  return ل >  ر;
+          case '<':  return ل <  ر;
+          case '>=': return ل >= ر;
+          case '<=': return ل <= ر;
+        }
+        throw new Error(`عملية غير معروفة: ${عقدة.op}`);
+      }
+      case 'استدعاء_دالة': {
+        const name = عقدة.callee.name;
+        const دالة = دوال[name];
+        if (!دالة) throw new Error(`دالة غير معرّفة: ${name}`);
+        const args = عقدة.args.map(a => احصل_على_قيمة(a, بيئة));
+        return استدعاء_دالة(دالة, args);
       }
     }
+    throw new Error(`لا يمكن تقييم عقدة: ${عقدة.type}`);
+  }
 
-    function احفظ() {
-      const كود = document.getElementById("كود_عين").value;
-      const ملف = new Blob([كود], { type: "text/plain" });
-      const رابط = document.createElement("a");
-      رابط.href = URL.createObjectURL(ملف);
-      رابط.download = "الكود.ain";
-      رابط.click();
+  function استدعاء_دالة(دالة, args) {
+    const بيئة_محلية = {};
+    دالة.params.forEach((p, i) => { بيئة_محلية[p] = args[i] ?? null; });
+    try {
+      for (const stmt of دالة.block.body) تنفيذ_عقدة(stmt, بيئة_محلية);
+    } catch (e) {
+      if (e && e.__إرجع) return e.value;
+      throw e;
     }
+    return null;
+  }
 
-    function انسخ() {
-      const نص = document.getElementById("الناتج").innerText;
-      if (!نص.trim()) {
-        alert("لا يوجد ناتج لنسخه!");
-        return;
+  function تنفيذ_عقدة(عقدة, بيئة) {
+    if (!عقدة) return;
+    switch (عقدة.type) {
+      case 'برنامج':
+        for (const s of عقدة.body) تنفيذ_عقدة(s, بيئة_عالمية);
+        break;
+      case 'كتلة':
+        for (const s of عقدة.body) تنفيذ_عقدة(s, بيئة);
+        break;
+      case 'متغير':
+        بيئة[عقدة.name] = عقدة.val ? احصل_على_قيمة(عقدة.val, بيئة) : null;
+        break;
+      case 'تعبير':
+        احصل_على_قيمة(عقدة.expr, بيئة);
+        break;
+      case 'طباعة':
+        طباعة_في_الكونسول(تحويل_الأرقام_للعربية(تنسيق(احصل_على_قيمة(عقدة.expr, بيئة))));
+        break;
+      case 'شرط':
+        if (احصل_على_قيمة(عقدة.cond, بيئة)) تنفيذ_عقدة(عقدة.block, بيئة);
+        else if (عقدة.alt) تنفيذ_عقدة(عقدة.alt, بيئة);
+        break;
+      case 'بينما': {
+        let حماية = 0;
+        while (احصل_على_قيمة(عقدة.cond, بيئة)) {
+          تنفيذ_عقدة(عقدة.block, بيئة);
+          if (++حماية > 100000) throw new Error('حلقة لا نهائية (تجاوزت ١٠٠٠٠٠ تكرار)');
+        }
+        break;
       }
-      navigator.clipboard.writeText(نص).then(() => {
-        alert("تم نسخ الناتج!");
-      });
+      case 'كرر': {
+        const n = Number(احصل_على_قيمة(عقدة.count, بيئة));
+        if (!Number.isFinite(n) || n < 0) throw new Error('عدد تكرارات غير صحيح');
+        for (let i = 0; i < n; i++) تنفيذ_عقدة(عقدة.block, بيئة);
+        break;
+      }
+      case 'كرر_من_إلى': {
+        const from = Number(احصل_على_قيمة(عقدة.from, بيئة));
+        const to   = Number(احصل_على_قيمة(عقدة.to, بيئة));
+        for (let i = from; i <= to; i++) {
+          بيئة[عقدة.name] = i;
+          تنفيذ_عقدة(عقدة.block, بيئة);
+        }
+        break;
+      }
+      case 'دالة':
+        دوال[عقدة.name] = { params: عقدة.params, block: عقدة.block };
+        break;
+      case 'إرجع': {
+        const val = عقدة.expr ? احصل_على_قيمة(عقدة.expr, بيئة) : null;
+        throw { __إرجع: true, value: val };
+      }
+      case 'استدعاء_صفحة':
+        تنفيذ_صفحة(عقدة, بيئة);
+        break;
     }
+  }
 
-    function امسح_الكود() {
-      if (document.getElementById("كود_عين").value.trim() === "") {
-        alert("المربع فارغ بالفعل!");
-        return;
+  function تنفيذ_صفحة(عقدة, بيئة) {
+    const قيم = عقدة.args.map(a => احصل_على_قيمة(a, بيئة));
+    switch (عقدة.name) {
+      case 'أضف_نص': {
+        const p = document.createElement('p');
+        p.textContent = تحويل_الأرقام_للعربية(قيم.join(''));
+        صندوق_الويب.appendChild(p);
+        break;
       }
-      if (confirm("هل تريد مسح الكود بالكامل؟")) {
-        document.getElementById("كود_عين").value = "";
+      case 'أضف_عنوان': {
+        const h = document.createElement('h3');
+        h.textContent = تحويل_الأرقام_للعربية(قيم.join(''));
+        صندوق_الويب.appendChild(h);
+        break;
+      }
+      case 'غير_اللون':
+        document.body.style.backgroundColor = String(قيم[0] || '#f0f0f0');
+        break;
+      case 'أضف_زر': {
+        const زر = document.createElement('a');
+        زر.href = String(قيم[1] || '#');
+        زر.target = '_blank';
+        زر.rel = 'noopener';
+        زر.className = 'زر-عين';
+        زر.textContent = String(قيم[0] || 'زر');
+        صندوق_الويب.appendChild(زر);
+        break;
+      }
+      case 'أضف_رابط': {
+        const لينك = document.createElement('a');
+        لينك.href = String(قيم[1] || '#');
+        لينك.target = '_blank';
+        لينك.rel = 'noopener';
+        لينك.textContent = String(قيم[0] || 'رابط');
+        صندوق_الويب.appendChild(document.createElement('br'));
+        صندوق_الويب.appendChild(لينك);
+        break;
+      }
+      case 'أضف_صورة': {
+        const img = document.createElement('img');
+        img.src = String(قيم[0] || '');
+        img.alt = String(قيم[1] || 'صورة');
+        img.title = img.alt;
+        صندوق_الويب.appendChild(img);
+        break;
+      }
+      case 'عيّن_الخط': {
+        صندوق_الويب.style.fontFamily = String(قيم[0] || 'Tahoma');
+        صندوق_الويب.style.fontSize = قيم[1] ? Number(قيم[1]) + 'px' : '16px';
+        break;
       }
     }
+  }
 
-    function امسح_الناتج() {
-      const outputDiv = document.getElementById("الناتج");
-      const webDiv = document.getElementById("مخرجات_الويب");
-      if (outputDiv.innerText.trim() === "" && webDiv.innerHTML.trim() === "") {
-        alert("لا يوجد ناتج لمسحه!");
-        return;
-      }
-      outputDiv.innerText = "";
-      webDiv.innerHTML = "";
-    }
-  </script>
+  تنفيذ_عقدة(ast, بيئة_عالمية);
+}
+
+// ============ الواجهة ============
+function شغل() {
+  const كود = document.getElementById('كود_عين').value;
+  const مربع_الناتج = document.getElementById('الناتج');
+  const مربع_الويب = document.getElementById('مخرجات_الويب');
+  مربع_الناتج.innerText = '';
+  مربع_الويب.replaceChildren();
+
+  try {
+    const رموز = tokenize(كود);
+    const شجرة = parse(رموز);
+    تنفيذ(شجرة, رسالة => { مربع_الناتج.innerText += رسالة + '\n'; });
+  } catch (err) {
+    مربع_الناتج.innerText = '❌ خطأ: ' + (err && err.message ? err.message : String(err));
+  }
+}
+
+function احفظ() {
+  const بلوب = new Blob([document.getElementById('كود_عين').value], { type: 'text/plain;charset=utf-8' });
+  const رابط = document.createElement('a');
+  رابط.href = URL.createObjectURL(بلوب);
+  رابط.download = 'كود_عين.txt';
+  document.body.appendChild(رابط);
+  رابط.click();
+  document.body.removeChild(رابط);
+  URL.revokeObjectURL(رابط.href);
+}
+
+function انسخ() {
+  const نص = document.getElementById('الناتج').innerText;
+  if (!نص.trim()) { alert('لا يوجد نص لنسخه!'); return; }
+
+  const نسخ_بديل = () => {
+    const ta = document.createElement('textarea');
+    ta.value = نص;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '-1000px';
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0, نص.length);
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    alert(ok ? '✅ تم النسخ!' : '❌ فشل النسخ — انسخ يدويًا.');
+  };
+
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(نص)
+      .then(() => alert('✅ تم النسخ!'))
+      .catch(نسخ_بديل);
+  } else {
+    نسخ_بديل();
+  }
+}
+
+function امسح_الكود() {
+  if (confirm('مسح الكود؟')) document.getElementById('كود_عين').value = '';
+}
+
+function امسح_الناتج() {
+  document.getElementById('الناتج').innerText = '';
+  document.getElementById('مخرجات_الويب').replaceChildren();
+}
+</script>
 </body>
 </html>
