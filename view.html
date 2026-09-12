@@ -33,76 +33,44 @@
     margin-top: 10px;
   }
 
-  /* ============ 🤖 أيقونة نبراس العائمة ============ */
+  /* ============ 🌟 أيقونة نبراس العائمة ============ */
   .أيقونة-نبراس {
     position: fixed;
     bottom: 20px;
     left: 20px;
     z-index: 999;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 20px;
+    padding: 14px 28px;
     background: linear-gradient(135deg, #4f46e5, #7c3aed);
     color: #fff;
     border-radius: 50px;
     text-decoration: none;
     font-family: Tahoma, sans-serif;
     font-weight: 700;
-    font-size: 14px;
-    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5);
+    font-size: 15px;
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.45);
     transition: all 0.3s ease;
     cursor: pointer;
-    animation: نبض 2.5s ease-in-out infinite;
   }
   .أيقونة-نبراس:hover {
     transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 10px 30px rgba(79, 70, 229, 0.7);
-  }
-  .أيقونة-نبراس .رمز {
-    font-size: 22px;
-    line-height: 1;
-  }
-  .أيقونة-نبراس .نص {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.15;
-  }
-  .أيقونة-نبراس .عنوان {
-    font-size: 14px;
-    font-weight: 900;
-  }
-  .أيقونة-نبراس .وصف {
-    font-size: 10px;
-    opacity: 0.85;
-    font-weight: 500;
-  }
-  @keyframes نبض {
-    0%, 100% { box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5); }
-    50% { box-shadow: 0 6px 30px rgba(79, 70, 229, 0.9); }
+    box-shadow: 0 10px 28px rgba(79, 70, 229, 0.65);
   }
   @media (max-width: 600px) {
     body { padding-bottom: 90px; }
     .أيقونة-نبراس {
       bottom: 14px;
       left: 14px;
-      padding: 10px 16px;
+      padding: 12px 22px;
+      font-size: 14px;
     }
-    .أيقونة-نبراس .رمز { font-size: 18px; }
-    .أيقونة-نبراس .عنوان { font-size: 13px; }
-    .أيقونة-نبراس .وصف { font-size: 9px; }
   }
 </style>
 </head>
 <body>
 
-  <!-- 🤖 أيقونة نبراس العائمة -->
+  <!-- 🌟 أيقونة نبراس العائمة -->
   <a href="https://nibras-al.onrender.com/" target="_blank" rel="noopener" class="أيقونة-نبراس">
-    <span class="رمز">🤖</span>
-    <span class="نص">
-      <span class="عنوان">نبراس GP</span>
-      <span class="وصف">مساعدك الذكي</span>
-    </span>
+    نبراس GP
   </a>
 
   <h1>لغة عين للبرمجة</h1>
@@ -111,24 +79,45 @@
   <textarea id="كود_عين">غير_اللون("#eef2ff")
 أضف_عنوان("🐍 لغة عين للبرمجة")
 
+# متغيرات
 الاسم = "عبدالله"
 العمر = ٢٥
+المدينة = "الرياض"
 
 اطبع("أهلاً " + الاسم)
+اطبع("عمرك: " + العمر)
+اطبع("من " + المدينة)
 
+# شرط
 إذا (العمر >= ١٨) {
   اطبع("أنت بالغ ✅")
 } آخر {
   اطبع("أنت قاصر ❌")
 }
 
+# دالة
+دالة تحية(شخص) {
+  إرجع "مرحبًا يا " + شخص
+}
+اطبع(تحية("سارة"))
+
+# حلقة
 كرر ع من ١ إلى ٥ {
   اطبع("العدد: " + ع)
 }
 
+# مكتبات
 اطبع("جذر ٤٩ = " + جذر(٤٩))
+اطبع("٣ أس ٤ = " + قوة(٣، ٤))
+اطبع("عشوائي (١، ١٠٠) = " + عشوائي(١، ١٠٠))
 
+# قائمة
+أرقام = [١٠، ٢٠، ٣٠، ٤٠]
+اطبع("مجموع الأرقام: " + مجموع(أرقام))
+
+# صفحة
 أضف_زر("نبراس GP", "https://nibras-al.onrender.com/")
+أضف_رابط("Google", "https://google.com")
 أضف_صورة("https://picsum.photos/400/180", "صورة")
 اطبع("✅ تم")</textarea>
 
@@ -283,7 +272,6 @@ function parse(tokens) {
 }
 
 // ============ Interpreter ============
-// ✅ لاحظ: سمّيت الدالة "نفّذ_عقدة" بدل "عقدة" لحل مشكلة التعارض
 function تنفيذ(ast, طباعة) {
   const صندوق = document.getElementById('مخرجات_الويب');
   const بيئة_عالمية = {};
@@ -332,7 +320,6 @@ function تنفيذ(ast, طباعة) {
     return null;
   }
 
-  // ✅ الدالة اسمها "نفّذ_عقدة" — بدون تعارض
   function نفّذ_عقدة(عقدة, بيئة) {
     if (!عقدة) return;
     switch (عقدة.type) {
