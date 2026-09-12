@@ -6,7 +6,7 @@
 <title>لغة عين للبرمجة</title>
 <style>
   * { box-sizing: border-box; }
-  body { font-family: Tahoma, sans-serif; padding: 20px; background: #f0f0f0; transition: background-color 0.5s; }
+  body { font-family: Tahoma, sans-serif; padding: 20px; padding-bottom: 100px; background: #f0f0f0; transition: background-color 0.5s; }
   textarea { width: 100%; height: 320px; font-family: 'Consolas', monospace; font-size: 15px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; line-height: 1.7; }
   #الناتج { white-space: pre-wrap; background: #fff; color: #333; padding: 10px; margin-top: 10px; border-radius: 5px; min-height: 50px; border: 1px solid #ccc; font-family: 'Consolas', monospace; }
   #مخرجات_الويب { background: #fff; padding: 15px; margin-top: 10px; border: 2px dashed #007bff; border-radius: 8px; min-height: 100px; }
@@ -25,52 +25,72 @@
   #مخرجات_الويب img { max-width:100%; border-radius:6px; margin:10px 0; }
   .hint { color: #666; font-size: 13px; }
 
+  /* الأزرار في صف واحد */
+  .أزرار {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
   /* ============ 🤖 أيقونة نبراس العائمة ============ */
   .أيقونة-نبراس {
     position: fixed;
-    bottom: 24px;
-    left: 24px;
-    z-index: 1000;
+    bottom: 20px;
+    left: 20px;
+    z-index: 999;
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 14px 22px;
+    padding: 12px 20px;
     background: linear-gradient(135deg, #4f46e5, #7c3aed);
     color: #fff;
     border-radius: 50px;
     text-decoration: none;
     font-family: Tahoma, sans-serif;
     font-weight: 700;
-    font-size: 15px;
-    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+    font-size: 14px;
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5);
     transition: all 0.3s ease;
     cursor: pointer;
     animation: نبض 2.5s ease-in-out infinite;
   }
   .أيقونة-نبراس:hover {
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 12px 35px rgba(79, 70, 229, 0.6);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(79, 70, 229, 0.7);
   }
   .أيقونة-نبراس .رمز {
-    font-size: 24px;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    font-size: 22px;
+    line-height: 1;
   }
   .أيقونة-نبراس .نص {
     display: flex;
     flex-direction: column;
-    line-height: 1.2;
+    line-height: 1.15;
   }
-  .أيقونة-نبراس .عنوان { font-size: 15px; font-weight: 900; }
-  .أيقونة-نبراس .وصف { font-size: 11px; opacity: 0.85; font-weight: 500; }
+  .أيقونة-نبراس .عنوان {
+    font-size: 14px;
+    font-weight: 900;
+  }
+  .أيقونة-نبراس .وصف {
+    font-size: 10px;
+    opacity: 0.85;
+    font-weight: 500;
+  }
   @keyframes نبض {
-    0%, 100% { box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4); }
-    50% { box-shadow: 0 8px 35px rgba(79, 70, 229, 0.7); }
+    0%, 100% { box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5); }
+    50% { box-shadow: 0 6px 30px rgba(79, 70, 229, 0.9); }
   }
   @media (max-width: 600px) {
-    .أيقونة-نبراس { bottom: 16px; left: 16px; padding: 12px 18px; }
-    .أيقونة-نبراس .رمز { font-size: 20px; }
-    .أيقونة-نبراس .عنوان { font-size: 14px; }
-    .أيقونة-نبراس .وصف { font-size: 10px; }
+    body { padding-bottom: 90px; }
+    .أيقونة-نبراس {
+      bottom: 14px;
+      left: 14px;
+      padding: 10px 16px;
+    }
+    .أيقونة-نبراس .رمز { font-size: 18px; }
+    .أيقونة-نبراس .عنوان { font-size: 13px; }
+    .أيقونة-نبراس .وصف { font-size: 9px; }
   }
 </style>
 </head>
@@ -87,55 +107,38 @@
 
   <h1>لغة عين للبرمجة</h1>
   <p class="hint">اكتب كودك أدناه — يدعم: متغيرات، شروط، حلقات، دوال، مكتبات، أوامر صفحة.</p>
+
   <textarea id="كود_عين">غير_اللون("#eef2ff")
 أضف_عنوان("🐍 لغة عين للبرمجة")
 
-# متغيرات
 الاسم = "عبدالله"
 العمر = ٢٥
-المدينة = "الرياض"
 
 اطبع("أهلاً " + الاسم)
-اطبع("عمرك: " + العمر)
-اطبع("من " + المدينة)
 
-# شرط
 إذا (العمر >= ١٨) {
   اطبع("أنت بالغ ✅")
 } آخر {
   اطبع("أنت قاصر ❌")
 }
 
-# دالة
-دالة تحية(شخص) {
-  إرجع "مرحبًا يا " + شخص
-}
-اطبع(تحية("سارة"))
-
-# حلقة
 كرر ع من ١ إلى ٥ {
   اطبع("العدد: " + ع)
 }
 
-# مكتبات
 اطبع("جذر ٤٩ = " + جذر(٤٩))
-اطبع("٣ أس ٤ = " + قوة(٣، ٤))
-اطبع("عشوائي (١، ١٠٠) = " + عشوائي(١، ١٠٠))
 
-# قائمة
-أرقام = [١٠، ٢٠، ٣٠، ٤٠]
-اطبع("مجموع الأرقام: " + مجموع(أرقام))
-
-# صفحة
 أضف_زر("نبراس GP", "https://nibras-al.onrender.com/")
-أضف_رابط("Google", "https://google.com")
 أضف_صورة("https://picsum.photos/400/180", "صورة")
-اطبع("✅ تم")</textarea><br>
-  <button class="btn-primary" onclick="شغل()">▶ تشغيل</button>
-  <button class="btn-warning" onclick="احفظ()">💾 حفظ الكود</button>
-  <button class="btn-success" onclick="انسخ()">📋 نسخ الناتج</button>
-  <button class="btn-danger" onclick="امسح_الكود()">🗑️ مسح الكود</button>
-  <button class="btn-danger" onclick="امسح_الناتج()">🧹 مسح الناتج</button>
+اطبع("✅ تم")</textarea>
+
+  <div class="أزرار">
+    <button class="btn-primary" onclick="شغل()">▶ تشغيل</button>
+    <button class="btn-warning" onclick="احفظ()">💾 حفظ الكود</button>
+    <button class="btn-success" onclick="انسخ()">📋 نسخ الناتج</button>
+    <button class="btn-danger" onclick="امسح_الكود()">🗑️ مسح الكود</button>
+    <button class="btn-danger" onclick="امسح_الناتج()">🧹 مسح الناتج</button>
+  </div>
 
   <h2>📟 الناتج:</h2>
   <div id="الناتج"></div>
@@ -190,7 +193,6 @@ const مكتبة_ألوان = {
   'لون_عشوائي': () => '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0'),
   'لون_فاتح': () => '#' + ['e3f2fd','e8f5e9','fce4ec','fff8e1','f3e5f5','f0f9ff'][Math.floor(Math.random()*6)],
   'لون_غامق': () => '#' + ['1e293b','0f172a','111827','1f2937','3f3f46'][Math.floor(Math.random()*5)],
-  'مزج': (ل١, ل٢) => { const س = ل => parseInt(ل.slice(1), 16); const أ = س(ل١), ب = س(ل٢); return '#' + (((أ & 0xFEFEFE) + (ب & 0xFEFEFE)) >> 1).toString(16).padStart(6, '0'); },
 };
 const المكتبات = { ...مكتبة_رياضيات, ...مكتبة_نصوص, ...مكتبة_قوائم, ...مكتبة_وقت, ...مكتبة_تفاعل, ...مكتبة_ألوان };
 
@@ -281,11 +283,13 @@ function parse(tokens) {
 }
 
 // ============ Interpreter ============
+// ✅ لاحظ: سمّيت الدالة "نفّذ_عقدة" بدل "عقدة" لحل مشكلة التعارض
 function تنفيذ(ast, طباعة) {
   const صندوق = document.getElementById('مخرجات_الويب');
   const بيئة_عالمية = {};
   const دوال = {};
   const تنسيق = v => { if (v === null || v === undefined) return ''; if (typeof v === 'boolean') return v ? 'صحيح' : 'خطأ'; if (Array.isArray(v)) return '[' + v.map(تنسيق).join('، ') + ']'; return String(v); };
+
   function قيمة(عقدة, بيئة) {
     if (!عقدة) return null;
     switch (عقدة.type) {
@@ -319,29 +323,34 @@ function تنفيذ(ast, طباعة) {
     }
     throw new Error(`لا يمكن تقييم: ${عقدة.type}`);
   }
+
   function استدعاء_دالة(دالة, args) {
     const بيئة_محلية = {};
     دالة.params.forEach((p, i) => { بيئة_محلية[p] = args[i] ?? null; });
-    try { for (const s of دالة.block.body) عقدة(s, بيئة_محلية); } catch (e) { if (e && e.__إرجع) return e.value; throw e; }
+    try { for (const s of دالة.block.body) نفّذ_عقدة(s, بيئة_محلية); }
+    catch (e) { if (e && e.__إرجع) return e.value; throw e; }
     return null;
   }
-  function عقدة(عقدة, بيئة) {
+
+  // ✅ الدالة اسمها "نفّذ_عقدة" — بدون تعارض
+  function نفّذ_عقدة(عقدة, بيئة) {
     if (!عقدة) return;
     switch (عقدة.type) {
-      case 'برنامج': for (const s of عقدة.body) عقدة(s, بيئة_عالمية); break;
-      case 'كتلة': for (const s of عقدة.body) عقدة(s, بيئة); break;
+      case 'برنامج': for (const s of عقدة.body) نفّذ_عقدة(s, بيئة_عالمية); break;
+      case 'كتلة': for (const s of عقدة.body) نفّذ_عقدة(s, بيئة); break;
       case 'متغير': بيئة[عقدة.name] = عقدة.val ? قيمة(عقدة.val, بيئة) : null; break;
       case 'تعبير': قيمة(عقدة.expr, بيئة); break;
       case 'طباعة': طباعة(تحويل_الأرقام_للعربية(تنسيق(قيمة(عقدة.expr, بيئة)))); break;
-      case 'شرط': if (قيمة(عقدة.cond, بيئة)) عقدة(عقدة.block, بيئة); else if (عقدة.alt) عقدة(عقدة.alt, بيئة); break;
-      case 'بينما': { let ح = 0; while (قيمة(عقدة.cond, بيئة)) { عقدة(عقدة.block, بيئة); if (++ح > 100000) throw new Error('حلقة لا نهائية'); } break; }
-      case 'كرر': { const n = Number(قيمة(عقدة.count, بيئة)); if (!Number.isFinite(n) || n < 0) throw new Error('عدد تكرارات غير صحيح'); for (let i = 0; i < n; i++) عقدة(عقدة.block, بيئة); break; }
-      case 'كرر_من_إلى': { const from = Number(قيمة(عقدة.from, بيئة)); const to = Number(قيمة(عقدة.to, بيئة)); for (let i = from; i <= to; i++) { بيئة[عقدة.name] = i; عقدة(عقدة.block, بيئة); } break; }
+      case 'شرط': if (قيمة(عقدة.cond, بيئة)) نفّذ_عقدة(عقدة.block, بيئة); else if (عقدة.alt) نفّذ_عقدة(عقدة.alt, بيئة); break;
+      case 'بينما': { let ح = 0; while (قيمة(عقدة.cond, بيئة)) { نفّذ_عقدة(عقدة.block, بيئة); if (++ح > 100000) throw new Error('حلقة لا نهائية'); } break; }
+      case 'كرر': { const n = Number(قيمة(عقدة.count, بيئة)); if (!Number.isFinite(n) || n < 0) throw new Error('عدد تكرارات غير صحيح'); for (let i = 0; i < n; i++) نفّذ_عقدة(عقدة.block, بيئة); break; }
+      case 'كرر_من_إلى': { const from = Number(قيمة(عقدة.from, بيئة)); const to = Number(قيمة(عقدة.to, بيئة)); for (let i = from; i <= to; i++) { بيئة[عقدة.name] = i; نفّذ_عقدة(عقدة.block, بيئة); } break; }
       case 'دالة': دوال[عقدة.name] = { params: عقدة.params, block: عقدة.block }; break;
       case 'إرجع': throw { __إرجع: true, value: عقدة.expr ? قيمة(عقدة.expr, بيئة) : null };
       case 'استدعاء_صفحة': صفحة(عقدة, بيئة); break;
     }
   }
+
   function صفحة(عقدة, بيئة) {
     const ق = عقدة.args.map(a => قيمة(a, بيئة));
     switch (عقدة.name) {
@@ -354,7 +363,8 @@ function تنفيذ(ast, طباعة) {
       case 'عيّن_الخط': { صندوق.style.fontFamily = String(ق[0] || 'Tahoma'); صندوق.style.fontSize = ق[1] ? Number(ق[1]) + 'px' : '16px'; break; }
     }
   }
-  عقدة(ast, بيئة_عالمية);
+
+  نفّذ_عقدة(ast, بيئة_عالمية);
 }
 
 // ============ الواجهة ============
@@ -376,7 +386,7 @@ function شغل() {
 function احفظ() {
   const كودي = document.getElementById('كود_عين').value;
   const آمن = كودي.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  const ص = '<!DOCTYPE html>\n<html lang="ar" dir="rtl">\n<head>\n<meta charset="UTF-8">\n<title>كودي بلغة عين</title>\n<style>\n  body { font-family: Tahoma, sans-serif; padding: 20px; background: #f0f0f0; }\n  h1 { color: #007bff; }\n  textarea { width: 100%; min-height: 500px; font-family: Consolas, monospace; font-size: 16px; padding: 15px; border-radius: 8px; border: 2px solid #007bff; line-height: 1.9; background: #fff; direction: rtl; }\n  button { padding: 12px 24px; margin: 10px 5px 0 0; background: #007bff; color: #fff; border: none; border-radius: 6px; font-size: 15px; cursor: pointer; }\n</style>\n</head>\n<body>\n  <h1>📝 كودي بلغة عين</h1>\n  <textarea id="ك" readonly>' + آمن + '</textarea>\n  <br>\n  <button onclick="navigator.clipboard.writeText(document.getElementById(\'ك\').value).then(()=>alert(\'✅ تم النسخ!\')).catch(()=>{const t=document.getElementById(\'ك\');t.select();document.execCommand(\'copy\');alert(\'✅ تم النسخ!\');})">📋 نسخ الكود</button>\n</body>\n</html>';
+  const ص = '<!DOCTYPE html>\n<html lang="ar" dir="rtl">\n<head>\n<meta charset="UTF-8">\n<title>كودي بلغة عين</title>\n<style>\n  body { font-family: Tahoma, sans-serif; padding: 20px; background: #f0f0f0; }\n  h1 { color: #007bff; }\n  textarea { width: 100%; min-height: 500px; font-family: Consolas, monospace; font-size: 16px; padding: 15px; border-radius: 8px; border: 2px solid #007bff; line-height: 1.9; background: #fff; direction: rtl; }\n  button { padding: 12px 24px; margin: 10px 5px 0 0; background: #007bff; color: #fff; border: none; border-radius: 6px; font-size: 15px; cursor: pointer; }\n</style>\n</head>\n<body>\n  <h1>📝 كودي بلغة عين</h1>\n  <textarea id="ك" readonly>' + آمن + '</textarea>\n  <br>\n  <button onclick="navigator.clipboard.writeText(document.getElementById(\'ك\').value).then(()=>alert(\'✅ تم النسخ!\'))">📋 نسخ الكود</button>\n</body>\n</html>';
   const ب = new Blob(['\uFEFF' + ص], { type: 'text/html;charset=utf-8' });
   const ر = document.createElement('a');
   ر.href = URL.createObjectURL(ب);
@@ -396,7 +406,6 @@ function انسخ() {
     ta.style.position = 'fixed'; ta.style.top = '-1000px';
     document.body.appendChild(ta);
     ta.select();
-    ta.setSelectionRange(0, ن.length);
     let ok = false;
     try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
     document.body.removeChild(ta);
