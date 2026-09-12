@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>لغة عين للبرمجه - النسخة التفاعلية</title>
+<title>لغة عين للبرمجة</title>
 <style>
   * { box-sizing: border-box; }
   body { font-family: Tahoma, sans-serif; padding: 20px; background: #f0f0f0; transition: background-color 0.5s; }
@@ -26,10 +26,10 @@
 </style>
 </head>
 <body>
-  <h1>مترجم لغة عين</h1>
+  <h1>لغة عين للبرمجة</h1>
   <p class="hint">اكتب كودك أدناه — يدعم: متغيرات، شروط، حلقات، دوال، أوامر صفحة.</p>
   <textarea id="كود_عين">غير_اللون("#eef2ff")
-أضف_عنوان("تجربة لغة عين")
+أضف_عنوان("تجربة لغة عين للبرمجة")
 
 // متغيرات
 متغير الاسم = "أحمد"
@@ -39,14 +39,14 @@
 
 // شرط
 إذا (العمر >= ١٨) {
-  أضف_نص("أنت بالغ ✅")
+  اطبع("أنت بالغ ✅")
 } آخر {
-  أضف_نص("أنت قاصر ❌")
+  اطبع("أنت قاصر ❌")
 }
 
 // حلقة من..إلى
 كرر ع من ١ إلى ٣ {
-  أضف_نص("العدد: " + ع)
+  اطبع("العدد: " + ع)
 }
 
 // دالة
@@ -87,15 +87,19 @@ const الكلمات_المحجوزة = new Set([
 
 function tokenize(code) {
   code = تحويل_الأرقام_للإنجليزية(code);
-  code = code.replace(/\/\/[^\n]*/g, '');
 
   const tokens = [];
-  const regex = /\s*(==|!=|>=|<=|[=<>+\-*/%(){}\[\],،!]|"[^"]*"|'[^']*'|[\p{L}_][\p{L}\p{N}_]*|\d+(?:\.\d+)?)/gu;
+  // ملاحظة: نمط التعليق "//..." داخل الـregex مباشرة (قبل النصوص) حتى لا يحذف روابط مثل https://
+  const regex = /\s*(\/\/[^\n]*|==|!=|>=|<=|[=<>+\-*/%(){}\[\],،!]|"[^"]*"|'[^']*'|[\p{L}_][\p{L}\p{N}_]*|\d+(?:\.\d+)?)/gu;
 
   let m, آخر_موضع = 0;
   while ((m = regex.exec(code)) !== null) {
     آخر_موضع = regex.lastIndex;
     let value = m[1];
+
+    // تخطّي التعليقات
+    if (value.startsWith('//')) continue;
+
     let type = 'معرف';
     if (الكلمات_المحجوزة.has(value)) type = 'كلمة_محجوزة';
     else if (/^\d/.test(value)) type = 'رقم';
@@ -103,6 +107,7 @@ function tokenize(code) {
     else if (/^[=<>+\-*/%(){}\[\],،!]/.test(value)) type = 'رمز';
     tokens.push({ type, value });
   }
+
   const بقايا = code.slice(آخر_موضع).trim();
   if (بقايا) throw new Error(`رمز غير معروف: "${بقايا.slice(0, 20)}"`);
 
@@ -190,12 +195,11 @@ function parse(tokens) {
 
   function parseRepeat() {
     consume();
-    // الصيغة: كرر i من a إلى b { }
     if (peek().type === 'معرف' && peek(1).value === 'من') {
       const name = consume().value;
-      consume(); // من
+      consume();
       const from = parseExpression();
-      consume(); // إلى
+      consume();
       const to = parseExpression();
       const block = parseBlock();
       return { type: 'كرر_من_إلى', name, from, to, block };
